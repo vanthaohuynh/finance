@@ -1,0 +1,50 @@
+class Api::V1::AccountsController < ApplicationController
+  before_action :set_account, only: [:show, :edit, :update, :destroy]
+
+  skip_before_action :verify_authenticity_token
+
+  def index
+    @accounts = Account
+                .select('accounts.*')
+                .order('created_at DESC')
+    render json: @accounts
+  end
+
+  def create
+    @account = Account.new(account_params)
+    if @account.save
+      render json: @account
+    else
+      render json: @account.errors, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    @account = Account.find(params[:id])
+    render json: @account
+  end
+
+  def update
+    if @account.update(account_params)
+      render json: @account
+    else
+      render json: @account.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @account.destroy
+    head :no_content
+  end
+
+  private
+
+  def set_account
+    @account = Account.find(params[:id])
+  end
+
+  def account_params
+    params.require(:account).permit(:account_num, :muhc_account, :study_title, :study_name, :sponsor_name, :sponsor_contact, :number_of_patients, :cta_date, :phase, :cim_contact, :cro_name, :cro_contact, :budget_version, :budget_currency, :invoicing_terms, :notes)
+  end
+
+end

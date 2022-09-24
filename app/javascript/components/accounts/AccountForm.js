@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import { Grid, TextField, Button } from '@mui/material';
-import { NumericFormat } from 'react-number-format';
 import Stack from '@mui/material/Stack';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { formatDate, isEmptyObject, validateAccount } from '../../helpers/helpers';
 import Pikaday from 'pikaday';
 import 'pikaday/css/pikaday.css';
+import { formatDate, isEmptyObject, validateAccount } from '../../helpers/helpers';
+// import { NumericFormat } from 'react-number-format';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 const AccountForm = ({ accounts, onSave }) => {
   const { id } = useParams();
@@ -48,15 +50,18 @@ const AccountForm = ({ accounts, onSave }) => {
   const cancelURL = account.id ? `/accounts/${account.id}` : '/accounts';
   const title = account.id ? `${account.account_num} - ${account.study_title}` : 'New Account';
 
-
   useEffect(() => {
     setAccount(initialAccountState);
   }, [accounts]);
 
+  const updateAccount = (key, value) => {
+    setAccount((prevAccount) => ({ ...prevAccount, [key]: value }));
+  };
+
   const handleInputChange = (e) => {
     const { target } = e;
     const { name } = target;
-    // const value  = target.value;
+    // const value = target.value;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
     // setAccount({ ...account, [name]: value });
@@ -64,25 +69,23 @@ const AccountForm = ({ accounts, onSave }) => {
   };
 
   useEffect(() => {
-  const p = new Pikaday({
-    field: dateInput.current,
-    toString: date => formatDate(date),
-    onSelect: (date) => {
-      const formattedDate = formatDate(date);
-      dateInput.current.value = formattedDate;
-      updateAccount('cta_date', formattedDate);
-    },
-  });
+    const p = new Pikaday({
+      field: dateInput.current,
+      toString: (date) => formatDate(date),
+      onSelect: (date) => {
+        const formattedDate = formatDate(date);
+        dateInput.current.value = formattedDate;
+        updateAccount('cta_date', formattedDate);
+      },
+    });
+    // Return a cleanup function.
+    // React will call this prior to unmounting.
+    return () => p.destroy();
+  }, []);
 
-  // Return a cleanup function.
-  // React will call this prior to unmounting.
-  return () => p.destroy();
-}, []);
-
-useEffect(() => {
-  setAccount(initialAccountState);
-}, [accounts]);
-
+  useEffect(() => {
+    setAccount(initialAccountState);
+  }, [accounts]);
 
   const renderErrors = () => {
     if (isEmptyObject(formErrors)) {
@@ -110,10 +113,6 @@ useEffect(() => {
     } else {
       onSave(account);
     }
-  };
-
-  const updateAccount = (key, value) => {
-    setAccount((prevAccount) => ({ ...prevAccount, [key]: value }));
   };
 
   return (

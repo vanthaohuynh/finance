@@ -209,6 +209,7 @@ h2 a:hover {
 
 .button-mui {
   margin: 14px 12px 0 12px;
+  text-decoration: none;
 }
 
 .form-actions a:hover {

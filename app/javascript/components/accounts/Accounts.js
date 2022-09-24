@@ -80,7 +80,7 @@ const Accounts = () => {
       const response = await window.fetch(
         `/api/v1/accounts/${updatedAccount.id}`,
         {
-          method: 'PUT',
+          method: 'PATCH',
           body: JSON.stringify(updatedAccount),
           headers: {
             Accept: 'application/json',
@@ -91,7 +91,7 @@ const Accounts = () => {
 
       if (!response.ok) throw Error(response.statusText);
 
-      const newAccounts = Accounts;
+      const newAccounts = accounts;
       const idx = newAccounts.findIndex((account) => account.id === updatedAccount.id);
       newAccounts[idx] = updatedAccount;
       setAccounts(newAccounts);

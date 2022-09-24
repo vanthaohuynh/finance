@@ -2,12 +2,21 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@devexpress/dx-react-chart-material-ui": "^3.0.5",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@hotwired/stimulus": "^3.1.0",
     "@hotwired/turbo-rails": "^7.2.0",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.6",
+    "@mui/x-date-pickers": "^5.0.3",
+    "date-fns": "^2.29.3",
     "esbuild": "^0.15.9",
+    "moment": "^2.29.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-number-format": "^5.0.0-beta.5",
     "react-router-dom": "^6.4.1"
   },
   "scripts": {

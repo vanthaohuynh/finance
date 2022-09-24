@@ -15,9 +15,8 @@ const Account = ({ accounts, onDelete }) => {
     <div className="eventContainer">
       <h2>
         {account.account_num}
-        {'  '}
+        {' - '}
         {account.study_title}
-        <Link to={`/accounts/${account.id}/edit`}>Edit</Link>
       </h2>
       <FormControl>
         {/* <h3>Account Detail</h3> */}
@@ -95,7 +94,7 @@ const Account = ({ accounts, onDelete }) => {
           <Grid item xs={6}>
             <TextField
               id="cta_date"
-              label="CTA Date"
+              label="CTA Date (YYYY-MM-DD)"
               value={account.cta_date ? account.cta_date : ''}
               size="small"
               fullWidth
@@ -214,7 +213,7 @@ const Account = ({ accounts, onDelete }) => {
               >
                 Delete
               </Button>
-              {/* <Button
+              <Button
                 sx={{
                   width: 100,
                   height: 40,
@@ -222,16 +221,13 @@ const Account = ({ accounts, onDelete }) => {
                 type="submit"
                 variant="contained"
                 color="primary"
+                component={Link} to={`/accounts/${account.id}/edit`}
               >
-                <Link to={`/accounts/${account.id}/edit`}>Edit</Link>
-              </Button> */}
+                Edit
+              </Button>
             </Stack>
           </Grid>
         </div>
-
-        {/* <Button variant="contained" color="primary">
-          Close
-        </Button> */}
       </FormControl>
     </div>
   );

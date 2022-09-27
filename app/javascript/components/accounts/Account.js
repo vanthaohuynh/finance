@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
-import { Grid, TextField, Button } from '@mui/material';
+import { Grid, TextField, Button, InputLabel, Select } from '@mui/material';
 import { NumericFormat } from 'react-number-format';
 import Stack from '@mui/material/Stack';
-
 
 const Account = ({ accounts, onDelete }) => {
   const { id } = useParams();
@@ -19,7 +18,6 @@ const Account = ({ accounts, onDelete }) => {
         {account.study_title}
       </h2>
       <FormControl>
-        {/* <h3>Account Detail</h3> */}
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
@@ -85,7 +83,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="num_of_patients"
               label="Number of Patients"
-              value={account.num_of_patients ? account.num_of_patients : ''}
+              value={account.number_of_patients || ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -94,7 +92,7 @@ const Account = ({ accounts, onDelete }) => {
           <Grid item xs={6}>
             <TextField
               id="cta_date"
-              label="CTA Date (YYYY-MM-DD)"
+              label="CTA Date (yyyy-mm-dd)"
               value={account.cta_date ? account.cta_date : ''}
               size="small"
               fullWidth
@@ -152,14 +150,30 @@ const Account = ({ accounts, onDelete }) => {
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
+            {/* <TextField
               id="budget_currency"
               label="Budget Currency"
               value={account.budget_currency ? account.budget_currency : ''}
               size="small"
               fullWidth
               variant="outlined"
-            />
+            /> */}
+            <FormControl fullWidth size="small">
+              <InputLabel>Budget Currency</InputLabel>
+              <Select
+                type="text"
+                id="budget_currency"
+                name="budget_currency"
+                label="Budget Currency"
+                value={account.budget_currency || ''}
+                variant="outlined"
+                native
+              >
+                <option></option>
+                <option key="CAD" value="CAD">CAD</option>
+                <option key="USD" value="USD">USD</option>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={6}>
             <TextField

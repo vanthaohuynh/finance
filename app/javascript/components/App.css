@@ -63,16 +63,16 @@ header h1 a {
 .grid {
   display: grid;
   grid-gap: 50px;
-  grid-template-columns: minmax(250px, 20%) auto;
-  margin: 25px auto;
-  width: 90%;
+  grid-template-columns: minmax(250px, 40%) auto;
+  margin: 0px 0px;
+  width: 100%;
   height: calc(100vh - 145px);
 }
 
-.eventList {
-  background: #f6f6f6;
+/* .eventList {
+  /* background: #f6f6f6;
   padding: 16px;
-}
+} */
 
 .eventList h2 {
   font-size: 20px;
@@ -91,15 +91,15 @@ header h1 a {
 .eventList li:hover,
 a.active {
   /* background: #f8e5ce; */
-  background: #dae7fc;
+  background: #b1ccf7;
 }
 
 .eventList a {
   display: block;
   color: black;
   text-decoration: none;
-  border-bottom: 1px solid #dddddd;
-  padding: 8px 6px 10px;
+  /* border-bottom: 1px solid #dddddd; */
+  /* padding: 8px 6px 10px; */
   outline: 0;
 }
 

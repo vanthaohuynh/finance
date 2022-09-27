@@ -2,13 +2,13 @@ import { error } from './notifications';
 
 export const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
-
 export const handleAjaxError = (err) => {
   error('Something went wrong');
   console.error(err);
 };
 
-const isValidDate = dateObj => !Number.isNaN(Date.parse(dateObj));
+// const isValidDate = (dateObj) => !Number.isNaN(Date.parse(dateObj));
+
 export const validateAccount = (account) => {
   const errors = {};
 
@@ -16,9 +16,10 @@ export const validateAccount = (account) => {
     errors.account_num = 'Account Number is required';
   }
 
-  if (!isValidDate(account.cta_date)) {
-    errors.cta_date = 'CTA Date is invalid';
-  }
+  // Cannot validate CTA data here because it is not a required field
+  // if (!isValidDate(account.cta_date)) {
+  //   errors.cta_date = 'CTA Date is invalid';
+  // }
 
   return errors;
 };

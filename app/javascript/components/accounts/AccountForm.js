@@ -3,16 +3,22 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
-import FormControl from '@mui/material/FormControl';
-import { Grid, TextField, Button } from '@mui/material';
-import Stack from '@mui/material/Stack';
+// import FormControl from '@mui/material/FormControl';
+// import Stack from '@mui/material/Stack';
 import Pikaday from 'pikaday';
 import 'pikaday/css/pikaday.css';
+import {
+  Grid,
+  TextField,
+  Button,
+  Select,
+  InputLabel,
+  FormControl,
+  Stack,
+  OutlinedInput,
+} from '@mui/material';
 import { formatDate, isEmptyObject, validateAccount } from '../../helpers/helpers';
 // import { NumericFormat } from 'react-number-format';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 const AccountForm = ({ accounts, onSave }) => {
   const { id } = useParams();
@@ -68,6 +74,16 @@ const AccountForm = ({ accounts, onSave }) => {
     updateAccount(name, value);
   };
 
+  const handleNumberInputChange = (e) => {
+    const { target } = e;
+    const { name } = target;
+    // const value = target.value;
+    const value = Number(target.value);
+
+    // setAccount({ ...account, [name]: value });
+    updateAccount(name, value);
+  };
+
   useEffect(() => {
     const p = new Pikaday({
       field: dateInput.current,
@@ -82,10 +98,6 @@ const AccountForm = ({ accounts, onSave }) => {
     // React will call this prior to unmounting.
     return () => p.destroy();
   }, []);
-
-  useEffect(() => {
-    setAccount(initialAccountState);
-  }, [accounts]);
 
   const renderErrors = () => {
     if (isEmptyObject(formErrors)) {
@@ -208,7 +220,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 id="number_of_patients"
                 name="number_of_patients"
                 label="Number of Patients"
-                onChange={handleInputChange}
+                onChange={handleNumberInputChange}
                 value={account.number_of_patients || ''}
                 size="small"
                 fullWidth
@@ -220,7 +232,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 type="text"
                 id="cta_date"
                 name="cta_date"
-                label="CTA Date (YYYY-MM-DD)"
+                label="CTA Date (yyyy-mm-dd)"
                 ref={dateInput}
                 autoComplete="off"
                 value={account.cta_date || ''}
@@ -296,17 +308,23 @@ const AccountForm = ({ accounts, onSave }) => {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="budget_currency"
-                name="budget_currency"
-                label="Budget Currency"
-                onChange={handleInputChange}
-                value={account.budget_currency || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
+              <FormControl fullWidth size="small">
+                <InputLabel>Budget Currency</InputLabel>
+                <Select
+                  type="text"
+                  id="budget_currency"
+                  name="budget_currency"
+                  label="Budget Currency"
+                  onChange={handleInputChange}
+                  value={account.budget_currency || ''}
+                  variant="outlined"
+                  native
+                >
+                  <option></option>
+                  <option key="CAD" value="CAD">CAD</option>
+                  <option key="USD" value="USD">USD</option>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={6}>
               <TextField

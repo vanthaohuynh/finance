@@ -8,7 +8,6 @@ import AccountForm from './AccountForm';
 import { success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 
-
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

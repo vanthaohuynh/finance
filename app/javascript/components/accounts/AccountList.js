@@ -1,7 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
-import { Grid, TextField } from '@mui/material';
+import { Link } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import { DataGrid } from '@mui/x-data-grid';
 
 const AccountList = ({ accounts }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,7 +22,37 @@ const AccountList = ({ accounts }) => {
     );
   };
 
-  const renderAccounts = (accountArray) =>
+  const columns = [
+  {
+    field: 'account_num',
+    headerName: 'Account Number',
+    width: 200,
+    editable: false,
+    renderCell: params => {
+      const { id } = params;
+      const { value } = params;
+      return (
+        <Link to={`/accounts/${params.id}`}>{value}</Link>
+      );
+    },
+  },
+  {
+    field: 'study_title',
+    headerName: 'Study Title',
+    width: 150,
+    editable: false,
+  },
+  {
+    field: 'study_name',
+    headerName: 'Study Name',
+    width: 150,
+    editable: false,
+  },
+];
+
+  ///////////////////////////////////////////////////
+  // This codes working without the Search (need a curly bracket after =>)
+  // const renderAccounts = (accountArray) => {
     // accountArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     // return accountArray.map((account) => (
     //   <li key={account.id}>
@@ -27,47 +61,87 @@ const AccountList = ({ accounts }) => {
     //     </NavLink>
     //   </li>
     // ));
-    accountArray
-      .filter((el) => matchSearchTerm(el))
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-      .map((account) => (
-        <li key={account.id}>
-          <NavLink to={`/accounts/${account.id}`}>
-             {account.account_num}
-         </NavLink>
-        </li>
-      ));
-  // };
+    // };
+    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
+    // This codes working with the Search input. No need for curly bracket after =>)
+    // const renderAccounts = (accountArray) =>
+    // accountArray
+    //   .filter((el) => matchSearchTerm(el))
+    //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    //   .map((account) => (
+    //     <li key={account.id}>
+    //       <NavLink to={`/accounts/${account.id}`}>
+    //           {account.account_num} - {account.study_title}
+    //       </NavLink>
+    //     </li>
+    //   ));
+    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
+    // Using MUI DaraGrid
+    const renderAccounts = (accounts) =>
+    {
+      const sortedAccounts = [...accounts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      return (
+        <>
+          <Box
+            sx={{
+              height: 500,
+              width: '100%',
+              '& .actions': {
+                color: 'text.secondary',
+              },
+              '& .textPrimary': {
+                color: 'text.primary',
+              },
+            }}
+          >
+            <DataGrid
+              rows={sortedAccounts}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+            >
+            </DataGrid>
+          </Box>
+        </>
+      );
+    };
 
   return (
-    <section className="eventList">
-      {/* <h4>Accounts</h4> */}
-      <h2>
-        <Link to="/accounts/new">New Account</Link>
-      </h2>
-
-      {/* <input
-        className="search"
-        placeholder="Search"
-        type="text"
-        ref={searchInput}
-        onKeyUp={updateSearchTerm}
-      /> */}
-
-      <Grid item xs={6}>
-        <TextField
-          type="text"
-          className="search"
-          placeholder="Search"
-          inputRef={searchInput}
-          onKeyUp={updateSearchTerm}
-          size="small"
-          fullWidth
-          variant="outlined"
-        />
-      </Grid>
-
-      <ul>{renderAccounts(accounts)}</ul>
+    <section>
+      <Stack spacing={2}>
+        <div className="button-mui" align="left">
+          <Button
+            sx={{
+              width: 125,
+              height: 40,
+            }}
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            component={Link} to="/accounts/new"
+          >
+            Add New
+          </Button>
+          {/* // This is the Search box maybe needed in the future*/}
+          {/* <Grid item xs={6}>
+            <TextField
+              type="text"
+              className="search"
+              placeholder="Search"
+              inputRef={searchInput}
+              onKeyUp={updateSearchTerm}
+              size="small"
+              fullWidth
+              variant="outlined"
+            />
+          </Grid> */}
+        </div>
+        <div className="eventList">
+          {renderAccounts(accounts)}
+        </div>
+      </Stack>
     </section>
   );
 };

@@ -1,16 +1,17 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Container from '@mui/material/Container';
+import { ConfirmProvider } from 'material-ui-confirm';
+import { ToastContainer } from 'react-toastify';
 import Home from './Home';
 import MainAppBar from './MainAppBar';
 import Expenses from './expenses/Expenses';
 import Revenues from './revenues/Revenues';
 import Accounts from './accounts/Accounts';
-import { ToastContainer } from 'react-toastify';
 import './App.css';
 
 const App = () => (
-  <>
+  <ConfirmProvider>
     <MainAppBar />
     <Container maxWidth="xl">
       <Routes>
@@ -21,7 +22,7 @@ const App = () => (
       </Routes>
       <ToastContainer />
     </Container>
-  </>
+  </ConfirmProvider>
 );
 
 export default App;

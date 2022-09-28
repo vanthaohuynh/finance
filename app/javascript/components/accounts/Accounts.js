@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-// import Header from './components/Header';
 import { useConfirm } from 'material-ui-confirm';
 // import axios from 'axios';
 import Header from '../Header';
@@ -9,12 +8,15 @@ import Account from './Account';
 import AccountForm from './AccountForm';
 import { success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
+import ErrorBoundary from '../../ErrorBoundary';
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const confirm = useConfirm();
+  // const [error, setError] = useState(Error());
+  // const [isError, setIsError] = useState(false);
   // const apiAccountEndpoint = '/api/v1/accounts';
 
   useEffect(() => {
@@ -24,8 +26,8 @@ const Accounts = () => {
         if (!response.ok) throw Error(response.statusText);
         const data = await response.json();
         setAccounts(data);
-      } catch (error) {
-        handleAjaxError(error);
+      } catch (err) {
+        handleAjaxError(err);
       }
 
       setIsLoading(false);
@@ -52,8 +54,8 @@ const Accounts = () => {
       // window.alert('Account Added!');
       success('Account Added!');
       navigate(`/accounts/${savedAccount.id}`);
-    } catch (error) {
-      handleAjaxError(error);
+    } catch (err) {
+      handleAjaxError(err);
     }
   };
 
@@ -74,8 +76,12 @@ const Accounts = () => {
           success('Account Deleted!');
           navigate('/accounts');
           setAccounts(accounts.filter(account => account.id !== accountId));
-        } catch (error) {
-          handleAjaxError(error);
+        } catch (err) {
+          handleAjaxError(err);
+          // To be implemented: Using ErrorBoundary
+          // setError(err);
+          // setIsError(true);
+          // console.error(Error(err.message ? err.message : err));
         }
       });
   };
@@ -151,31 +157,48 @@ const Accounts = () => {
 
       success('Account Updated!');
       navigate(`/accounts/${updatedAccount.id}`);
-    } catch (error) {
-      handleAjaxError(error);
+    } catch (err) {
+      handleAjaxError(err);
     }
   };
-
 
   return (
     <>
       <Header header="Accounts" />
       <div className="grid">
+        {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (
           <p>Loading...</p>
         ) : (
           <>
-            <AccountList accounts={accounts} />
+            <ErrorBoundary>
+              <AccountList accounts={accounts} />
+            </ErrorBoundary>
             <Routes>
               <Route
                 path=":id"
-                element={<Account accounts={accounts} onDelete={deleteAccount} />}
+                element={(
+                  <ErrorBoundary>
+                    <Account accounts={accounts} onDelete={deleteAccount} />
+                  </ErrorBoundary>
+                )}
               />
               <Route
                 path=":id/edit"
-                element={<AccountForm accounts={accounts} onSave={updateAccount} />}
+                element={(
+                  <ErrorBoundary>
+                    <AccountForm accounts={accounts} onSave={updateAccount} />
+                  </ErrorBoundary>
+                  )}
               />
-              <Route path="new" element={<AccountForm onSave={addAccount} />} />
+              <Route
+                path="new"
+                element={(
+                  <ErrorBoundary>
+                    <AccountForm onSave={addAccount} />
+                  </ErrorBoundary>
+              )}
+              />
             </Routes>
           </>
         )}

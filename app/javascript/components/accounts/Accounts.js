@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 // import Header from './components/Header';
 import { useConfirm } from 'material-ui-confirm';
-import axios from 'axios';
+// import axios from 'axios';
 import Header from '../Header';
 import AccountList from './AccountList';
 import Account from './Account';
@@ -15,7 +15,7 @@ const Accounts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const confirm = useConfirm();
-  const apiAccountEndpoint = '/api/v1/accounts';
+  // const apiAccountEndpoint = '/api/v1/accounts';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,24 +87,29 @@ const Accounts = () => {
   //   })
   //     .then(async () => {
   //       try {
-  //         const { data: res } = await axios.delete(`${apiAccountEndpoint}/${accountId}`);
-  //         console.log(res);
-  //       } catch (err) {
-  //         if (err.response) {
-  //           console.log('Status:', err.response);
-  //           // console.log('Headers:', err.response.headers);
+  //         const response = await axios.delete(`${apiAccountEndpoint}/${accountId}`);
+  //         console.log('Success:', response);
+  //         success('Account Deleted!');
+  //         navigate('/accounts');
+  //         setAccounts(accounts.filter(account => account.id !== accountId));
+  //       } catch (error) {
+  //         if (error.response) {
+  //           // setIsServerSideError(true);
+  //           // setServerErrors(error.response.data);
+  //           // console.log('Error Response:', error.response.data);
+  //           console.log('Error Response:', error.response);
+  //         } else if (error.request) {
+  //           console.log('Error Request', error.request);
+  //         } else {
+  //           console.log('Error', error.message);
   //         }
+  //         console.log('Server Errors:', error);
   //       }
-  //       // window.alert('Account Deleted!');
-  //       success('Account Deleted!');
-  //       navigate('/accounts');
-  //       setAccounts(accounts.filter(account => account.id !== accountId));
   //     });
   // };
 
-  // Working fine. Try to implement ServerSideError above
-
-  // // const sure = window.confirm('Are you sure?');
+  // Original codes from James Hibbard
+  // const sure = window.confirm('Are you sure?');
   // if (sure) {
   //   try {
   //     const response = await window.fetch(`/api/v1/accounts/${accountId}`, {

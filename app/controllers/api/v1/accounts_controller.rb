@@ -34,7 +34,11 @@ class Api::V1::AccountsController < ApplicationController
 
   def destroy
     @account.destroy
-    head :no_content
+    if @account.destroy
+      head :no_content, status: :ok
+    else
+      render json: @account.errors, status: :unprocessable_entity
+    end
   end
 
   private

@@ -10,6 +10,11 @@ import { DataGrid } from '@mui/x-data-grid';
 const AccountList = ({ accounts }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const searchInput = useRef(null);
+  const [error, setError] = useState({ message: "I'm an error message" });
+
+  const crash = () => {
+    setError(null);
+  };
 
   const updateSearchTerm = () => {
     setSearchTerm(searchInput.current.value);
@@ -124,6 +129,9 @@ const AccountList = ({ accounts }) => {
           >
             Add New
           </Button>
+          {/* <Button onClick={crash}>CRASH TEST</Button>
+            <p style={{ color: "red" }}>{error.message}</p> */}
+
           {/* // This is the Search box maybe needed in the future*/}
           {/* <Grid item xs={6}>
             <TextField

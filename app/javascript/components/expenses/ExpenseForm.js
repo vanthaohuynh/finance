@@ -176,8 +176,10 @@ const ExpenseForm = ({ expenses, accounts, expenseCategories, onSave }) => {
                   inputFormat="yyyy-MM-dd"
                   onChange={handleDateInputChange}
                   value={expense.invoice_date}
+                  // Use onKeyDown to disable typing in the date field
                   // renderInput={
-                  //   (params) => <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
+                  //   (params) =>
+                  // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
                   // }
                   renderInput={
                     (params) => <TextField size="small" fullWidth required {...params} />

@@ -92,8 +92,8 @@ const Account = ({ accounts, onDelete }) => {
           <Grid item xs={6}>
             <TextField
               id="cta_date"
-              label="CTA Date (yyyy-mm-dd)"
-              value={account.cta_date ? account.cta_date : ''}
+              label="CTA Date"
+              value={account.cta_date ? account.cta_date.replace(/\//g, '-') : ''}
               size="small"
               fullWidth
               variant="outlined"

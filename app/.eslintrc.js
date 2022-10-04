@@ -1,4 +1,8 @@
 module.exports = {
+  globals: {
+    window: true,
+    document: true,
+  },
   root: true,
   extends: ['airbnb', 'airbnb/hooks'],
   rules: {

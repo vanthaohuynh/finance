@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
 
-const AccountList = ({ accounts }) => {
+const RevenueList = ({ revenues }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const searchInput = useRef(null);
   const [error, setError] = useState({ message: "I'm an error message" });
@@ -29,15 +29,15 @@ const AccountList = ({ accounts }) => {
 
   const columns = [
   {
-    field: 'account_num',
-    headerName: 'Account Number',
+    field: 'revenue_num',
+    headerName: 'Revenue Number',
     width: 200,
     editable: false,
-    renderCell: (params) => {
+    renderCell: params => {
       const { id } = params;
       const { value } = params;
       return (
-        <Link to={`/accounts/${id}`}>{value}</Link>
+        <Link to={`/revenues/${params.id}`}>{value}</Link>
       );
     },
   },
@@ -57,12 +57,12 @@ const AccountList = ({ accounts }) => {
 
   ///////////////////////////////////////////////////
   // This codes working without the Search (need a curly bracket after =>)
-  // const renderAccounts = (accountArray) => {
-    // accountArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    // return accountArray.map((account) => (
-    //   <li key={account.id}>
-    //     <NavLink to={`/accounts/${account.id}`}>
-    //       {account.account_num}
+  // const renderRevenues = (revenueArray) => {
+    // revenueArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    // return revenueArray.map((revenue) => (
+    //   <li key={revenue.id}>
+    //     <NavLink to={`/revenues/${revenue.id}`}>
+    //       {revenue.revenue_num}
     //     </NavLink>
     //   </li>
     // ));
@@ -70,23 +70,23 @@ const AccountList = ({ accounts }) => {
     ///////////////////////////////////////////////////
     ///////////////////////////////////////////////////
     // This codes working with the Search input. No need for curly bracket after =>)
-    // const renderAccounts = (accountArray) =>
-    // accountArray
+    // const renderRevenues = (revenueArray) =>
+    // revenueArray
     //   .filter((el) => matchSearchTerm(el))
     //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-    //   .map((account) => (
-    //     <li key={account.id}>
-    //       <NavLink to={`/accounts/${account.id}`}>
-    //           {account.account_num} - {account.study_title}
+    //   .map((revenue) => (
+    //     <li key={revenue.id}>
+    //       <NavLink to={`/revenues/${revenue.id}`}>
+    //           {revenue.revenue_num} - {revenue.study_title}
     //       </NavLink>
     //     </li>
     //   ));
     ///////////////////////////////////////////////////
     ///////////////////////////////////////////////////
     // Using MUI DaraGrid
-    const renderAccounts = (accounts) =>
+    const renderRevenues = (revenues) =>
     {
-      const sortedAccounts = [...accounts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      const sortedRevenues = [...revenues].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       return (
         <>
           <Box
@@ -102,7 +102,7 @@ const AccountList = ({ accounts }) => {
             }}
           >
             <DataGrid
-              rows={sortedAccounts}
+              rows={sortedRevenues}
               columns={columns}
               pageSize={10}
               rowsPerPageOptions={[10]}
@@ -125,7 +125,7 @@ const AccountList = ({ accounts }) => {
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            component={Link} to="/accounts/new"
+            component={Link} to="/revenues/new"
           >
             Add New
           </Button>
@@ -147,18 +147,18 @@ const AccountList = ({ accounts }) => {
           </Grid> */}
         </div>
         <div className="eventList">
-          {renderAccounts(accounts)}
+          {renderRevenues(revenues)}
         </div>
       </Stack>
     </section>
   );
 };
 
-AccountList.propTypes = {
-  accounts: PropTypes.arrayOf(PropTypes.shape({
+RevenueList.propTypes = {
+  revenues: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
-    account_num: PropTypes.string,
-    muhc_account: PropTypes.string,
+    revenue_num: PropTypes.string,
+    muhc_revenue: PropTypes.string,
     study_title: PropTypes.string,
     study_name: PropTypes.string,
     sponsor_name: PropTypes.string,
@@ -178,4 +178,4 @@ AccountList.propTypes = {
   })).isRequired,
 };
 
-export default AccountList;
+export default RevenueList;

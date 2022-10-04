@@ -43,6 +43,6 @@ class Api::V1::ExpensesController < ApplicationController
   end
 
   def expense_params
-    params.require(:expense).permit(:invoice_date, :invoice_num, :currency, :description, :amount, :account_id, :expense_category_id)
+    params.require(:expense).permit(:invoice_date, :invoice_num, :expense_currency, :description, :amount, :account_id, :expense_category_id, :notes)
   end
 end

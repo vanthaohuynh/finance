@@ -3,10 +3,10 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 // import axios from 'axios';
 import Header from '../Header';
-import AccountList from './AccountList';
 import Account from './Account';
 import AccountForm from './AccountForm';
-import { success } from '../../helpers/notifications';
+import AccountList from './AccountList';
+import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
@@ -75,7 +75,7 @@ const Accounts = () => {
           // window.alert('Account Deleted!');
           success('Account Deleted!');
           navigate('/accounts');
-          setAccounts(accounts.filter(account => account.id !== accountId));
+          setAccounts(accounts.filter((account) => account.id !== accountId));
         } catch (err) {
           handleAjaxError(err);
           // To be implemented: Using ErrorBoundary
@@ -83,6 +83,9 @@ const Accounts = () => {
           // setIsError(true);
           // console.error(Error(err.message ? err.message : err));
         }
+      })
+      .catch(() => {
+        info('Delete cancelled');
       });
   };
 

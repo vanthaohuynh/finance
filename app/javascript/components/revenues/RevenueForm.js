@@ -15,18 +15,19 @@ import {
   InputLabel,
   FormControl,
   Stack,
+  OutlinedInput,
 } from '@mui/material';
-import { formatDate, isEmptyObject, validateAccount } from '../../helpers/helpers';
+import { formatDate, isEmptyObject, validateRevenue } from '../../helpers/helpers';
 // import { NumericFormat } from 'react-number-format';
 
-const AccountForm = ({ accounts, onSave }) => {
+const RevenueForm = ({ revenues, onSave }) => {
   const { id } = useParams();
 
-  const initialAccountState = useCallback(
+  const initialRevenueState = useCallback(
     () => {
       const defaults = {
-        account_num: '',
-        muhc_account: '',
+        revenue_num: '',
+        muhc_revenue: '',
         study_title: '',
         study_name: '',
         sponsor_name: '',
@@ -43,24 +44,24 @@ const AccountForm = ({ accounts, onSave }) => {
         notes: '',
       };
 
-      const currAccount = id ? accounts.find((e) => e.id === Number(id)) : {};
-      return { ...defaults, ...currAccount };
+      const currRevenue = id ? revenues.find((e) => e.id === Number(id)) : {};
+      return { ...defaults, ...currRevenue };
     },
-    [accounts, id],
+    [revenues, id],
   );
 
-  const [account, setAccount] = useState(initialAccountState);
+  const [revenue, setRevenue] = useState(initialRevenueState);
   const [formErrors, setFormErrors] = useState({});
   const dateInput = useRef(null);
-  const cancelURL = account.id ? `/accounts/${account.id}` : '/accounts';
-  const title = account.id ? `${account.account_num} - ${account.study_title}` : 'New Account';
+  const cancelURL = revenue.id ? `/revenues/${revenue.id}` : '/revenues';
+  const title = revenue.id ? `${revenue.revenue_num} - ${revenue.study_title}` : 'New Revenue';
 
   useEffect(() => {
-    setAccount(initialAccountState);
-  }, [accounts]);
+    setRevenue(initialRevenueState);
+  }, [revenues]);
 
-  const updateAccount = (key, value) => {
-    setAccount((prevAccount) => ({ ...prevAccount, [key]: value }));
+  const updateRevenue = (key, value) => {
+    setRevenue((prevRevenue) => ({ ...prevRevenue, [key]: value }));
   };
 
   const handleInputChange = (e) => {
@@ -69,8 +70,8 @@ const AccountForm = ({ accounts, onSave }) => {
     // const value = target.value;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    // setAccount({ ...account, [name]: value });
-    updateAccount(name, value);
+    // setRevenue({ ...revenue, [name]: value });
+    updateRevenue(name, value);
   };
 
   const handleNumberInputChange = (e) => {
@@ -79,8 +80,8 @@ const AccountForm = ({ accounts, onSave }) => {
     // const value = target.value;
     const value = Number(target.value);
 
-    // setAccount({ ...account, [name]: value });
-    updateAccount(name, value);
+    // setRevenue({ ...revenue, [name]: value });
+    updateRevenue(name, value);
   };
 
   useEffect(() => {
@@ -90,7 +91,7 @@ const AccountForm = ({ accounts, onSave }) => {
       onSelect: (date) => {
         const formattedDate = formatDate(date);
         dateInput.current.value = formattedDate;
-        updateAccount('cta_date', formattedDate);
+        updateRevenue('cta_date', formattedDate);
       },
     });
     // Return a cleanup function.
@@ -105,7 +106,7 @@ const AccountForm = ({ accounts, onSave }) => {
 
     return (
       <div className="errors">
-        <h3>The following errors prohibited the Account from being saved:</h3>
+        <h3>The following errors prohibited the Revenue from being saved:</h3>
         <ul>
           {Object.values(formErrors).map((formError) => (
             <li key={formError}>{formError}</li>
@@ -117,12 +118,12 @@ const AccountForm = ({ accounts, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errors = validateAccount(account);
+    const errors = validateRevenue(revenue);
 
     if (!isEmptyObject(errors)) {
       setFormErrors(errors);
     } else {
-      onSave(account);
+      onSave(revenue);
     }
   };
 
@@ -138,25 +139,24 @@ const AccountForm = ({ accounts, onSave }) => {
             <Grid item xs={6}>
               <TextField
                 type="text"
-                id="account_num"
-                name="account_num"
-                label="Account Number"
+                id="revenue_num"
+                name="revenue_num"
+                label="Revenue Number"
                 onChange={handleInputChange}
-                value={account.account_num || ''}
+                value={revenue.revenue_num || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
-                required
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 type="text"
-                id="muhc_account"
-                name="muhc_account"
-                label="MUHC Account"
+                id="muhc_revenue"
+                name="muhc_revenue"
+                label="MUHC Revenue"
                 onChange={handleInputChange}
-                value={account.muhc_account || ''}
+                value={revenue.muhc_revenue || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -169,7 +169,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="study_title"
                 label="Study Title"
                 onChange={handleInputChange}
-                value={account.study_title || ''}
+                value={revenue.study_title || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -182,7 +182,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="study_name"
                 label="Study Name"
                 onChange={handleInputChange}
-                value={account.study_name || ''}
+                value={revenue.study_name || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -195,7 +195,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="sponsor_name"
                 label="Sponsor Name"
                 onChange={handleInputChange}
-                value={account.sponsor_name || ''}
+                value={revenue.sponsor_name || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -208,7 +208,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="sponsor_contact"
                 label="Sponsor Contact"
                 onChange={handleInputChange}
-                value={account.sponsor_contact || ''}
+                value={revenue.sponsor_contact || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -221,7 +221,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="number_of_patients"
                 label="Number of Patients"
                 onChange={handleNumberInputChange}
-                value={account.number_of_patients || ''}
+                value={revenue.number_of_patients || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -235,7 +235,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 label="CTA Date (yyyy-mm-dd)"
                 ref={dateInput}
                 autoComplete="off"
-                value={account.cta_date || ''}
+                value={revenue.cta_date || ''}
                 onChange={handleInputChange}
                 size="small"
                 fullWidth
@@ -249,7 +249,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="phase"
                 label="Phase"
                 onChange={handleInputChange}
-                value={account.phase || ''}
+                value={revenue.phase || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -262,7 +262,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="cim_contact"
                 label="CIM Contact"
                 onChange={handleInputChange}
-                value={account.cim_contact || ''}
+                value={revenue.cim_contact || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -275,7 +275,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="cro_name"
                 label="CRO Name"
                 onChange={handleInputChange}
-                value={account.cro_name || ''}
+                value={revenue.cro_name || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -288,7 +288,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="cro_contact"
                 label="CRO Contact"
                 onChange={handleInputChange}
-                value={account.cro_contact || ''}
+                value={revenue.cro_contact || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -301,7 +301,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="budget_version"
                 label="Budget Version"
                 onChange={handleInputChange}
-                value={account.budget_version || ''}
+                value={revenue.budget_version || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -316,7 +316,7 @@ const AccountForm = ({ accounts, onSave }) => {
                   name="budget_currency"
                   label="Budget Currency"
                   onChange={handleInputChange}
-                  value={account.budget_currency || ''}
+                  value={revenue.budget_currency || ''}
                   variant="outlined"
                   native
                 >
@@ -333,7 +333,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="invoicing_terms"
                 label="Invoicing Terms"
                 onChange={handleInputChange}
-                value={account.invoicing_terms || ''}
+                value={revenue.invoicing_terms || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -346,7 +346,7 @@ const AccountForm = ({ accounts, onSave }) => {
                 name="notes"
                 label="Notes"
                 onChange={handleInputChange}
-                value={account.notes || ''}
+                value={revenue.notes || ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -403,17 +403,17 @@ const AccountForm = ({ accounts, onSave }) => {
   );
 };
 
-export default AccountForm;
+export default RevenueForm;
 
-AccountForm.propTypes = {
-  accounts: PropTypes.arrayOf(
+RevenueForm.propTypes = {
+  revenues: PropTypes.arrayOf(
     PropTypes.shape({
-      account_num: PropTypes.string.isRequired,
+      revenue_num: PropTypes.string.isRequired,
     }),
   ),
   onSave: PropTypes.func.isRequired,
 };
 
-AccountForm.defaultProps = {
-  accounts: [],
+RevenueForm.defaultProps = {
+  revenues: [],
 };

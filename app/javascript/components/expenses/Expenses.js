@@ -1,395 +1,275 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useConfirm } from 'material-ui-confirm';
 // import axios from 'axios';
-// import NewExpense from './NewExpense';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Backdrop from '@mui/material/Backdrop';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import DownloadIcon from '@mui/icons-material/Download';
-import Tooltip from '@mui/material/Tooltip';
-import Zoom from '@mui/material/Zoom';
-import moment from 'moment';
-import { NumericFormat } from 'react-number-format';
 import Header from '../Header';
+import ExpenseList from './ExpenseList';
+import Expense from './Expense';
+import ExpenseForm from './ExpenseForm';
+import { info, success } from '../../helpers/notifications';
+import { handleAjaxError } from '../../helpers/helpers';
+import ErrorBoundary from '../../ErrorBoundary';
 
-// import EditExpense from './expense/EditExpense';
+const Expenses = () => {
+  const [expenses, setExpenses] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+  const [expenseCategories, setExpenseCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const confirm = useConfirm();
+  // const [error, setError] = useState(Error());
+  // const [isError, setIsError] = useState(false);
+  // const apiExpenseEndpoint = '/api/v1/expenses';
 
-import {
-  GridRowModes,
-  DataGrid,
-  GridToolbarContainer,
-  GridActionsCellItem,
-} from '@mui/x-data-grid';
+  const apiAccountEndpoint = '/api/v1/accounts2';
+  const apiExpenseCatEndpoint = '/api/v1/expense_categories';
+  const apiExpenseEndpoint = '/api/v1/expenses';
 
-const apiExpenseEndpoint = '/api/v1/expenses'
+  useEffect(() => {
+    const fetchExpenseData = async () => {
+      try {
+        const response = await window.fetch(apiExpenseEndpoint);
+        if (!response.ok) throw Error(response.statusText);
+        const data = await response.json();
+        setExpenses(data);
+      } catch (err) {
+        handleAjaxError(err);
+      }
 
-function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
+      setIsLoading(false);
+    };
+    fetchExpenseData();
 
-  // const handleClick = () => {
-    // console.log('HandleClick');
-    // const id = randomId();
-    // setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
-    // setRowModesModel((oldModel) => ({
-      //   ...oldModel,
-      //   [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-      // }));
-    // };
+    const fetchAccountData = async () => {
+      try {
+        const response = await window.fetch(apiAccountEndpoint);
+        if (!response.ok) throw Error(response.statusText);
+        const data = await response.json();
+        setAccounts(data);
+      } catch (err) {
+        handleAjaxError(err);
+      }
 
-    return (
-      <GridToolbarContainer>
-      {/* <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
-      </Button> */}
-      {/* <h3>Expense</h3> */}
-      {/* <Button color="primary" startIcon={<AddIcon />} data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleClick}>
-        Add Record
-      </Button>
-      <NewExpense
-        refreshExpense={reloadExpenses}
-      /> */}
-    </GridToolbarContainer>
-  );
-}
+      setIsLoading(false);
+    };
+    fetchAccountData();
 
-EditToolbar.propTypes = {
-  setRowModesModel: PropTypes.func.isRequired,
-  setRows: PropTypes.func.isRequired,
-};
+    const fetchExpenseCategoryData = async () => {
+      try {
+        const response = await window.fetch(apiExpenseCatEndpoint);
+        if (!response.ok) throw Error(response.statusText);
+        const data = await response.json();
+        setExpenseCategories(data);
+      } catch (err) {
+        handleAjaxError(err);
+      }
 
-function Expenses() {
+      setIsLoading(false);
+    };
+    fetchExpenseCategoryData();
+  }, []);
 
-  const [rows, setRows] = React.useState([]);
-  const [rowModesModel, setRowModesModel] = React.useState({});
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [id, setID] = React.useState(null);
-  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  // const [openNewExpense, setOpenNewExpense] = React.useState(false);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const { data: expenses } = await axios.get(apiExpenseEndpoint);
-      setRows(expenses);
+  const reloadExpenseData = async () => {
+    try {
+      const response = await window.fetch(apiExpenseEndpoint);
+      if (!response.ok) throw Error(response.statusText);
+      const data = await response.json();
+      setExpenses(data);
+    } catch (err) {
+      handleAjaxError(err);
     }
-    fetchData();
-  } , []);
 
-  // const handleNewExpenseOpen = () => {
-  //   setOpenNewExpense(true);
+    setIsLoading(false);
+  };
+
+  const addExpense = async (newExpense) => {
+    try {
+      const response = await window.fetch(apiExpenseEndpoint, {
+        method: 'POST',
+        body: JSON.stringify(newExpense),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) throw Error(response.statusText);
+
+      const savedExpense = await response.json();
+      const newExpenses = [...expenses, savedExpense];
+      setExpenses(newExpenses);
+      reloadExpenseData();
+      // window.alert('Expense Added!');
+      success('Expense Added!');
+      navigate(`/expenses/${savedExpense.id}`);
+    } catch (err) {
+      handleAjaxError(err);
+    }
+  };
+
+  const deleteExpense = async (expenseId) => {
+    confirm({
+      title: 'Confirmation',
+      description: 'Are you sure you want to delete this expense?',
+    })
+      .then(async () => {
+        try {
+          const response = await window.fetch(`/api/v1/expenses/${expenseId}`, {
+            method: 'DELETE',
+          });
+
+          if (!response.ok) throw Error(response.statusText);
+
+          // window.alert('Expense Deleted!');
+          success('Expense Deleted!');
+          navigate('/expenses');
+          setExpenses(expenses.filter((expense) => expense.id !== expenseId));
+        } catch (err) {
+          handleAjaxError(err);
+          // To be implemented: Using ErrorBoundary
+          // setError(err);
+          // setIsError(true);
+          // console.error(Error(err.message ? err.message : err));
+        }
+      })
+      .catch(() => {
+        info('Delete cancelled');
+      });
+  };
+
+  // const deleteExpense = async (expenseId) => {
+  //   confirm({
+  //     title: 'Confirmation',
+  //     description: 'Are you sure you want to delete this expense?',
+  //   })
+  //     .then(async () => {
+  //       try {
+  //         const response = await axios.delete(`${apiExpenseEndpoint}/${expenseId}`);
+  //         console.log('Success:', response);
+  //         success('Expense Deleted!');
+  //         navigate('/expenses');
+  //         setExpenses(expenses.filter(expense => expense.id !== expenseId));
+  //       } catch (error) {
+  //         if (error.response) {
+  //           // setIsServerSideError(true);
+  //           // setServerErrors(error.response.data);
+  //           // console.log('Error Response:', error.response.data);
+  //           console.log('Error Response:', error.response);
+  //         } else if (error.request) {
+  //           console.log('Error Request', error.request);
+  //         } else {
+  //           console.log('Error', error.message);
+  //         }
+  //         console.log('Server Errors:', error);
+  //       }
+  //     });
   // };
 
-  const reloadExpenses = async () => {
-    const { data: expenses } = await axios.get(apiExpenseEndpoint);
-    setRows(expenses);
-    console.log('Reload successful');
-  }
-  // Not use
-  const handleRowEditStart = (params, event) => {
-    event.defaultMuiPrevented = true;
-    const { id } = params;
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-    }));
-    console.log('Params:', params);
-    setID(id);
-    console.log('ID now set:', id);
-  };
-  // Not use
-  const handleRowEditStop = (params, event) => {
-    event.defaultMuiPrevented = true;
-  };
+  // Original codes from James Hibbard
+  // const sure = window.confirm('Are you sure?');
+  // if (sure) {
+  //   try {
+  //     const response = await window.fetch(`/api/v1/expenses/${expenseId}`, {
+  //       method: 'DELETE',
+  //     });
 
-  // Not use
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-    // console.log('Edit Clicked');
-    // Load modal update form
+  //     if (!response.ok) throw Error(response.statusText);
 
-  };
-  // Not use
-  const updateRecord = async (id, record) => {
-    const { data: updatedRecord } = await axios.patch(`${apiExpenseEndpoint}/${id}`, record);
-    console.log('Updated record:', updatedRecord);
-    reloadExpenses();
-  }
-  // Not use
-  const handleSaveClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    // updateRecord(id, rows.find((row) => row.id === id)); not working
-  };
+  //     // window.alert('Expense Deleted!');
+  //     success('Expense Deleted!');
+  //     navigate('/expenses');
+  //     setExpenses(expenses.filter(expense => expense.id !== expenseId));
+  //   } catch (error) {
+  //     handleAjaxError(error);
+  //   }
+  // }
+  // };
 
-  const handleDialogOpen = () => {
-    setOpenDialog(true);
-    // setOpenBackdrop(true);
-    // console.log('Backdrop is now: ', openBackdrop);
-  };
+  const updateExpense = async (updatedExpense) => {
+    try {
+      const response = await window.fetch(
+        `/api/v1/expenses/${updatedExpense.id}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify(updatedExpense),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-    // setOpenBackdrop(false);
-    // console.log('Backdrop is now: ', openBackdrop);
-    // console.log('Dialog Closed');
-  };
+      if (!response.ok) throw Error(response.statusText);
 
-  const handleUploadPDF = () => {
-    // console.log('Upload PDF');
-  };
+      const newExpenses = expenses;
+      const idx = newExpenses.findIndex((expense) => expense.id === updatedExpense.id);
+      newExpenses[idx] = updatedExpense;
+      setExpenses(newExpenses);
+      reloadExpenseData();
 
-  const deleteRecord = (id) => async () => {
-    const { data } = await axios.delete(`${apiExpenseEndpoint}/${id}`);
-    reloadExpenses();
-  }
-
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-    deleteRecord(id)();
-    handleDialogClose();
-  };
-  // Not use
-  const handleCancelClick = (id) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
-
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
+      success('Expense Updated!');
+      navigate(`/expenses/${updatedExpense.id}`);
+    } catch (err) {
+      handleAjaxError(err);
     }
   };
-  // Not use
-  const processRowUpdate = (newRow) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    // console.log('ProcessRowUpdate:', updatedRow);
-    updateRecord(newRow.id, updatedRow);
-    return updatedRow;
-  };
-
-  // const columns starts here
-  columns = [
-    // { field: 'id', headerName: 'ID', width: 70 },
-    {
-      field: 'created_at',
-      headerName: 'Create Date',
-      width: 150,
-      editable: false,
-      valueFormatter: (params) => {
-        return moment(params.value).format('YYYY-MM-DD');
-      }
-    },
-    {
-      field: 'invoice_date',
-      headerName: 'Invoice Date',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'invoice_num',
-      headerName: 'Invoice Number',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'account_num',
-      headerName: 'Study Number',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'amount',
-      headerName: 'Amount',
-      width: 120,
-      editable: false,
-    },
-    {
-      field: 'currency',
-      headerName: 'Currency',
-      width: 100,
-      editable: false,
-    },
-    {
-      field: 'expense_category_name',
-      headerName: 'Expense Category',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
-      width: 350,
-      cellClassName: 'actions',
-      getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-        // setID(id);
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              // icon={<SaveIcon />}
-              // label="Save"
-              // onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              // icon={<CancelIcon />}
-              // label="Cancel"
-              // className="textPrimary"
-              // onClick={handleCancelClick(id)}
-              // color="inherit"
-            />,
-          ];
-        };
-        // Return starts here
-        return [
-          // <Button color="primary" onClick={handleEditClick(id)} data-bs-toggle="modal" data-bs-target="#exampleModal">
-          //   Edit
-          // </Button>,
-          // <EditExpense />,
-          // <GridActionsCellItem
-          //   icon={<EditIcon />}
-          //   label="Edit"
-          //   className="textPrimary"
-          //   onClick={handleEditClick(id)}
-          //   color="inherit"
-          // />,
-          // <GridActionsCellItem
-          //   icon={<DeleteIcon />}
-          //   label="Delete"
-          //   onClick={handleDeleteClick(id)}
-          //   color="inherit"
-          // />,
-        // ];
-        <>
-          <Tooltip title="Upload PDF Invoice" TransitionComponent={Zoom}>
-            <Button
-              // variant="outlined"
-              startIcon={<CloudUploadIcon />}
-              color="primary"
-              component="label"
-              // size="small"
-              // onClick={handleUploadPDF(id)}
-            >
-              {/* Upload */}
-              <input hidden accept="application/pdf" type="file" />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Download PDF Invoice" TransitionComponent={Zoom}>
-            <Button
-              // variant="outlined"
-              startIcon={<DownloadIcon />}
-              color="primary"
-              // size="small"
-              // onClick={handleUploadPDF(id)}
-            >
-              {/* Upload */}
-            </Button>
-          </Tooltip>
-          <Tooltip title="Edit Expense" TransitionComponent={Zoom}>
-            <Button
-              // variant="outlined"
-              startIcon={<EditIcon />}
-              color="primary"
-              // size="small"
-              onClick={handleDeleteClick(id)}
-              // onClick={handleDialogOpen}
-            >
-              {/* Delete */}
-            </Button>
-          </Tooltip>
-          <Dialog
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-            open={openDialog}
-            onClose={handleDialogClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Delete this record?"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are you sure you want to delete this record? This action cannot be undone.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleDialogClose}>Cancel</Button>
-              <Button onClick={handleDeleteClick(id)}>Delete</Button>
-            </DialogActions>
-          </Dialog>
-        </>
-        ];
-        // Return ends here (line above)
-      },
-    },
-  ];
-  // const columns ends here (line above)
 
   return (
-
-    <Box
-    sx={{
-      height: 500,
-      width: '100%',
-      '& .actions': {
-        color: 'text.secondary',
-      },
-      '& .textPrimary': {
-        color: 'text.primary',
-      },
-    }}
-    >
-      {/* <Button color="primary" startIcon={<AddIcon />} data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleClick}> */}
-      {/* <h3>Expenses</h3> */}
+    <>
       <Header header="Expenses" />
-      {/* <Button color="primary" startIcon={<AddIcon />} data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Add Record
-      </Button> */}
-      {/* <Button color="primary" startIcon={<AddIcon />} onClick={handleNewExpenseOpen}>
-        Add Record
-      </Button> */}
-      <NewExpense
-        reloadExpenses={reloadExpenses}
-      />
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowEditStart={handleRowEditStart}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        pageSize={100}
-        rowsPerPageOptions={[100]}
-        components={{
-          Toolbar: EditToolbar,
-        }}
-        componentsProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-        experimentalFeatures={{ newEditingApi: true }}
-      />
-    </Box>
+      <div className="grid">
+        {/* {isError && <p>{error.message}</p>} */}
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <ErrorBoundary>
+              <ExpenseList expenses={expenses} />
+            </ErrorBoundary>
+            <Routes>
+              <Route
+                path=":id"
+                element={(
+                  <ErrorBoundary>
+                    <Expense
+                      expenses={expenses}
+                      accounts={accounts}
+                      expenseCategories={expenseCategories}
+                      onDelete={deleteExpense}
+                    />
+                  </ErrorBoundary>
+                )}
+              />
+              <Route
+                path=":id/edit"
+                element={(
+                  <ErrorBoundary>
+                    <ExpenseForm
+                      expenses={expenses}
+                      accounts={accounts}
+                      expenseCategories={expenseCategories}
+                      onSave={updateExpense}
+                    />
+                  </ErrorBoundary>
+                  )}
+              />
+              <Route
+                path="new"
+                element={(
+                  <ErrorBoundary>
+                    <ExpenseForm
+                      // expenses={expenses}
+                      accounts={accounts}
+                      expenseCategories={expenseCategories}
+                      onSave={addExpense}
+                    />
+                  </ErrorBoundary>
+              )}
+              />
+            </Routes>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

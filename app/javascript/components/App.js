@@ -16,8 +16,8 @@ const App = () => (
     <Container maxWidth="xl">
       <Routes>
         <Route exact path="/" element={<Home />} />
-        {/* <Route path="/expenses/*" element={<Expenses />} /> */}
-        {/* <Route path="/revenues/*" element={<Revenues />} /> */}
+        <Route path="/expenses/*" element={<Expenses />} />
+        <Route path="/revenues/*" element={<Revenues />} />
         <Route path="/accounts/*" element={<Accounts />} />
       </Routes>
       <ToastContainer />

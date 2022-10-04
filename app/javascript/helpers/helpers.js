@@ -24,10 +24,66 @@ export const validateAccount = (account) => {
   return errors;
 };
 
+export const validateExpense = (expense) => {
+  const errors = {};
+
+  if (expense.invoice_date === '' || expense.invoice_date === null) {
+    errors.invoice_date = 'Invoice Date is required';
+  }
+
+  if (expense.invoice_date === 'Invalid Date') {
+    errors.invoice_date = 'Invoice Date is invalid';
+  }
+
+  if (expense.invoice_num === '') {
+    errors.invoice_num = 'Invoice Number is required';
+  }
+
+  if (expense.amount === '' || expense.amount === 0) {
+    errors.amount = 'Invoice Amount is required';
+  }
+
+  if (expense.account_id === '') {
+    errors.account_id = 'Account Number is required';
+  }
+
+  if (expense.expense_category_id === '') {
+    errors.expense_category_id = 'Expense Category is required';
+  }
+
+  return errors;
+};
+
+export const validateRevenue = (revenue) => {
+  const errors = {};
+
+  if (revenue.invoice_date === '') {
+    errors.invoice_date = 'Invoice Date is required';
+  }
+
+  if (revenue.invoice_num === '') {
+    errors.invoice_num = 'Invoice Number is required';
+  }
+
+  if (revenue.amount === '') {
+    errors.amount = 'Invoice Amount is required';
+  }
+
+  if (revenue.account_id === '') {
+    errors.account_id = 'Account Number is required';
+  }
+
+  if (revenue.expense_category_id === '') {
+    errors.expense_category_id = 'Expense Category is required';
+  }
+
+  return errors;
+};
+
 export const formatDate = (d) => {
   const YYYY = d.getFullYear();
   const MM = `0${d.getMonth() + 1}`.slice(-2);
   const DD = `0${d.getDate()}`.slice(-2);
 
-  return `${YYYY}-${MM}-${DD}`;
+  return `${YYYY}/${MM}/${DD}`;
 };

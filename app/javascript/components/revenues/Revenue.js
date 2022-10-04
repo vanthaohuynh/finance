@@ -6,24 +6,24 @@ import { Grid, TextField, Button, InputLabel, Select } from '@mui/material';
 import { NumericFormat } from 'react-number-format';
 import Stack from '@mui/material/Stack';
 
-const Account = ({ accounts, onDelete }) => {
+const Revenue = ({ revenues, onDelete }) => {
   const { id } = useParams();
-  const account = accounts.find((e) => e.id === Number(id));
+  const revenue = revenues.find((e) => e.id === Number(id));
 
   return (
     <div className="eventContainer">
       <h2>
-        {account.account_num}
+        {revenue.revenue_num}
         {' - '}
-        {account.study_title}
+        {revenue.study_title}
       </h2>
       <FormControl>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
-              id="account_num"
-              label="Account Number"
-              value={account.account_num}
+              id="revenue_num"
+              label="Revenue Number"
+              value={revenue.revenue_num}
               size="small"
               fullWidth
               variant="outlined"
@@ -31,9 +31,9 @@ const Account = ({ accounts, onDelete }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="muhc_account"
-              label="MUHC Account"
-              value={account.muhc_account ? account.muhc_account : ''}
+              id="muhc_revenue"
+              label="MUHC Revenue"
+              value={revenue.muhc_revenue ? revenue.muhc_revenue : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -43,7 +43,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="study_title"
               label="Study Title"
-              value={account.study_title ? account.study_title : ''}
+              value={revenue.study_title ? revenue.study_title : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -53,7 +53,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="study_name"
               label="Study Name"
-              value={account.study_name ? account.study_name : ''}
+              value={revenue.study_name ? revenue.study_name : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -63,7 +63,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="sponsor_name"
               label="Sponsor Name"
-              value={account.sponsor_name ? account.sponsor_name : ''}
+              value={revenue.sponsor_name ? revenue.sponsor_name : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -73,7 +73,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="sponsor_contact"
               label="Sponsor Contact"
-              value={account.sponsor_contact ? account.sponsor_contact : ''}
+              value={revenue.sponsor_contact ? revenue.sponsor_contact : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -83,7 +83,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="num_of_patients"
               label="Number of Patients"
-              value={account.number_of_patients || ''}
+              value={revenue.number_of_patients || ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -93,7 +93,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="cta_date"
               label="CTA Date (yyyy-mm-dd)"
-              value={account.cta_date ? account.cta_date : ''}
+              value={revenue.cta_date ? revenue.cta_date : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -103,7 +103,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="phase"
               label="Phase"
-              value={account.phase ? account.phase : ''}
+              value={revenue.phase ? revenue.phase : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -113,7 +113,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="cim_contact"
               label="CIM Contact"
-              value={account.cim_contact ? account.cim_contact : ''}
+              value={revenue.cim_contact ? revenue.cim_contact : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -123,7 +123,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="cro_name"
               label="CRO Name"
-              value={account.cro_name ? account.cro_name : ''}
+              value={revenue.cro_name ? revenue.cro_name : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -133,7 +133,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="cro_contact"
               label="CRO Contact"
-              value={account.cro_contact ? account.cro_contact : ''}
+              value={revenue.cro_contact ? revenue.cro_contact : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -143,7 +143,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="budget_version"
               label="Budget Version"
-              value={account.budget_version ? account.budget_version : ''}
+              value={revenue.budget_version ? revenue.budget_version : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -153,7 +153,7 @@ const Account = ({ accounts, onDelete }) => {
             {/* <TextField
               id="budget_currency"
               label="Budget Currency"
-              value={account.budget_currency ? account.budget_currency : ''}
+              value={revenue.budget_currency ? revenue.budget_currency : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -165,7 +165,7 @@ const Account = ({ accounts, onDelete }) => {
                 id="budget_currency"
                 name="budget_currency"
                 label="Budget Currency"
-                value={account.budget_currency || ''}
+                value={revenue.budget_currency || ''}
                 variant="outlined"
                 native
               >
@@ -179,7 +179,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="invoicing_terms"
               label="Invoicing Terms"
-              value={account.invoicing_terms ? account.invoicing_terms : ''}
+              value={revenue.invoicing_terms ? revenue.invoicing_terms : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -189,7 +189,7 @@ const Account = ({ accounts, onDelete }) => {
             <TextField
               id="notes"
               label="Notes"
-              value={account.notes ? account.notes : ''}
+              value={revenue.notes ? revenue.notes : ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -223,7 +223,7 @@ const Account = ({ accounts, onDelete }) => {
                 }}
                 variant="outlined"
                 color="primary"
-                onClick={() => onDelete(account.id)}
+                onClick={() => onDelete(revenue.id)}
               >
                 Delete
               </Button>
@@ -235,7 +235,7 @@ const Account = ({ accounts, onDelete }) => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                component={Link} to={`/accounts/${account.id}/edit`}
+                component={Link} to={`/revenues/${revenue.id}/edit`}
               >
                 Edit
               </Button>
@@ -247,11 +247,11 @@ const Account = ({ accounts, onDelete }) => {
   );
 };
 
-Account.propTypes = {
-  accounts: PropTypes.arrayOf(PropTypes.shape({
+Revenue.propTypes = {
+  revenues: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
-    account_num: PropTypes.string,
-    muhc_account: PropTypes.string,
+    revenue_num: PropTypes.string,
+    muhc_revenue: PropTypes.string,
     study_title: PropTypes.string,
     study_name: PropTypes.string,
     sponsor_name: PropTypes.string,
@@ -269,7 +269,6 @@ Account.propTypes = {
     created_at: PropTypes.string,
     // updated_at: PropTypes.string,
   })).isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
-export default Account;
+export default Revenue;

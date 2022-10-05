@@ -6,12 +6,14 @@ import Header from '../Header';
 import RevenueList from './RevenueList';
 import Revenue from './Revenue';
 import RevenueForm from './RevenueForm';
-import { success } from '../../helpers/notifications';
+import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
 const Revenues = () => {
   const [revenues, setRevenues] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+  const [revenueCategories, setRevenueCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const confirm = useConfirm();
@@ -19,10 +21,14 @@ const Revenues = () => {
   // const [isError, setIsError] = useState(false);
   // const apiRevenueEndpoint = '/api/v1/revenues';
 
+  const apiAccountEndpoint = '/api/v1/accounts2';
+  const apiRevenueCatEndpoint = '/api/v1/revenue_categories';
+  const apiRevenueEndpoint = '/api/v1/revenues';
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchRevenueData = async () => {
       try {
-        const response = await window.fetch('/api/v1/revenues');
+        const response = await window.fetch(apiRevenueEndpoint);
         if (!response.ok) throw Error(response.statusText);
         const data = await response.json();
         setRevenues(data);
@@ -32,13 +38,53 @@ const Revenues = () => {
 
       setIsLoading(false);
     };
+    fetchRevenueData();
 
-    fetchData();
+    const fetchAccountData = async () => {
+      try {
+        const response = await window.fetch(apiAccountEndpoint);
+        if (!response.ok) throw Error(response.statusText);
+        const data = await response.json();
+        setAccounts(data);
+      } catch (err) {
+        handleAjaxError(err);
+      }
+
+      setIsLoading(false);
+    };
+    fetchAccountData();
+
+    const fetchRevenueCategoryData = async () => {
+      try {
+        const response = await window.fetch(apiRevenueCatEndpoint);
+        if (!response.ok) throw Error(response.statusText);
+        const data = await response.json();
+        setRevenueCategories(data);
+      } catch (err) {
+        handleAjaxError(err);
+      }
+
+      setIsLoading(false);
+    };
+    fetchRevenueCategoryData();
   }, []);
+
+  const reloadRevenueData = async () => {
+    try {
+      const response = await window.fetch(apiRevenueEndpoint);
+      if (!response.ok) throw Error(response.statusText);
+      const data = await response.json();
+      setRevenues(data);
+    } catch (err) {
+      handleAjaxError(err);
+    }
+
+    setIsLoading(false);
+  };
 
   const addRevenue = async (newRevenue) => {
     try {
-      const response = await window.fetch('/api/v1/revenues', {
+      const response = await window.fetch(apiRevenueEndpoint, {
         method: 'POST',
         body: JSON.stringify(newRevenue),
         headers: {
@@ -51,6 +97,7 @@ const Revenues = () => {
       const savedRevenue = await response.json();
       const newRevenues = [...revenues, savedRevenue];
       setRevenues(newRevenues);
+      reloadRevenueData();
       // window.alert('Revenue Added!');
       success('Revenue Added!');
       navigate(`/revenues/${savedRevenue.id}`);
@@ -75,7 +122,7 @@ const Revenues = () => {
           // window.alert('Revenue Deleted!');
           success('Revenue Deleted!');
           navigate('/revenues');
-          setRevenues(revenues.filter(revenue => revenue.id !== revenueId));
+          setRevenues(revenues.filter((revenue) => revenue.id !== revenueId));
         } catch (err) {
           handleAjaxError(err);
           // To be implemented: Using ErrorBoundary
@@ -83,6 +130,9 @@ const Revenues = () => {
           // setIsError(true);
           // console.error(Error(err.message ? err.message : err));
         }
+      })
+      .catch(() => {
+        info('Delete cancelled');
       });
   };
 
@@ -154,6 +204,7 @@ const Revenues = () => {
       const idx = newRevenues.findIndex((revenue) => revenue.id === updatedRevenue.id);
       newRevenues[idx] = updatedRevenue;
       setRevenues(newRevenues);
+      reloadRevenueData();
 
       success('Revenue Updated!');
       navigate(`/revenues/${updatedRevenue.id}`);
@@ -179,7 +230,12 @@ const Revenues = () => {
                 path=":id"
                 element={(
                   <ErrorBoundary>
-                    <Revenue revenues={revenues} onDelete={deleteRevenue} />
+                    <Revenue
+                      revenues={revenues}
+                      accounts={accounts}
+                      revenueCategories={revenueCategories}
+                      onDelete={deleteRevenue}
+                    />
                   </ErrorBoundary>
                 )}
               />
@@ -187,7 +243,12 @@ const Revenues = () => {
                 path=":id/edit"
                 element={(
                   <ErrorBoundary>
-                    <RevenueForm revenues={revenues} onSave={updateRevenue} />
+                    <RevenueForm
+                      revenues={revenues}
+                      accounts={accounts}
+                      revenueCategories={revenueCategories}
+                      onSave={updateRevenue}
+                    />
                   </ErrorBoundary>
                   )}
               />
@@ -195,7 +256,12 @@ const Revenues = () => {
                 path="new"
                 element={(
                   <ErrorBoundary>
-                    <RevenueForm onSave={addRevenue} />
+                    <RevenueForm
+                      // revenues={revenues}
+                      accounts={accounts}
+                      revenueCategories={revenueCategories}
+                      onSave={addRevenue}
+                    />
                   </ErrorBoundary>
               )}
               />

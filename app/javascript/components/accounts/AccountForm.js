@@ -16,6 +16,7 @@ import {
   FormControl,
   Stack,
 } from '@mui/material';
+import { NumericFormat } from 'react-number-format';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -83,11 +84,8 @@ const AccountForm = ({ accounts, onSave }) => {
   const handleNumberInputChange = (e) => {
     const { target } = e;
     const { name } = target;
-    // const value = target.value;
-    const value = Number(target.value);
-
-    // setAccount({ ...account, [name]: value });
-    updateAccount(name, value);
+    const val = Number(target.value.replace(/[^0-9.]/g, ''));
+    updateAccount(name, val);
   };
 
   const handleDateInputChange = (val) => {
@@ -238,61 +236,6 @@ const AccountForm = ({ accounts, onSave }) => {
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  id="number_of_patients"
-                  name="number_of_patients"
-                  label="Number of Patients"
-                  onChange={handleNumberInputChange}
-                  value={account.number_of_patients || ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid>
-              {/* <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="cta_date"
-                  name="cta_date"
-                  label="CTA Date (yyyy-mm-dd)"
-                  ref={dateInput}
-                  autoComplete="off"
-                  value={account.cta_date || ''}
-                  onChange={handleInputChange}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid> */}
-              <Grid item xs={6}>
-                <DatePicker
-                  type="text"
-                  id="cta_date"
-                  name="cta_date"
-                  label="CTA Date"
-                  inputFormat="yyyy-MM-dd"
-                  onChange={handleDateInputChange}
-                  value={account.cta_date}
-                  renderInput={
-                    (params) => <TextField size="small" fullWidth {...params} />
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="phase"
-                  name="phase"
-                  label="Phase"
-                  onChange={handleInputChange}
-                  value={account.phase || ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
                   id="cim_contact"
                   name="cim_contact"
                   label="CIM Contact"
@@ -387,6 +330,63 @@ const AccountForm = ({ accounts, onSave }) => {
                   variant="outlined"
                 />
               </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="phase"
+                  name="phase"
+                  label="Phase"
+                  onChange={handleInputChange}
+                  value={account.phase || ''}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <NumericFormat
+                  id="number_of_patients"
+                  name="number_of_patients"
+                  variant="outlined"
+                  label="Number of Patients"
+                  customInput={TextField}
+                  type="text"
+                  onChange={handleNumberInputChange}
+                  value={account.number_of_patients || ''}
+                  size="small"
+                  fullWidth
+                  thousandSeparator=","
+                />
+              </Grid>
+              {/* <Grid item xs={6}> Using Pikaday
+                <TextField
+                  type="text"
+                  id="cta_date"
+                  name="cta_date"
+                  label="CTA Date (yyyy-mm-dd)"
+                  ref={dateInput}
+                  autoComplete="off"
+                  value={account.cta_date || ''}
+                  onChange={handleInputChange}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Grid> */}
+              <Grid item xs={6}>
+                <DatePicker
+                  type="text"
+                  id="cta_date"
+                  name="cta_date"
+                  label="CTA Date"
+                  inputFormat="yyyy-MM-dd"
+                  onChange={handleDateInputChange}
+                  value={account.cta_date}
+                  renderInput={
+                    (params) => <TextField size="small" fullWidth {...params} />
+                  }
+                />
+              </Grid>
             </Grid>
             <div className="button-mui">
               <Grid item xs={6}>
@@ -412,6 +412,18 @@ const AccountForm = ({ accounts, onSave }) => {
                     color="primary"
                   >
                     Save
+                  </Button>
+                  <Button
+                    sx={{
+                      width: 175,
+                      height: 40,
+                    }}
+                    type="submit"
+                    variant="outlined"
+                    color="primary"
+                    // component={Link} to={`/accounts/${account.id}/edit`}
+                  >
+                    Add Amendment
                   </Button>
                 </Stack>
               </Grid>

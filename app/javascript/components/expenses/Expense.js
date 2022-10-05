@@ -37,7 +37,7 @@ const Expense = ({ expenses, onDelete }) => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <TextField
               id="amount"
               label="Amount"
@@ -45,6 +45,23 @@ const Expense = ({ expenses, onDelete }) => {
               size="small"
               fullWidth
               variant="outlined"
+            />
+          </Grid> */}
+          <Grid item xs={6}>
+            <NumericFormat
+              id="amount"
+              name="amount"
+              variant="outlined"
+              label="Amount"
+              customInput={TextField}
+              type="text"
+              value={expense.amount}
+              size="small"
+              fullWidth
+              thousandSeparator=","
+              decimalScale={2}
+              fixedDecimalScale
+              prefix="$ "
             />
           </Grid>
           <Grid item xs={6}>

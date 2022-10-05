@@ -81,36 +81,6 @@ const Account = ({ accounts, onDelete }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="num_of_patients"
-              label="Number of Patients"
-              value={account.number_of_patients || ''}
-              size="small"
-              fullWidth
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="cta_date"
-              label="CTA Date"
-              value={account.cta_date ? account.cta_date.replace(/\//g, '-') : ''}
-              size="small"
-              fullWidth
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="phase"
-              label="Phase"
-              value={account.phase ? account.phase : ''}
-              size="small"
-              fullWidth
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
               id="cim_contact"
               label="CIM Contact"
               value={account.cim_contact ? account.cim_contact : ''}
@@ -150,14 +120,6 @@ const Account = ({ accounts, onDelete }) => {
             />
           </Grid>
           <Grid item xs={6}>
-            {/* <TextField
-              id="budget_currency"
-              label="Budget Currency"
-              value={account.budget_currency ? account.budget_currency : ''}
-              size="small"
-              fullWidth
-              variant="outlined"
-            /> */}
             <FormControl fullWidth size="small">
               <InputLabel>Budget Currency</InputLabel>
               <Select
@@ -195,23 +157,40 @@ const Account = ({ accounts, onDelete }) => {
               variant="outlined"
             />
           </Grid>
-
-          {/* <Grid item xs={6}>
-            <NumericFormat
-              name="Balance"
+          <Grid item xs={6}>
+            <TextField
+              id="phase"
+              label="Phase"
+              value={account.phase ? account.phase : ''}
+              size="small"
+              fullWidth
               variant="outlined"
-              label="Balance"
-              customInput={TextField}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <NumericFormat
               type="text"
-              value={34567.50}
+              id="num_of_patients"
+              name="num_of_patients"
+              variant="outlined"
+              label="Number of Patients"
+              customInput={TextField}
+              value={account.number_of_patients || ''}
               size="small"
               fullWidth
               thousandSeparator=","
-              decimalScale={2}
-              fixedDecimalScale={true}
-              prefix={'$'}
             />
-          </Grid> */}
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="cta_date"
+              label="CTA Date"
+              value={account.cta_date ? account.cta_date.replace(/\//g, '-') : ''}
+              size="small"
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
         </Grid>
         <div className="button-mui">
           <Grid item xs={6}>
@@ -238,6 +217,18 @@ const Account = ({ accounts, onDelete }) => {
                 component={Link} to={`/accounts/${account.id}/edit`}
               >
                 Edit
+              </Button>
+              <Button
+                sx={{
+                  width: 175,
+                  height: 40,
+                }}
+                type="submit"
+                variant="outlined"
+                color="primary"
+                // component={Link} to={`/accounts/${account.id}/edit`}
+              >
+                Add Amendment
               </Button>
             </Stack>
           </Grid>

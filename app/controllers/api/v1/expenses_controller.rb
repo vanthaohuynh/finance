@@ -1,7 +1,6 @@
 class Api::V1::ExpensesController < ApplicationController
   # before_action :authenticate_user!
   before_action :set_expense, only: [:show, :edit, :update, :destroy]
-
   skip_before_action :verify_authenticity_token
 
   def index
@@ -43,6 +42,6 @@ class Api::V1::ExpensesController < ApplicationController
   end
 
   def expense_params
-    params.require(:expense).permit(:invoice_date, :invoice_num, :expense_currency, :description, :amount, :account_id, :expense_category_id, :notes)
+    params.require(:expense).permit(:invoice_date, :invoice_num, :expense_currency, :amount, :account_id, :expense_category_id, :notes)
   end
 end

@@ -3,8 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
-// import FormControl from '@mui/material/FormControl';
-// import Stack from '@mui/material/Stack';
+import { NumericFormat } from 'react-number-format';
 import Pikaday from 'pikaday';
 import 'pikaday/css/pikaday.css';
 import {
@@ -15,36 +14,32 @@ import {
   InputLabel,
   FormControl,
   Stack,
-  OutlinedInput,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { formatDate, isEmptyObject, validateRevenue } from '../../helpers/helpers';
-// import { NumericFormat } from 'react-number-format';
 
-const RevenueForm = ({ revenues, onSave }) => {
+const RevenueForm = ({ revenues, accounts, revenueCategories, onSave }) => {
   const { id } = useParams();
 
   const initialRevenueState = useCallback(
     () => {
       const defaults = {
-        revenue_num: '',
-        muhc_revenue: '',
-        study_title: '',
-        study_name: '',
-        sponsor_name: '',
-        sponsor_contact: '',
-        number_of_patients: '',
-        cta_date: '',
-        phase: '',
-        cim_contact: '',
-        cro_name: '',
-        cro_contact: '',
-        budget_version: '',
-        budget_currency: '',
-        invoicing_terms: '',
+        invoice_date: null,
+        invoice_num: '',
+        amount: '',
+        account_id: '',
+        revenue_category_id: '',
+        revenue_currency: '',
         notes: '',
       };
 
       const currRevenue = id ? revenues.find((e) => e.id === Number(id)) : {};
+      if (!isEmptyObject(currRevenue)) {
+        // Need to replace - with / to fix problem with Javascript Date object off by one day
+        currRevenue.invoice_date = currRevenue.invoice_date.replace(/-/g, '\/');
+      }
       return { ...defaults, ...currRevenue };
     },
     [revenues, id],
@@ -52,9 +47,9 @@ const RevenueForm = ({ revenues, onSave }) => {
 
   const [revenue, setRevenue] = useState(initialRevenueState);
   const [formErrors, setFormErrors] = useState({});
-  const dateInput = useRef(null);
+  // const dateInput = useRef(null);
   const cancelURL = revenue.id ? `/revenues/${revenue.id}` : '/revenues';
-  const title = revenue.id ? `${revenue.revenue_num} - ${revenue.study_title}` : 'New Revenue';
+  const title = revenue.id ? `${revenue.invoice_num}` : 'New Revenue';
 
   useEffect(() => {
     setRevenue(initialRevenueState);
@@ -67,37 +62,38 @@ const RevenueForm = ({ revenues, onSave }) => {
   const handleInputChange = (e) => {
     const { target } = e;
     const { name } = target;
-    // const value = target.value;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-
-    // setRevenue({ ...revenue, [name]: value });
-    updateRevenue(name, value);
+    const val = target.value;
+    updateRevenue(name, val);
   };
 
   const handleNumberInputChange = (e) => {
     const { target } = e;
     const { name } = target;
-    // const value = target.value;
-    const value = Number(target.value);
-
-    // setRevenue({ ...revenue, [name]: value });
-    updateRevenue(name, value);
+    const val = Number(target.value.replace(/[^0-9.]/g, ''));
+    updateRevenue(name, val);
   };
 
-  useEffect(() => {
-    const p = new Pikaday({
-      field: dateInput.current,
-      toString: (date) => formatDate(date),
-      onSelect: (date) => {
-        const formattedDate = formatDate(date);
-        dateInput.current.value = formattedDate;
-        updateRevenue('cta_date', formattedDate);
-      },
-    });
-    // Return a cleanup function.
-    // React will call this prior to unmounting.
-    return () => p.destroy();
-  }, []);
+  const handleDateInputChange = (val) => {
+    if (val === 'Invalid Date' || val === null) {
+      return;
+    }
+    updateRevenue('invoice_date', formatDate(val));
+  };
+
+  // useEffect(() => {
+  //   const p = new Pikaday({
+  //     field: dateInput.current,
+  //     toString: (date) => formatDate(date),
+  //     onSelect: (date) => {
+  //       const formattedDate = formatDate(date);
+  //       dateInput.current.value = formattedDate;
+  //       updateRevenue('invoice_date', formattedDate);
+  //     },
+  //   });
+  //   // Return a cleanup function.
+  //   // React will call this prior to unmounting.
+  //   return () => p.destroy();
+  // }, []);
 
   const renderErrors = () => {
     if (isEmptyObject(formErrors)) {
@@ -116,6 +112,10 @@ const RevenueForm = ({ revenues, onSave }) => {
     );
   };
 
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateRevenue(revenue);
@@ -129,276 +129,193 @@ const RevenueForm = ({ revenues, onSave }) => {
 
   return (
     <section>
-      <div className="eventContainer">
-        <h2>{title}</h2>
-        {renderErrors()}
-      </div>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="revenue_num"
-                name="revenue_num"
-                label="Revenue Number"
-                onChange={handleInputChange}
-                value={revenue.revenue_num || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="muhc_revenue"
-                name="muhc_revenue"
-                label="MUHC Revenue"
-                onChange={handleInputChange}
-                value={revenue.muhc_revenue || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="study_title"
-                name="study_title"
-                label="Study Title"
-                onChange={handleInputChange}
-                value={revenue.study_title || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="study_name"
-                name="study_name"
-                label="Study Name"
-                onChange={handleInputChange}
-                value={revenue.study_name || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="sponsor_name"
-                name="sponsor_name"
-                label="Sponsor Name"
-                onChange={handleInputChange}
-                value={revenue.sponsor_name || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="sponsor_contact"
-                name="sponsor_contact"
-                label="Sponsor Contact"
-                onChange={handleInputChange}
-                value={revenue.sponsor_contact || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="number_of_patients"
-                name="number_of_patients"
-                label="Number of Patients"
-                onChange={handleNumberInputChange}
-                value={revenue.number_of_patients || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="cta_date"
-                name="cta_date"
-                label="CTA Date (yyyy-mm-dd)"
-                ref={dateInput}
-                autoComplete="off"
-                value={revenue.cta_date || ''}
-                onChange={handleInputChange}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="phase"
-                name="phase"
-                label="Phase"
-                onChange={handleInputChange}
-                value={revenue.phase || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="cim_contact"
-                name="cim_contact"
-                label="CIM Contact"
-                onChange={handleInputChange}
-                value={revenue.cim_contact || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="cro_name"
-                name="cro_name"
-                label="CRO Name"
-                onChange={handleInputChange}
-                value={revenue.cro_name || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="cro_contact"
-                name="cro_contact"
-                label="CRO Contact"
-                onChange={handleInputChange}
-                value={revenue.cro_contact || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="budget_version"
-                name="budget_version"
-                label="Budget Version"
-                onChange={handleInputChange}
-                value={revenue.budget_version || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Budget Currency</InputLabel>
-                <Select
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <div className="eventContainer">
+          <h2>{title}</h2>
+          {renderErrors()}
+        </div>
+        <form onSubmit={handleSubmit}>
+          <FormControl>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
                   type="text"
-                  id="budget_currency"
-                  name="budget_currency"
-                  label="Budget Currency"
+                  id="invoice_num"
+                  name="invoice_num"
+                  label="Invoice Number"
                   onChange={handleInputChange}
-                  value={revenue.budget_currency || ''}
+                  value={revenue.invoice_num}
+                  size="small"
+                  fullWidth
                   variant="outlined"
-                  native
-                >
-                  <option></option>
-                  <option key="CAD" value="CAD">CAD</option>
-                  <option key="USD" value="USD">USD</option>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="invoicing_terms"
-                name="invoicing_terms"
-                label="Invoicing Terms"
-                onChange={handleInputChange}
-                value={revenue.invoicing_terms || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                type="text"
-                id="notes"
-                name="notes"
-                label="Notes"
-                onChange={handleInputChange}
-                value={revenue.notes || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            {/* <Grid item xs={6}>
-              <NumericFormat
-                name="Balance"
-                variant="outlined"
-                label="Balance"
-                customInput={TextField}
-                type="text"
-                value={34567.50}
-                size="small"
-                fullWidth
-                thousandSeparator=","
-                decimalScale={2}
-                fixedDecimalScale={true}
-                prefix={'$'}
-              />
-            </Grid> */}
-          </Grid>
-          <div className="button-mui">
-            <Grid item xs={6}>
-              <Stack spacing={2} direction="row">
-                <Button
-                  sx={{
-                    width: 100,
-                    height: 40,
-                  }}
+                  required
+                  />
+              </Grid>
+              {/* <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="invoice_date"
+                  name="invoice_date"
+                  label="Invoice Date (yyyy-mm-dd)"
+                  ref={dateInput}
+                  autoComplete="off"
+                  value={revenue.invoice_date}
+                  onChange={handleInputChange}
+                  size="small"
+                  fullWidth
                   variant="outlined"
-                  color="primary"
-                  component={Link} to={cancelURL}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  sx={{
-                    width: 100,
-                    height: 40,
-                  }}
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                >
-                  Save
-                </Button>
-              </Stack>
+                  required
+                />
+              </Grid> */}
+              <Grid item xs={6}>
+                <DatePicker
+                  type="text"
+                  id="invoice_date"
+                  name="invoice_date"
+                  label="Invoice Date"
+                  inputFormat="yyyy-MM-dd"
+                  onChange={handleDateInputChange}
+                  value={revenue.invoice_date}
+                  // Use onKeyDown to disable typing in the date field
+                  // renderInput={
+                  //   (params) =>
+                  // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
+                  // }
+                  renderInput={
+                    (params) => <TextField size="small" fullWidth required {...params} />
+                  }
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <NumericFormat
+                  id="amount"
+                  name="amount"
+                  variant="outlined"
+                  label="Amount"
+                  customInput={TextField}
+                  type="text"
+                  onChange={handleNumberInputChange}
+                  value={revenue.amount}
+                  size="small"
+                  fullWidth
+                  thousandSeparator=","
+                  decimalScale={2}
+                  fixedDecimalScale
+                  prefix="$ "
+                  required
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl size="small" fullWidth>
+                  <InputLabel>Account Number *</InputLabel>
+                  <Select
+                    id="account_id"
+                    name="account_id"
+                    label="Account Number"
+                    onChange={handleInputChange}
+                    native
+                    value={revenue.account_id}
+                    required
+                  >
+                    <option value=""> </option>
+                    {accounts.map((account) => (
+                      <option
+                        key={account.id}
+                        value={account.id}
+                      >
+                        {account.account_num}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl size="small" fullWidth>
+                  <InputLabel>Revenue Category *</InputLabel>
+                  <Select
+                    id="revenue_category_id"
+                    name="revenue_category_id"
+                    label="Revenue Category"
+                    onChange={handleInputChange}
+                    native
+                    value={revenue.revenue_category_id || ''}
+                    required
+                  >
+                    <option value=""> </option>
+                    {revenueCategories.map((revenueCategory) => (
+                      <option
+                        key={revenueCategory.id}
+                        value={revenueCategory.id}
+                      >
+                        {revenueCategory.name}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl size="small" fullWidth>
+                  <InputLabel>Revenue Currency *</InputLabel>
+                  <Select
+                    id="revenue_currency"
+                    name="revenue_currency"
+                    label="Revenue Currency"
+                    onChange={handleInputChange}
+                    native
+                    value={revenue.revenue_currency || ''}
+                    required
+                  >
+                    <option value=""> </option>
+                    <option key="CAD" value="CAD">CAD</option>
+                    <option key="USD" value="USD">USD</option>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="notes"
+                  name="notes"
+                  label="Notes"
+                  onChange={handleInputChange}
+                  value={revenue.notes || ''}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Grid>
             </Grid>
-          </div>
-        </FormControl>
-      </form>
+            <div className="button-mui">
+              <Grid item xs={6}>
+                <Stack spacing={2} direction="row">
+                  <Button
+                    sx={{
+                      width: 100,
+                      height: 40,
+                    }}
+                    variant="outlined"
+                    color="primary"
+                    component={Link} to={cancelURL}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    sx={{
+                      width: 100,
+                      height: 40,
+                    }}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    Save
+                  </Button>
+                </Stack>
+              </Grid>
+            </div>
+          </FormControl>
+        </form>
+      </LocalizationProvider>
     </section>
   );
 };
@@ -408,9 +325,23 @@ export default RevenueForm;
 RevenueForm.propTypes = {
   revenues: PropTypes.arrayOf(
     PropTypes.shape({
-      revenue_num: PropTypes.string.isRequired,
+      // invoice_num: PropTypes.string.isRequired,
+      // invoice_date: PropTypes.string.isRequired,
+      // amount: PropTypes.number.isRequired,
+      // account_num: PropTypes.string.isRequired,
+      // revenue_category_name: PropTypes.string.isRequired,
     }),
   ),
+  accounts: PropTypes.arrayOf(
+    PropTypes.shape({
+      // account_num: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  revenueCategories: PropTypes.arrayOf(
+    PropTypes.shape({
+      // revenue_category_name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   onSave: PropTypes.func.isRequired,
 };
 

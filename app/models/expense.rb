@@ -6,5 +6,5 @@ class Expense < ApplicationRecord
   validates :account_id, presence: true
   validates :expense_category_id, presence: true
   validates :invoice_date, presence: true
-  validates :invoice_num, presence: true
+  validates :invoice_num, presence: true, uniqueness: true
 end

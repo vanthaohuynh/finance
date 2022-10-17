@@ -62,8 +62,10 @@ header h1 a {
 
 .grid {
   display: grid;
-  grid-gap: 50px;
-  grid-template-columns: minmax(250px, 37%) auto;
+  /* grid-gap: 50px; */
+  row-gap: 20px;
+  column-gap: 50px;
+  grid-template-columns: minmax(250px, 45%) auto;
   margin: 0px 0px;
   width: 100%;
   height: calc(100vh - 145px);

@@ -21,6 +21,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { formatDate, isEmptyObject, validateAccount } from '../../helpers/helpers';
+import AmendmentForm from './AmendmentForm';
 // import { NumericFormat } from 'react-number-format';
 
 const AccountForm = ({ accounts, onSave }) => {
@@ -61,7 +62,7 @@ const AccountForm = ({ accounts, onSave }) => {
   const [formErrors, setFormErrors] = useState({});
   const dateInput = useRef(null);
   const cancelURL = account.id ? `/accounts/${account.id}` : '/accounts';
-  const title = account.id ? `${account.account_num} - ${account.study_title}` : 'New Account';
+  const title = account.id ? `${account.account_num} - ${account.study_name}` : 'New Account';
 
   useEffect(() => {
     setAccount(initialAccountState);
@@ -142,6 +143,13 @@ const AccountForm = ({ accounts, onSave }) => {
     }
   };
 
+  const onAddAmendment = (amendment) => {
+    console.log('amendment:', amendment);
+    // const newAccount = { ...account };
+    // newAccount.amendments.push(amendment);
+    // setAccount(newAccount);
+  };
+
   return (
     <section>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -184,11 +192,11 @@ const AccountForm = ({ accounts, onSave }) => {
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  id="study_title"
-                  name="study_title"
-                  label="Study Title"
+                  id="study_name"
+                  name="study_name"
+                  label="Study Name"
                   onChange={handleInputChange}
-                  value={account.study_title || ''}
+                  value={account.study_name || ''}
                   size="small"
                   fullWidth
                   variant="outlined"
@@ -197,11 +205,11 @@ const AccountForm = ({ accounts, onSave }) => {
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  id="study_name"
-                  name="study_name"
-                  label="Study Name"
+                  id="study_title"
+                  name="study_title"
+                  label="Study Title"
                   onChange={handleInputChange}
-                  value={account.study_name || ''}
+                  value={account.study_title || ''}
                   size="small"
                   fullWidth
                   variant="outlined"
@@ -275,11 +283,11 @@ const AccountForm = ({ accounts, onSave }) => {
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  id="budget_version"
-                  name="budget_version"
-                  label="Budget Version"
+                  id="phase"
+                  name="phase"
+                  label="Phase"
                   onChange={handleInputChange}
-                  value={account.budget_version || ''}
+                  value={account.phase || ''}
                   size="small"
                   fullWidth
                   variant="outlined"
@@ -320,24 +328,11 @@ const AccountForm = ({ accounts, onSave }) => {
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  id="notes"
-                  name="notes"
-                  label="Notes"
+                  id="budget_version"
+                  name="budget_version"
+                  label="Budget Version"
                   onChange={handleInputChange}
-                  value={account.notes || ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="phase"
-                  name="phase"
-                  label="Phase"
-                  onChange={handleInputChange}
-                  value={account.phase || ''}
+                  value={account.budget_version || ''}
                   size="small"
                   fullWidth
                   variant="outlined"
@@ -387,6 +382,19 @@ const AccountForm = ({ accounts, onSave }) => {
                   }
                 />
               </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="notes"
+                  name="notes"
+                  label="Notes"
+                  onChange={handleInputChange}
+                  value={account.notes || ''}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Grid>
             </Grid>
             <div className="button-mui">
               <Grid item xs={6}>
@@ -413,7 +421,7 @@ const AccountForm = ({ accounts, onSave }) => {
                   >
                     Save
                   </Button>
-                  <Button
+                  {/* <Button
                     sx={{
                       width: 175,
                       height: 40,
@@ -424,7 +432,7 @@ const AccountForm = ({ accounts, onSave }) => {
                     // component={Link} to={`/accounts/${account.id}/edit`}
                   >
                     Add Amendment
-                  </Button>
+                  </Button> */}
                 </Stack>
               </Grid>
             </div>

@@ -24,6 +24,25 @@ export const validateAccount = (account) => {
   return errors;
 };
 
+export const validateAmendment = (amendment) => {
+  const errors = {};
+
+  if (amendment.budget_version === '') {
+    errors.budget_version = 'Budget Version is required';
+  }
+
+  if (amendment.number_of_patients === 0) {
+    errors.number_of_patients = 'Number of Patients is required';
+  }
+
+  if (amendment.cta_date === '' || amendment.cta_date === null) {
+    errors.cta_date = 'CTA Date is invalid';
+  }
+
+  return errors;
+};
+
+
 export const validateExpense = (expense) => {
   const errors = {};
 

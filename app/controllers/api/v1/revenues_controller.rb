@@ -1,5 +1,4 @@
 class Api::V1::RevenuesController < ApplicationController
-    # before_action :authenticate_user!
   before_action :set_revenue, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
 
@@ -40,7 +39,6 @@ class Api::V1::RevenuesController < ApplicationController
   end
 
   def revenue_params
-    params.require(:revenue).permit(:invoice_date, :invoice_num, :amount, :account_id, :revenue_category_id, :revenue_currency, :notes)
+    params.require(:revenue).permit(:updated_at, :invoice_date, :invoice_num, :amount, :account_id, :revenue_category_id, :revenue_currency, :notes)
   end
-
 end

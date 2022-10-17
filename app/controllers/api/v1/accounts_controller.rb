@@ -1,6 +1,5 @@
 class Api::V1::AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
-
   skip_before_action :verify_authenticity_token
 
   def index
@@ -48,7 +47,6 @@ class Api::V1::AccountsController < ApplicationController
   end
 
   def account_params
-    params.require(:account).permit(:account_num, :muhc_account, :study_title, :study_name, :sponsor_name, :sponsor_contact, :number_of_patients, :cta_date, :phase, :cim_contact, :cro_name, :cro_contact, :budget_version, :budget_currency, :invoicing_terms, :notes)
+    params.require(:account).permit(:updated_at, :account_num, :muhc_account, :study_title, :study_name, :sponsor_name, :sponsor_contact, :number_of_patients, :cta_date, :phase, :cim_contact, :cro_name, :cro_contact, :budget_version, :budget_currency, :invoicing_terms, :notes)
   end
-
 end

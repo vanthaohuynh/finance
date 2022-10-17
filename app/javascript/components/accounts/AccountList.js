@@ -42,14 +42,14 @@ const AccountList = ({ accounts }) => {
     },
   },
   {
-    field: 'study_title',
-    headerName: 'Study Title',
+    field: 'study_name',
+    headerName: 'Study Name',
     width: 150,
     editable: false,
   },
   {
-    field: 'study_name',
-    headerName: 'Study Name',
+    field: 'study_title',
+    headerName: 'Study Title',
     width: 150,
     editable: false,
   },
@@ -125,7 +125,8 @@ const AccountList = ({ accounts }) => {
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            component={Link} to="/accounts/new"
+            component={Link}
+            to="/accounts/new"
           >
             Add New
           </Button>

@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-
+  # get 'welcome/index'
+  # get 'site/index'
+  # root to: 'welcome#index'
   root to: 'site#index'
 
   get 'accounts', to: 'site#index'
@@ -40,6 +38,7 @@ Rails.application.routes.draw do
       resources :revenues, only: %i[index show create update destroy]
       resources :expense_categories, only: %i[index show create update destroy]
       resources :revenue_categories, only: %i[index show create update destroy]
+      resources :account_amendments, only: %i[index show create update destroy]
     end
   end
 end

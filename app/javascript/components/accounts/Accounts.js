@@ -6,12 +6,15 @@ import Header from '../Header';
 import Account from './Account';
 import AccountForm from './AccountForm';
 import AccountList from './AccountList';
+// import AccountAmendmentList from './AccountAmendmentList';
 import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
+  // const [amendments, setAmendments] = useState([]);
+  // const [selectedAmendments, setSelectedAmendments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const confirm = useConfirm();
@@ -35,6 +38,26 @@ const Accounts = () => {
 
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await window.fetch('/api/v1/account_amendments');
+  //       if (!response.ok) throw Error(response.statusText);
+  //       const data = await response.json();
+  //       setAmendments(data);
+  //     } catch (err) {
+  //       handleAjaxError(err);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+  // const getAmendments = (id) => {
+  //   const amendments = accountAmendments.filter((e) => e.account_id === Number(id));
+  //   return amendments;
+  // };
 
   const addAccount = async (newAccount) => {
     try {
@@ -148,7 +171,7 @@ const Accounts = () => {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-        }
+        },
       );
 
       if (!response.ok) throw Error(response.statusText);
@@ -182,7 +205,14 @@ const Accounts = () => {
                 path=":id"
                 element={(
                   <ErrorBoundary>
-                    <Account accounts={accounts} onDelete={deleteAccount} />
+                    <Account
+                      accounts={accounts}
+                      // amendments={amendments}
+                      onDelete={deleteAccount}
+                    />
+                    {/* <AccountAmendmentList
+                      accountAmendments={getAmendments({ id })}
+                    /> */}
                   </ErrorBoundary>
                 )}
               />
@@ -190,7 +220,11 @@ const Accounts = () => {
                 path=":id/edit"
                 element={(
                   <ErrorBoundary>
-                    <AccountForm accounts={accounts} onSave={updateAccount} />
+                    <AccountForm
+                      accounts={accounts}
+                      // accountAmendments={accountAmendments}
+                      onSave={updateAccount}
+                    />
                   </ErrorBoundary>
                   )}
               />

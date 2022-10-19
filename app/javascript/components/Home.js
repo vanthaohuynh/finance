@@ -1,36 +1,53 @@
 import React from 'react';
-import { Card, Box, Grid } from '@mui/material';
-import ExpenseChart from './home/ExpenseChart';
-import RevenueChart from './home/RevenueChart';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// import Registration from './auth/Registration';
+import Login from './auth/Login';
+import { handleAjaxError } from '../helpers/helpers';
 
-const Home = () => (
-  <Box sx={{
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: 'background.paper',
-  }}
-  >
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={6}>
-        <Card
-          size="small"
-          sx={{ width: '100%', height: '100%' }}
-        >
-          <RevenueChart />
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Card
-          size="small"
-          sx={{ width: '100%', height: '100%' }}
-        >
-          <ExpenseChart />
-        </Card>
-      </Grid>
-    </Grid>
-  </Box>
-);
+const Home = (props) => {
+  const { loggedInStatus } = props;
+  const { handleLogin } = props;
+  const navigate = useNavigate();
+  console.log('Home: loggedInStatus: ', loggedInStatus);
+
+  const handleSuccessfulAuth = (data) => {
+    // console.log('Home: handleSuccessfulAuth: data: ', data);
+    // Update parent state
+    console.log('Home: handleSuccessfulAuth: data: ', data);
+    handleLogin(data);
+    console.log('Data:', data.user.role_id);
+    if (data.user.role_id === 1) {
+      navigate('/expenses');
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
+  return (
+    <div>
+      {/* <h1>Home</h1> */}
+      {/* <h3>
+        Status:
+        {loggedInStatus}
+      </h3> */}
+      {/* <Registration handleSuccessfulAuth={handleSuccessfulAuth} /> */}
+      {/* <button type="button" onClick={() => handleLogoutClick()}>
+        Log out
+      </button> */}
+      { loggedInStatus === 'NOT_LOGGED_IN' ? (
+        <Login handleSuccessfulAuth={handleSuccessfulAuth} />
+      ) : (
+        navigate('/dashboard')
+      )}
+    </div>
+  );
+};
+
+Home.propTypes = {
+  loggedInStatus: PropTypes.string.isRequired,
+  handleLogin: PropTypes.func.isRequired,
+};
 
 export default Home;

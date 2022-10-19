@@ -1,8 +1,23 @@
 Rails.application.routes.draw do
+  resources :roles
   # get 'welcome/index'
   # get 'site/index'
   # root to: 'welcome#index'
+
+  scope '/admin' do
+    resources :users
+  end
+
+  resources :sessions, only: [:create]
+  resources :registrations, only: [:create]
+  delete :logout, to: "sessions#logout"
+  get :logged_in, to: "sessions#logged_in"
+
   root to: 'site#index'
+
+  get 'home', to: 'site#index'
+  get 'dashboard', to: 'site#index'
+  get 'registration', to: 'site#index'
 
   get 'accounts', to: 'site#index'
   get 'accounts/new', to: 'site#index'
@@ -31,7 +46,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :events, only: %i[index show create update destroy]
+      # resources :events, only: %i[index show create update destroy]
       resources :expenses, only: %i[index show create update destroy]
       resources :accounts, only: %i[index show create update destroy]
       resources :accounts2, only: %i[index show create update destroy]

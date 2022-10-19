@@ -64,4 +64,8 @@ group :development do
   # gem "spring"
 end
 
+gem 'bcrypt', '~> 3.1', '>= 3.1.12'
+
 gem 'rack-cors', '~> 1.1', '>= 1.1.1', require: 'rack/cors'
+
+gem 'cancancan', '~> 3.2', '>= 3.2.1'

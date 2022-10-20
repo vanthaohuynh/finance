@@ -47,7 +47,7 @@ const App = () => {
         });
     };
     checkLoginStatus();
-    // console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
+    console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
     // console.log('App: useEffect: checkLoginStatus: user: ', user);
   }, [loggedInStatus]);
 
@@ -81,7 +81,8 @@ const App = () => {
     <ConfirmProvider>
       {loggedInStatus === 'LOGGED_IN' ? (
         <MainAppBar
-          user={user}
+          userRoleID={user.role_id}
+          userEmail={user.email}
           loggedInStatus={loggedInStatus}
           handleLogoutClick={handleLogoutClick}
         />

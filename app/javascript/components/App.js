@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const checkLoginStatus = () => {
       axios
-        .get('http://localhost:3000/logged_in', { withCredentials: true }, { headers: { 'Access-Control-Allow-Origin': '*' } })
+        .get('http://localhost:3000/logged_in', { withCredentials: true })
         .then((response) => {
           // console.log('App: checkLoginStatus: response: ', response);
           if (
@@ -47,9 +47,9 @@ const App = () => {
         });
     };
     checkLoginStatus();
-    console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
-    console.log('App: useEffect: checkLoginStatus: user: ', user);
-  }, [loggedInStatus, user]);
+    // console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
+    // console.log('App: useEffect: checkLoginStatus: user: ', user);
+  }, [loggedInStatus]);
 
   const handleLogin = (data) => {
     console.log('App: handleLogin: data: ', data);

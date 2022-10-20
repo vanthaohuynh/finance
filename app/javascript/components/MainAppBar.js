@@ -15,17 +15,18 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 // import Link from '@mui/material/Link'; // <- Cannot use this Link. Has to be react-router-dom Link
 import { Link } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
 // background color of AppBar: #1876d2
 
-const MainAppBar = ({ user, loggedInStatus, handleLogoutClick }) => {
+const MainAppBar = ({
+  userRoleID, userEmail, loggedInStatus, handleLogoutClick,
+}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   let pages = ['Revenues', 'Expenses', 'Accounts'];
   let dash = '/dashboard';
 
   const settings = ['Profile', 'Logout'];
-  if (user.role_id === 1) {
+  if (userRoleID === 1) {
     pages = ['Expenses'];
     dash = '/expenses';
   }
@@ -174,7 +175,7 @@ const MainAppBar = ({ user, loggedInStatus, handleLogoutClick }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem key={user.email}>{user.email}</MenuItem>
+                <MenuItem key={userEmail}>{userEmail}</MenuItem>
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">{setting}</Typography>
@@ -190,7 +191,8 @@ const MainAppBar = ({ user, loggedInStatus, handleLogoutClick }) => {
 };
 
 MainAppBar.propTypes = {
-  user: PropTypes.object.isRequired,
+  userRoleID: PropTypes.number.isRequired,
+  userEmail: PropTypes.string.isRequired,
   loggedInStatus: PropTypes.string.isRequired,
   handleLogoutClick: PropTypes.func.isRequired,
 };

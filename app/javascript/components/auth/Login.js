@@ -38,7 +38,7 @@ const Login = ({ handleSuccessfulAuth }) => {
         { withCredentials: true },
       )
       .then((response) => {
-        console.log('Login response:', response);
+        // console.log('Login response:', response);
         if (response.data.status === 'created') {
           handleSuccessfulAuth(response.data);
         } else {

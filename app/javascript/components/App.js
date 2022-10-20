@@ -47,9 +47,9 @@ const App = () => {
         });
     };
     checkLoginStatus();
-    console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
-    console.log('App: useEffect: checkLoginStatus: user: ', user);
-  }, [loggedInStatus, user]);
+    // console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
+    // console.log('App: useEffect: checkLoginStatus: user: ', user);
+  }, [loggedInStatus]);
 
   const handleLogin = (data) => {
     console.log('App: handleLogin: data: ', data);

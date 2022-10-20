@@ -95,7 +95,8 @@ const App = () => {
             element={(
               <Home
                 handleLogin={handleLogin}
-                // handleLogout={handleLogout} loggedInStatus={loggedInStatus}
+                loggedInStatus={loggedInStatus}
+                // handleLogout={handleLogout}
               />
             )}
           />

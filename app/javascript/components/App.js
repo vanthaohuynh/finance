@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const checkLoginStatus = () => {
       axios
-        .get('http://localhost:3000/logged_in', { withCredentials: true })
+        .get('http://localhost:3000/logged_in', { withCredentials: true }, { headers: { 'Access-Control-Allow-Origin': '*' } })
         .then((response) => {
           // console.log('App: checkLoginStatus: response: ', response);
           if (
@@ -95,8 +95,7 @@ const App = () => {
             element={(
               <Home
                 handleLogin={handleLogin}
-                // handleLogout={handleLogout}
-                loggedInStatus={loggedInStatus}
+                // handleLogout={handleLogout} loggedInStatus={loggedInStatus}
               />
             )}
           />

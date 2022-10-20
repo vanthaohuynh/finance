@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const checkLoginStatus = () => {
       axios
-        .get('http://localhost:3000/logged_in', { withCredentials: true }, { mode: 'cors' }, { headers: { 'Access-Control-Allow-Origin': '*' } })
+        .get('http://localhost:3000/logged_in', { withCredentials: true })
         .then((response) => {
           // console.log('App: checkLoginStatus: response: ', response);
           if (

@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const checkLoginStatus = () => {
       axios
-        .get('http://localhost:3000/logged_in', { withCredentials: true })
+        .get('/logged_in', { withCredentials: true })
         .then((response) => {
           // console.log('App: checkLoginStatus: response: ', response);
           if (
@@ -65,7 +65,7 @@ const App = () => {
 
   const handleLogoutClick = () => {
     axios
-      .delete('http://localhost:3000/logout', { withCredentials: true })
+      .delete('/logout', { withCredentials: true })
       .then((response) => {
         console.log('Home: handleLogoutClick: response: ', response);
         handleLogout();

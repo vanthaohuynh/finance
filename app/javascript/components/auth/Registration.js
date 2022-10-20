@@ -12,7 +12,7 @@ const Registration = ({ handleSuccessfulAuth }) => {
   const handleSubmit = (e) => {
     axios
       .post(
-        'http://localhost:3000/registrations',
+        '/registrations',
         {
           user: {
             email: email,

@@ -28,7 +28,7 @@ const Login = ({ handleSuccessfulAuth }) => {
   const handleSubmit = (e) => {
     axios
       .post(
-        'http://localhost:3000/sessions',
+        '/sessions',
         {
           user: {
             email,

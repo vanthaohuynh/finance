@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
+  include ActionController::Cookies
   # protect_from_forgery with: :null_session // Come back to this later.
   # Right now cannot activate this line. The app will not work with it.
 

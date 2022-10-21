@@ -42,7 +42,7 @@ const Login = ({ handleSuccessfulAuth }) => {
         handleSuccessfulAuth(response.data);
       }
     } catch (err) {
-      handleAjaxError(err);
+      handleAjaxError(err.response.data);
       setErrorLogin(true);
     }
   };

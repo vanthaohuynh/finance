@@ -76,7 +76,6 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    console.log('App: handleLogout: ');
     setLoggedInStatus('NOT_LOGGED_IN');
     setUser({});
   };

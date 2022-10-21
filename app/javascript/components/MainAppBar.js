@@ -25,7 +25,7 @@ const MainAppBar = ({
   let pages = ['Revenues', 'Expenses', 'Accounts'];
   let dash = '/dashboard';
 
-  const settings = ['Profile', 'Logout'];
+  const settings = ['Profile'];
   if (userRoleID === 1) {
     pages = ['Expenses'];
     dash = '/expenses';
@@ -42,12 +42,8 @@ const MainAppBar = ({
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (e) => {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    if (e.target.innerText === 'Logout') {
-      console.log('MainAppBar: handleCloseUserMenu: Logout');
-      handleLogoutClick();
-    }
   };
 
   return (
@@ -181,6 +177,7 @@ const MainAppBar = ({
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem key="Logout" onClick={handleLogoutClick}>Logout</MenuItem>
               </Menu>
             </Box>
           </Toolbar>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, redirect } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { ToastContainer } from 'react-toastify';
@@ -17,7 +17,7 @@ import './App.css';
 const App = () => {
   const [loggedInStatus, setLoggedInStatus] = useState('NOT_LOGGED_IN');
   const [user, setUser] = useState({});
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const checkLoginStatus = () => {
@@ -69,7 +69,8 @@ const App = () => {
       .then((response) => {
         console.log('Home: handleLogoutClick: response: ', response);
         handleLogout();
-        navigate('/');
+        // navigate('/');
+        redirect('/');
       })
       .catch((error) => {
         console.log('Home: handleLogoutClick: error: ', error);

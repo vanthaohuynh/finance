@@ -8,11 +8,11 @@ const Dashboard = (props) => {
   const { loggedInStatus } = props;
   return (
     <>
-      {/* <h1>Dashboard</h1>
+      <h1>Dashboard</h1>
       <h3>
         Status:
         {loggedInStatus}
-      </h3> */}
+      </h3>
       <Box sx={{
         display: 'flex',
         flexWrap: 'wrap',

@@ -29,7 +29,7 @@ const Login = ({ handleSuccessfulAuth }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        '/sessions',
+        'http://localhost:3000/sessions',
         {
           user: {
             email,
@@ -42,7 +42,7 @@ const Login = ({ handleSuccessfulAuth }) => {
         handleSuccessfulAuth(response.data);
       }
     } catch (err) {
-      handleAjaxError(err.response.data);
+      handleAjaxError(err);
       setErrorLogin(true);
     }
   };

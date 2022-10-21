@@ -29,7 +29,7 @@ const Login = ({ handleSuccessfulAuth }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:3000/sessions',
+        '/sessions',
         {
           user: {
             email,

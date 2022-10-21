@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 // background color of AppBar: #1876d2
 
 const MainAppBar = ({
-  userRoleID, userEmail, loggedInStatus, handleLogoutClick,
+  userRoleID, userEmail, loggedInStatus,
 }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -177,7 +177,7 @@ const MainAppBar = ({
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
-                <MenuItem key="Logout" onClick={handleLogoutClick}>Logout</MenuItem>
+                {/* <MenuItem key="Logout" onClick={handleLogoutClick}>Logout</MenuItem> */}
               </Menu>
             </Box>
           </Toolbar>
@@ -191,7 +191,7 @@ MainAppBar.propTypes = {
   userRoleID: PropTypes.number.isRequired,
   userEmail: PropTypes.string.isRequired,
   loggedInStatus: PropTypes.string.isRequired,
-  handleLogoutClick: PropTypes.func.isRequired,
+  // handleLogoutClick: PropTypes.func.isRequired,
 };
 
 export default MainAppBar;

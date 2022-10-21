@@ -25,9 +25,10 @@ const Login = ({ handleSuccessfulAuth }) => {
   // const [rememberMe, setRememberMe] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
 
-  const handleSubmit = (e) => {
-    axios
-      .post(
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
         'http://localhost:3000/sessions',
         {
           user: {
@@ -36,22 +37,43 @@ const Login = ({ handleSuccessfulAuth }) => {
           },
         },
         { withCredentials: true },
-      )
-      .then((response) => {
-        // console.log('Login response:', response);
-        if (response.data.status === 'created') {
-          handleSuccessfulAuth(response.data);
-        } else {
-          setErrorLogin(true);
-        }
-      })
-      .catch((err) => {
-        console.log('Login error', err);
-        // setRegistrationErrors(error.response.data.errors);
-        handleAjaxError(err);
-      });
-    e.preventDefault();
+      );
+      if (response.data.logged_in) {
+        handleSuccessfulAuth(response.data);
+      }
+    } catch (err) {
+      handleAjaxError(err);
+      setErrorLogin(true);
+    }
   };
+
+  // const handleSubmit = (e) => {
+  //   axios
+  //     .post(
+  //       'http://localhost:3000/sessions',
+  //       {
+  //         user: {
+  //           email,
+  //           password,
+  //         },
+  //       },
+  //       { withCredentials: true },
+  //     )
+  //     .then((response) => {
+  //       // console.log('Login response:', response);
+  //       if (response.data.status === 'created') {
+  //         handleSuccessfulAuth(response.data);
+  //       } else {
+  //         setErrorLogin(true);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log('Login error', err);
+  //       // setRegistrationErrors(error.response.data.errors);
+  //       handleAjaxError(err);
+  //     });
+  //   e.preventDefault();
+  // };
 
   return (
     <ThemeProvider theme={theme}>

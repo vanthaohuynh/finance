@@ -6,13 +6,15 @@ import RevenueChart from './home/RevenueChart';
 
 const Dashboard = (props) => {
   const { loggedInStatus } = props;
+  // console.log('Dashboard: loggedInStatus: ', loggedInStatus);
+  console.log('Dashboard: loggedInStatus: ', loggedInStatus);
   return (
     <>
-      <h1>Dashboard</h1>
+      {/* <h1>Dashboard</h1>
       <h3>
         Status:
         {loggedInStatus}
-      </h3>
+      </h3> */}
       <Box sx={{
         display: 'flex',
         flexWrap: 'wrap',

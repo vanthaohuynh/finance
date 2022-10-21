@@ -6,6 +6,7 @@ import RevenueChart from './home/RevenueChart';
 
 const Dashboard = (props) => {
   const { loggedInStatus } = props;
+  // console.log('Dashboard: loggedInStatus: ', loggedInStatus);
   console.log('Dashboard: loggedInStatus: ', loggedInStatus);
   return (
     <>

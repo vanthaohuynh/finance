@@ -9,7 +9,7 @@ import { handleAjaxError } from '../helpers/helpers';
 const Home = (props) => {
   const { loggedInStatus } = props;
   const { handleLogin } = props;
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   console.log('Home: loggedInStatus: ', loggedInStatus);
 
   const handleSuccessfulAuth = (data) => {
@@ -19,10 +19,11 @@ const Home = (props) => {
     handleLogin(data);
     // console.log('Home: data_user_role_id:', data.user.role_id);
     if (data.user.role_id === 1) {
-      // navigate('/expenses');
-      redirect('/expenses');
+      navigate('/expenses');
+      // redirect('/expenses');
     } else {
-      redirect('/dashboard');
+      navigate('/dashboard');
+      // redirect('/dashboard');
     }
   };
 
@@ -40,7 +41,8 @@ const Home = (props) => {
       { loggedInStatus === 'NOT_LOGGED_IN' ? (
         <Login handleSuccessfulAuth={handleSuccessfulAuth} />
       ) : (
-        redirect('/dashboard')
+        // redirect('/dashboard')
+        navigate('/dashboard')
       )}
     </div>
   );

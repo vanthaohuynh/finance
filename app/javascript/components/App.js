@@ -17,39 +17,57 @@ import './App.css';
 const App = () => {
   const [loggedInStatus, setLoggedInStatus] = useState('NOT_LOGGED_IN');
   const [user, setUser] = useState({});
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const checkLoginStatus = () => {
-      axios
-        .get('http://localhost:3000/logged_in', { withCredentials: true })
-        .then((response) => {
-          // console.log('App: checkLoginStatus: response: ', response);
-          if (
-            response.data.logged_in
-            && loggedInStatus === 'NOT_LOGGED_IN'
-          ) {
-            setLoggedInStatus('LOGGED_IN');
-            setUser(response.data.user);
-            // console.log('App: checkLoginStatus: user: ', user);
-          } else if (
-            !response.data.logged_in
-            && loggedInStatus === 'LOGGED_IN'
-          ) {
-            setLoggedInStatus('NOT_LOGGED_IN');
-            setUser({});
-            // console.log('App: checkLoginStatus:', loggedInStatus);
-          }
-        })
-        .catch((error) => {
-          console.log('App: checkLoginStatus: error: ', error);
-          handleAjaxError(error);
-        });
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/logged_in', { withCredentials: true });
+        // console.log('App: checkLoginStatus: response: ', response);
+        if (response.data.logged_in && loggedInStatus === 'NOT_LOGGED_IN') {
+          setLoggedInStatus('LOGGED_IN');
+          setUser(response.data.user);
+        } else if (!response.data.logged_in && loggedInStatus === 'LOGGED_IN') {
+          setLoggedInStatus('NOT_LOGGED_IN');
+          setUser({});
+        }
+      } catch (error) {
+        handleAjaxError(error);
+      }
     };
     checkLoginStatus();
-    console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
-    // console.log('App: useEffect: checkLoginStatus: user: ', user);
   }, [loggedInStatus]);
+
+  //   const checkLoginStatus = async () => {
+  //     axios
+  //       .get('http://localhost:3000/logged_in', { withCredentials: true })
+  //       .then((response) => {
+  //         // console.log('App: checkLoginStatus: response: ', response);
+  //         if (
+  //           response.data.logged_in
+  //           && loggedInStatus === 'NOT_LOGGED_IN'
+  //         ) {
+  //           setLoggedInStatus('LOGGED_IN');
+  //           setUser(response.data.user);
+  //           // console.log('App: checkLoginStatus: user: ', user);
+  //         } else if (
+  //           !response.data.logged_in
+  //           && loggedInStatus === 'LOGGED_IN'
+  //         ) {
+  //           setLoggedInStatus('NOT_LOGGED_IN');
+  //           setUser({});
+  //           // console.log('App: checkLoginStatus:', loggedInStatus);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log('App: checkLoginStatus: error: ', error);
+  //         handleAjaxError(error);
+  //       });
+  //   };
+  //   checkLoginStatus();
+  //   console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
+  //   // console.log('App: useEffect: checkLoginStatus: user: ', user);
+  // }, [loggedInStatus]);
 
   const handleLogin = (data) => {
     console.log('App: handleLogin: data: ', data);
@@ -69,8 +87,8 @@ const App = () => {
       .then((response) => {
         console.log('Home: handleLogoutClick: response: ', response);
         handleLogout();
-        // navigate('/');
-        redirect('/');
+        navigate('/');
+        // redirect('/');
       })
       .catch((error) => {
         console.log('Home: handleLogoutClick: error: ', error);

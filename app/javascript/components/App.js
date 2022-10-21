@@ -102,7 +102,7 @@ const App = () => {
           userRoleID={user.role_id}
           userEmail={user.email}
           loggedInStatus={loggedInStatus}
-          // handleLogoutClick={handleLogoutClick}
+          handleLogoutClick={handleLogoutClick}
         />
       ) : null}
 

@@ -19,9 +19,10 @@ const Home = (props) => {
     handleLogin(data);
     // console.log('Home: data_user_role_id:', data.user.role_id);
     if (data.user.role_id === 1) {
-      navigate('/expenses');
+      navigate('http://localhost:3000/expenses');
     } else {
-      navigate('/dashboard');
+      // navigate('/dashboard');
+      navigate('http://localhost:3000/dashboard');
     }
   };
 
@@ -39,7 +40,7 @@ const Home = (props) => {
       { loggedInStatus === 'NOT_LOGGED_IN' ? (
         <Login handleSuccessfulAuth={handleSuccessfulAuth} />
       ) : (
-        navigate('/dashboard')
+        navigate('http://localhost:3000/dashboard')
       )}
     </div>
   );

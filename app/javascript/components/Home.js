@@ -13,17 +13,15 @@ const Home = (props) => {
   console.log('Home: ', loggedInStatus);
 
   const handleSuccessfulAuth = (data) => {
-    // console.log('Home: handleSuccessfulAuth: data: ', data);
+    console.log('Home: handleSuccessfulAuth: data: ', data);
     // Update parent state
     // console.log('Home: handleSuccessfulAuth: data: ', data);
     handleLogin(data);
     // console.log('Home: data_user_role_id:', data.user.role_id);
     if (data.user.role_id === 1) {
       navigate('/expenses');
-      // redirect('/expenses');
     } else {
       navigate('/dashboard');
-      // redirect('/dashboard');
     }
   };
 

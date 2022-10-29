@@ -69,3 +69,7 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 gem 'rack-cors', '~> 1.1', '>= 1.1.1', require: 'rack/cors'
 
 gem 'cancancan', '~> 3.2', '>= 3.2.1'
+
+gem 'jwt', '~> 2.2', '>= 2.2.2'
+
+gem 'active_model_serializers', '~> 0.10', '>= 0.10.12'

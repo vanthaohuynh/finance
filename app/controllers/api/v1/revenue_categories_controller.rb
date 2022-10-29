@@ -1,4 +1,5 @@
 class Api::V1::RevenueCategoriesController < ApplicationController
+  before_action :authorized
   def index
     @revenue_categories = RevenueCategory.all
     @revenue_categories = @revenue_categories.map { |revenue_category|

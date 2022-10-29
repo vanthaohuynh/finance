@@ -24,22 +24,32 @@ const Login = ({ handleSuccessfulAuth }) => {
   const [password, setPassword] = useState('');
   // const [rememberMe, setRememberMe] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
+  const loginAPIEndpoint = 'http://localhost:3000/login';
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const user = {
+      email,
+      password,
+    };
+    const url = loginAPIEndpoint;
+    // const body = JSON.stringify({ user });
+    // const headers = {
+    //   'Content-Type': 'application/json',
+    //   Accept: 'application/json',
+    //   Authorization: `Bearer ${JWT_TOKEN}`,
+    // };
+    console.log('Login: ', url, user);
     try {
-      const response = await axios.post(
-        'http://localhost:3000/sessions',
-        {
-          user: {
-            email,
-            password,
-          },
-        },
-        { withCredentials: true },
-      );
-      if (response.data.logged_in) {
+      const response = await axios.post(url, user);
+      console.log('Login: handleSubmit: response: ', response);
+      console.log('Login: handleSubmit: response: ', response.data.status);
+      if (response.status === 200) {
+        console.log('Login: handleSubmit: response.data: ', response.data);
         handleSuccessfulAuth(response.data);
+      } else {
+        setErrorLogin(true);
+        error('Login failed. Please try again.');
       }
     } catch (err) {
       handleAjaxError(err);
@@ -125,7 +135,7 @@ const Login = ({ handleSuccessfulAuth }) => {
             /> */}
             {errorLogin && (
               <Typography component="p" variant="body2" color="error">
-                Email/password incorrect. Please try again.
+                Email or password incorrect. Please try again.
               </Typography>
             )}
             <Button

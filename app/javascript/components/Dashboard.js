@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Box, Grid } from '@mui/material';
 import ExpenseChart from './home/ExpenseChart';
 import RevenueChart from './home/RevenueChart';
 
-const Dashboard = (props) => {
-  const { loggedInStatus } = props;
+const Dashboard = () => {
+  const [loggedInStatus, setLoggedInStatus] = useState('NOT_LOGGED_IN');
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const token = window.localStorage.getItem('jwt');
+    const user = window.localStorage.getItem('user');
+    if (token && user) {
+      setLoggedInStatus('LOGGED_IN');
+      setUser(JSON.parse(user));
+    } else {
+      setLoggedInStatus('NOT_LOGGED_IN');
+      setUser({});
+    }
+  }, []);
+
+  // const { loggedInStatus } = props;
   // console.log('Dashboard: loggedInStatus: ', loggedInStatus);
-  console.log('Dashboard: ', loggedInStatus);
+  // console.log('Dashboard: ', loggedInStatus);
+  // console.log('Dashboard: ', window.localStorage.getItem('user'));
+  // console.log('Dashboard: ', window.localStorage.getItem('jwt'));
   return (
     <>
       {/* <h1>Dashboard</h1>
@@ -44,10 +61,6 @@ const Dashboard = (props) => {
       </Box>
     </>
   );
-};
-
-Dashboard.propTypes = {
-  loggedInStatus: PropTypes.string.isRequired,
 };
 
 export default Dashboard;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
-// import axios from 'axios';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import Header from '../Header';
 import ExpenseList from './ExpenseList';
 import Expense from './Expense';
@@ -10,96 +11,157 @@ import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
-const Expenses = () => {
+const Expenses = ({ token }) => {
   const [expenses, setExpenses] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [expenseCategories, setExpenseCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isValidated, setIsValidated] = useState(false);
   const navigate = useNavigate();
   const confirm = useConfirm();
   // const [error, setError] = useState(Error());
   // const [isError, setIsError] = useState(false);
   // const apiExpenseEndpoint = '/api/v1/expenses';
 
+  const urlValidation = '/validate_token';
+  const apiExpenseEndpoint = '/api/v1/expenses';
   const apiAccountEndpoint = '/api/v1/accounts2';
   const apiExpenseCatEndpoint = '/api/v1/expense_categories';
-  const apiExpenseEndpoint = '/api/v1/expenses';
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-  useEffect(() => {
-    const fetchExpenseData = async () => {
-      try {
-        const response = await window.fetch(apiExpenseEndpoint);
-        if (!response.ok) throw Error(response.statusText);
-        const data = await response.json();
-        setExpenses(data);
-      } catch (err) {
-        handleAjaxError(err);
-      }
-
-      setIsLoading(false);
-    };
-    fetchExpenseData();
-
-    const fetchAccountData = async () => {
-      try {
-        const response = await window.fetch(apiAccountEndpoint);
-        if (!response.ok) throw Error(response.statusText);
-        const data = await response.json();
-        setAccounts(data);
-      } catch (err) {
-        handleAjaxError(err);
-      }
-
-      setIsLoading(false);
-    };
-    fetchAccountData();
-
-    const fetchExpenseCategoryData = async () => {
-      try {
-        const response = await window.fetch(apiExpenseCatEndpoint);
-        if (!response.ok) throw Error(response.statusText);
-        const data = await response.json();
-        setExpenseCategories(data);
-      } catch (err) {
-        handleAjaxError(err);
-      }
-
-      setIsLoading(false);
-    };
-    fetchExpenseCategoryData();
-  }, []);
-
-  const reloadExpenseData = async () => {
+  const fetchExpenseData = async () => {
     try {
-      const response = await window.fetch(apiExpenseEndpoint);
-      if (!response.ok) throw Error(response.statusText);
-      const data = await response.json();
-      setExpenses(data);
+      const response = await axios.get(apiExpenseEndpoint);
+      console.log('Expenses: fetchExpenseData: response: ', response);
+      if (response.status === 200) {
+        setExpenses(response.data);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      handleAjaxError(err);
+      // navigate('/dashboard');
+    }
+  };
+
+  const fetchAccountData = async () => {
+    try {
+      const response = await axios.get(apiAccountEndpoint);
+      console.log('Expenses: fetchAccountData: response: ', response);
+      if (response.status === 200) {
+        setAccounts(response.data);
+        setIsLoading(false);
+      }
     } catch (err) {
       handleAjaxError(err);
     }
+  };
 
-    setIsLoading(false);
+  const fetchExpenseCategoryData = async () => {
+    try {
+      const response = await axios.get(apiExpenseCatEndpoint);
+      console.log('Expenses: fetchExpenseCategoryData: response: ', response);
+      if (response.status === 200) {
+        setExpenseCategories(response.data);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      handleAjaxError(err);
+    }
+  };
+
+  useEffect(() => {
+    const validateToken = async () => {
+      try {
+        const response = await axios.get(urlValidation);
+        console.log('Expenses: validate_token: response: ', response);
+        if (response.status === 200) {
+          console.log('Expenses: validate_token: response.data: ', response.data);
+          setIsValidated(true);
+          fetchExpenseData();
+          fetchAccountData();
+          fetchExpenseCategoryData();
+        } else {
+          setIsValidated(false);
+          // navigate('/api/v1/expenses');
+        }
+      } catch (err) {
+        handleAjaxError(err);
+        setIsValidated(false);
+        // navigate('/home');
+      }
+    };
+    validateToken();
+  }, []);
+
+  // useEffect(() => {
+  //   const fetchExpenseData = async () => {
+  //     try {
+  //       const response = await window.fetch(apiExpenseEndpoint);
+  //       if (!response.ok) throw Error(response.statusText);
+  //       const data = await response.json();
+  //       setExpenses(data);
+  //     } catch (err) {
+  //       handleAjaxError(err);
+  //     }
+
+  //     setIsLoading(false);
+  //   };
+  //   fetchExpenseData();
+
+  //   const fetchAccountData = async () => {
+  //     try {
+  //       const response = await window.fetch(apiAccountEndpoint);
+  //       if (!response.ok) throw Error(response.statusText);
+  //       const data = await response.json();
+  //       setAccounts(data);
+  //     } catch (err) {
+  //       handleAjaxError(err);
+  //     }
+
+  //     setIsLoading(false);
+  //   };
+  //   fetchAccountData();
+
+  //   const fetchExpenseCategoryData = async () => {
+  //     try {
+  //       const response = await window.fetch(apiExpenseCatEndpoint);
+  //       if (!response.ok) throw Error(response.statusText);
+  //       const data = await response.json();
+  //       setExpenseCategories(data);
+  //     } catch (err) {
+  //       handleAjaxError(err);
+  //     }
+
+  //     setIsLoading(false);
+  //   };
+  //   fetchExpenseCategoryData();
+  // }, []);
+
+  const reloadExpenseData = async () => {
+    try {
+      const response = await axios.get(apiExpenseEndpoint);
+      console.log('Expenses: reloadExpenseData: response: ', response);
+      if (response.status === 200) {
+        setExpenses(response.data);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      handleAjaxError(err);
+    }
   };
 
   const addExpense = async (newExpense) => {
     try {
-      const response = await window.fetch(apiExpenseEndpoint, {
-        method: 'POST',
-        body: JSON.stringify(newExpense),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) throw Error(response.statusText);
-
-      const savedExpense = await response.json();
+      const response = await axios.post(apiExpenseEndpoint, newExpense);
+      console.log('Expenses: addExpense: response: ', response);
+      if (response.status !== 200) {
+        throw Error(response.statusText);
+      }
+      const savedExpense = response.data;
       const newExpenses = [...expenses, savedExpense];
       setExpenses(newExpenses);
       reloadExpenseData();
-      // window.alert('Expense Added!');
-      success('Expense Added!');
+      success('Expense added successfully');
       navigate(`/expenses/${savedExpense.id}`);
     } catch (err) {
       handleAjaxError(err);
@@ -113,22 +175,17 @@ const Expenses = () => {
     })
       .then(async () => {
         try {
-          const response = await window.fetch(`/api/v1/expenses/${expenseId}`, {
-            method: 'DELETE',
-          });
-
-          if (!response.ok) throw Error(response.statusText);
-
-          // window.alert('Expense Deleted!');
-          success('Expense Deleted!');
+          const response = await axios.delete(`${apiExpenseEndpoint}/${expenseId}`);
+          console.log('Expenses: deleteExpense: response: ', response);
+          if (response.status !== 204) {
+            throw Error(response.statusText);
+          }
+          const newExpenses = expenses.filter((expense) => expense.id !== expenseId);
+          setExpenses(newExpenses);
+          success('Expense deleted successfully');
           navigate('/expenses');
-          setExpenses(expenses.filter((expense) => expense.id !== expenseId));
         } catch (err) {
           handleAjaxError(err);
-          // To be implemented: Using ErrorBoundary
-          // setError(err);
-          // setIsError(true);
-          // console.error(Error(err.message ? err.message : err));
         }
       })
       .catch(() => {
@@ -186,26 +243,16 @@ const Expenses = () => {
 
   const updateExpense = async (updatedExpense) => {
     try {
-      const response = await window.fetch(
-        `/api/v1/expenses/${updatedExpense.id}`,
-        {
-          method: 'PATCH',
-          body: JSON.stringify(updatedExpense),
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (!response.ok) throw Error(response.statusText);
-
+      const response = await axios.patch(`${apiExpenseEndpoint}/${updatedExpense.id}`, updatedExpense);
+      console.log('Expenses: updateExpense: response: ', response);
+      if (response.status !== 200) {
+        throw Error(response.statusText);
+      }
       const newExpenses = expenses;
       const idx = newExpenses.findIndex((expense) => expense.id === updatedExpense.id);
       newExpenses[idx] = updatedExpense;
       setExpenses(newExpenses);
       reloadExpenseData();
-
       success('Expense Updated!');
       navigate(`/expenses/${updatedExpense.id}`);
     } catch (err) {
@@ -271,6 +318,10 @@ const Expenses = () => {
       </div>
     </>
   );
+};
+
+Expenses.propTypes = {
+  token: PropTypes.string.isRequired,
 };
 
 export default Expenses;

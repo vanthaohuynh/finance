@@ -1,7 +1,7 @@
 class Api::V1::AccountAmendmentsController < ApplicationController
-  # before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :authorized
+  before_action :set_account, only: %i[show edit update destroy]
   # skip_before_action :verify_authenticity_token
-  load_and_authorize_resource
 
   def index
     @account_amendments = AccountAmendment
@@ -21,12 +21,12 @@ class Api::V1::AccountAmendmentsController < ApplicationController
   end
 
   def show
-    # @account_amendment = AccountAmendment.find(params[:id])
+    @account_amendment = AccountAmendment.find(params[:id])
     render json: @account_amendment
   end
 
   def update
-    # @account_amendment = AccountAmendment.find(params[:id])
+    @account_amendment = AccountAmendment.find(params[:id])
     if @account_amendment.update(account_amendment_params)
       render json: @account_amendment
     else
@@ -35,7 +35,7 @@ class Api::V1::AccountAmendmentsController < ApplicationController
   end
 
   def destroy
-    # @account_amendment = AccountAmendment.find(params[:id])
+    @account_amendment = AccountAmendment.find(params[:id])
     if @account_amendment.destroy
       head :no_content, status: :ok
     else

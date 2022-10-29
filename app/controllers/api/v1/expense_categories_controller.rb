@@ -1,4 +1,5 @@
 class Api::V1::ExpenseCategoriesController < ApplicationController
+  before_action :authorized
   def index
     @expense_categories = ExpenseCategory.all
     @expense_categories = @expense_categories.map { |expense_category|

@@ -6,7 +6,7 @@ const Header = (props) => {
   const { header } = props;
   return (
     <header>
-      <Link to={`/${header}`}>
+      <Link to={`/${header}`.toLowerCase()}>
         <h1>{header}</h1>
       </Link>
     </header>

@@ -10,6 +10,7 @@ import AccountList from './AccountList';
 import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
+import axios from 'axios';
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
@@ -22,6 +23,7 @@ const Accounts = () => {
   // const [isError, setIsError] = useState(false);
   // const apiAccountEndpoint = '/api/v1/accounts';
 
+  // Working fine with old Session Cookies
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,6 +80,7 @@ const Accounts = () => {
       success('Account Added!');
       navigate(`/accounts/${savedAccount.id}`);
     } catch (err) {
+      console.log('addAccount: err: ', err);
       handleAjaxError(err);
     }
   };

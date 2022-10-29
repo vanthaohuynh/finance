@@ -1,4 +1,5 @@
 class Api::V1::Accounts2Controller < ApplicationController
+  before_action :authorized
   # This Accounts2Controller is for getting json to create dropdown list
   # for the expense form. Need to have lable and value
   def index

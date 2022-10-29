@@ -5,10 +5,16 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  resources :sessions, only: [:create]
-  resources :registrations, only: [:create]
-  delete :logout, to: 'sessions#logout'
-  get :logged_in, to: 'sessions#logged_in'
+  # resources :sessions, only: [:create]
+  # resources :registrations, only: [:create]
+  # delete :logout, to: 'sessions#logout'
+  # get :logged_in, to: 'sessions#logged_in'
+  # post :login, to: 'sessions#create'
+  post :login, to: 'users#login'
+  get :validate_token, to: 'users#validate_token'
+
+  # post "/signup", to: "users#create"
+  # get :authorized, to: 'sessions#show'
 
   root to: 'site#index'
 

@@ -18,3 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     </StrictMode>,
   );
 });
+
+// Cannot use this because when refreshing the page, everything is removed also.
+// window.onbeforeunload = () => {
+//   window.localStorage.removeItem('user');
+//   window.localStorage.removeItem('token');
+// };

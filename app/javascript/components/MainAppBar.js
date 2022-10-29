@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 // background color of AppBar: #1876d2
 
 const MainAppBar = ({
-  userRoleID, userEmail, loggedInStatus, handleLogoutClick,
+  userRoleID, userEmail, loggedInStatus, handleLogout,
 }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -55,8 +55,8 @@ const MainAppBar = ({
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href={dash}
+              component={Link}
+              to={dash}
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -69,7 +69,6 @@ const MainAppBar = ({
             >
               Finance
             </Typography>
-
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -117,8 +116,8 @@ const MainAppBar = ({
             <Typography
               variant="h5"
               noWrap
-              component="a"
-              href={dash}
+              component={Link}
+              to={dash}
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
@@ -177,7 +176,7 @@ const MainAppBar = ({
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
-                <MenuItem key="Logout" onClick={handleLogoutClick}>Logout</MenuItem>
+                <MenuItem key="Logout" onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </Box>
           </Toolbar>
@@ -191,7 +190,7 @@ MainAppBar.propTypes = {
   userRoleID: PropTypes.number.isRequired,
   userEmail: PropTypes.string.isRequired,
   loggedInStatus: PropTypes.string.isRequired,
-  handleLogoutClick: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default MainAppBar;

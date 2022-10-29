@@ -3,8 +3,15 @@ import { error } from './notifications';
 export const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 export const handleAjaxError = (err) => {
-  error('Something went wrong');
-  console.error(err);
+  console.log('handleAjaxError: err: ', err);
+  switch (err.response.status) {
+    case 401:
+      error('You are not authorized to perform this action.');
+      break;
+    default:
+      error(`${err.response.statusText}`);
+      break;
+  }
 };
 
 // const isValidDate = (dateObj) => !Number.isNaN(Date.parse(dateObj));

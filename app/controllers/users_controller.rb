@@ -17,8 +17,9 @@ class UsersController < ApplicationController
     # debugger
     if @user&.authenticate(params[:password])
       token = encode_token(user_id: @user.id)
-      time = Time.now + 24.hours.to_i
-      render json: { user: @user, token:, exp: time.strftime('%Y-%m-%d %H:%M') }, status: 200
+      # time = Time.now + 24.hours.to_i
+      # render json: { user: @user, token:, exp: time.strftime('%Y-%m-%d %H:%M') }, status: 200
+      render json: { user: @user, token: }, status: 200
     else
       render json: { error: 'unauthorized' }, status: 401
     end

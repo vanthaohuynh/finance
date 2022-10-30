@@ -4,8 +4,12 @@ class ApplicationController < ActionController::Base
 
   SECRET_KEY = Rails.application.credentials.jwt_key
 
-  def encode_token(payload, exp = 24.hours.from_now)
-    payload[:exp] = exp.to_i
+  # def encode_token(payload, exp = 24.hours.from_now)
+  #   payload[:exp] = exp.to_i
+  #   JWT.encode(payload, SECRET_KEY)
+  # end
+
+  def encode_token(payload)
     JWT.encode(payload, SECRET_KEY)
   end
 

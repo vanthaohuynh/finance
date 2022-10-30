@@ -72,6 +72,7 @@ const Expenses = ({ token }) => {
   useEffect(() => {
     const validateToken = async () => {
       try {
+        console.log('Expenses: validateToken: (before calling axios) token: ', token);
         const response = await axios.get(urlValidation);
         console.log('Expenses: validate_token: response: ', response);
         if (response.status === 200) {

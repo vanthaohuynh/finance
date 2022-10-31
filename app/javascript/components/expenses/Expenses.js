@@ -23,10 +23,10 @@ const Expenses = ({ token }) => {
   // const [isError, setIsError] = useState(false);
   // const apiExpenseEndpoint = '/api/v1/expenses';
 
-  const urlValidation = 'http://localhost:3000/validate_token';
-  const apiExpenseEndpoint = 'http://localhost:3000/api/v1/expenses';
-  const apiAccountEndpoint = 'http://localhost:3000/api/v1/accounts2';
-  const apiExpenseCatEndpoint = 'http://localhost:3000/api/v1/expense_categories';
+  const urlValidation = '/validate_token';
+  const apiExpenseEndpoint = '/api/v1/expenses';
+  const apiAccountEndpoint = '/api/v1/accounts2';
+  const apiExpenseCatEndpoint = '/api/v1/expense_categories';
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   const fetchExpenseData = async () => {

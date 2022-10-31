@@ -24,7 +24,7 @@ const Login = ({ handleSuccessfulAuth }) => {
   const [password, setPassword] = useState('');
   // const [rememberMe, setRememberMe] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
-  const loginAPIEndpoint = 'http://localhost:3000/login';
+  const loginAPIEndpoint = '/login';
 
   const handleSubmit = async (event) => {
     event.preventDefault();

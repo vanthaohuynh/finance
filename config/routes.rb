@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   resources :roles
+  resources :users
 
-  scope '/admin' do
-    resources :users
-  end
+  # scope '/admin' do
+  #   resources :users
+  # end
 
   # resources :sessions, only: [:create]
   # resources :registrations, only: [:create]

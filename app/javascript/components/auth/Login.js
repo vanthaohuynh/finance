@@ -24,8 +24,7 @@ const Login = ({ handleSuccessfulAuth }) => {
   const [password, setPassword] = useState('');
   // const [rememberMe, setRememberMe] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
-  // const loginAPIEndpoint = '/login';
-  const loginAPIEndpoint = 'https://dovee-finance.herokuapp.com/login';
+  const loginAPIEndpoint = 'http://localhost:3000/login';
 
   const handleSubmit = async (event) => {
     event.preventDefault();

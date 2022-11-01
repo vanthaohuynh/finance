@@ -40,6 +40,7 @@ module Finance
     config.generators.system_tests = nil
 
     config.logger = Logger.new($stdout)
-    config.logger.level = Logger::DEBUG
+    # The below line is for Heroku Debug. It won't work in local
+    # config.logger.level = Logger::DEBUG
   end
 end

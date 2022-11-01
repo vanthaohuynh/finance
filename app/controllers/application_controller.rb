@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   SECRET_KEY = Rails.application.credentials.jwt_key
+  logger.debug "SECRET_KEY: #{SECRET_KEY}"
 
   # def encode_token(payload, exp = 24.hours.from_now)
   #   payload[:exp] = exp.to_i
@@ -10,6 +11,7 @@ class ApplicationController < ActionController::Base
   # end
 
   def encode_token(payload)
+    logger.debug "Payload: #{payload}"
     JWT.encode(payload, SECRET_KEY)
   end
 

@@ -2,8 +2,8 @@ class ApplicationController < ActionController::Base
   # before_action :authorized
   skip_before_action :verify_authenticity_token
 
-  SECRET_KEY = Rails.application.credentials.jwt_key
-  logger.debug "SECRET_KEY: #{SECRET_KEY}"
+  # SECRET_KEY = Rails.application.credentials.jwt_key
+  # logger.debug "SECRET_KEY: #{SECRET_KEY}"
 
   # def encode_token(payload, exp = 24.hours.from_now)
   #   payload[:exp] = exp.to_i
@@ -12,7 +12,8 @@ class ApplicationController < ActionController::Base
 
   def encode_token(payload)
     logger.debug "Payload: #{payload}"
-    JWT.encode(payload, SECRET_KEY)
+    # logger.debug("S: #{Rails.application.credentials.secret_key_base}")
+    JWT.encode(payload, Rails.application.credentials.secret_key_base)
   end
 
   def auth_header
@@ -25,7 +26,8 @@ class ApplicationController < ActionController::Base
       token = auth_header.split(' ')[1]
       # header: { 'Authorization': 'Bearer <token>' }
       begin
-        JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
+        # JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
+        JWT.decode(token, Rails.application.credentials.secret_key_base, true, algorithm: 'HS256')
       rescue JWT::DecodeError
         nil
       end

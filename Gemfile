@@ -54,6 +54,7 @@ group :development, :test do
   # Van added Oct 31, 2022 for Debugger
   gem 'ruby-debug-ide', '~> 0.7.3'
   gem 'debase', '~> 0.2.5.beta2', require: false
+  # gem 'dotenv-rails' # Van added Nov 1, 2021
 end
 
 group :development do

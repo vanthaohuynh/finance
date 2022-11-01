@@ -38,5 +38,8 @@ module Finance
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.logger = Logger.new($stdout)
+    config.logger.level = Logger::DEBUG
   end
 end

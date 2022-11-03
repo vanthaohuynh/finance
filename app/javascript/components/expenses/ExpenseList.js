@@ -99,8 +99,9 @@ const ExpenseList = ({ expenses }) => {
   // /////////////////////////////////////////////////
   // /////////////////////////////////////////////////
   // Using MUI DaraGrid
-  const renderExpenses = (expenses) => {
-    const sortedExpenses = [...expenses].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const renderExpenses = () => {
+    const sortedExpenses = [...expenses].sort((a, b) => new
+    Date(b.created_at) - new Date(a.created_at));
     return (
       <Box
         sx={{
@@ -128,7 +129,7 @@ const ExpenseList = ({ expenses }) => {
   return (
     <section>
       <Stack spacing={2}>
-        <div className="button-mui" align="left">
+        <div className="button-mui">
           <Button
             sx={{
               width: 125,
@@ -159,7 +160,7 @@ const ExpenseList = ({ expenses }) => {
           </Grid> */}
         </div>
         <div className="eventList">
-          {renderExpenses(expenses)}
+          {renderExpenses()}
         </div>
       </Stack>
     </section>

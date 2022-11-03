@@ -13,7 +13,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-// import Link from '@mui/material/Link'; // <- Cannot use this Link. Has to be react-router-dom Link
+// import Link from '@mui/material/Link'; // <- Cannot use this Link.
+// Has to be react-router-dom Link
 import { Link } from 'react-router-dom';
 // background color of AppBar: #1876d2
 
@@ -22,7 +23,7 @@ const MainAppBar = ({
 }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let pages = ['Revenues', 'Expenses', 'Accounts'];
+  let pages = ['Revenues', 'Expenses', 'Accounts', 'Expense Categories', 'Revenue Categories'];
   let dash = '/dashboard';
 
   const settings = ['Profile'];
@@ -103,7 +104,7 @@ const MainAppBar = ({
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     {/* <Typography textAlign="center"> */}
                     <Link
-                      to={`/${page.replace(/ /g, '').toLowerCase()}`}
+                      to={`/${page.replace(/ /g, '_').toLowerCase()}`}
                       style={{ textDecoration: 'none', color: 'inherit' }}>
                       {page}
                     </Link>
@@ -138,7 +139,7 @@ const MainAppBar = ({
                 <Button
                   key={page}
                   component={Link}
-                  to={`/${page.replace(/ /g, '').toLowerCase()}`}
+                  to={`/${page.replace(/ /g, '_').toLowerCase()}`}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >

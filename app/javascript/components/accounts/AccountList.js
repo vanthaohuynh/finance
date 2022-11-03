@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
@@ -8,110 +8,111 @@ import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
 
 const AccountList = ({ accounts }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const searchInput = useRef(null);
-  const [error, setError] = useState({ message: "I'm an error message" });
+  // const [searchTerm, setSearchTerm] = useState('');
+  // const searchInput = useRef(null);
+  // const [error, setError] = useState({ message: "I'm an error message" });
 
-  const crash = () => {
-    setError(null);
-  };
+  // const crash = () => {
+  //   setError(null);
+  // };
 
-  const updateSearchTerm = () => {
-    setSearchTerm(searchInput.current.value);
-  };
+  // const updateSearchTerm = () => {
+  //   setSearchTerm(searchInput.current.value);
+  // };
 
-  const matchSearchTerm = (obj) => {
-    const { id, created_at, updated_at, ...rest } = obj;
-    return Object.values(rest).some(
-      (value) => value?.toString().toLowerCase().indexOf(searchTerm?.toString().toLowerCase()) > -1
-    );
-  };
+  // const matchSearchTerm = (obj) => {
+  //   const { id, created_at, updated_at, ...rest } = obj;
+  //   return Object.values(rest).some(
+  //     (value) => value?
+  //          // .toString()
+  //          // .toLowerCase()
+  //          // .indexOf(searchTerm?.toString().toLowerCase()) > -1
+  //   );
+  // };
 
   const columns = [
-  {
-    field: 'account_num',
-    headerName: 'Account Number',
-    width: 200,
-    editable: false,
-    renderCell: (params) => {
-      const { id } = params;
-      const { value } = params;
-      return (
-        <Link to={`/accounts/${id}`}>{value}</Link>
-      );
+    {
+      field: 'account_num',
+      headerName: 'Account Number',
+      width: 200,
+      editable: false,
+      renderCell: (params) => {
+        const { id } = params;
+        const { value } = params;
+        return (
+          <Link to={`/accounts/${id}`}>{value}</Link>
+        );
+      },
     },
-  },
-  {
-    field: 'study_name',
-    headerName: 'Study Name',
-    width: 150,
-    editable: false,
-  },
-  {
-    field: 'study_title',
-    headerName: 'Study Title',
-    width: 150,
-    editable: false,
-  },
-];
+    {
+      field: 'study_name',
+      headerName: 'Study Name',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'study_title',
+      headerName: 'Study Title',
+      width: 150,
+      editable: false,
+    },
+  ];
 
-  ///////////////////////////////////////////////////
+  // /////////////////////////////////////////////////
   // This codes working without the Search (need a curly bracket after =>)
   // const renderAccounts = (accountArray) => {
-    // accountArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    // return accountArray.map((account) => (
-    //   <li key={account.id}>
-    //     <NavLink to={`/accounts/${account.id}`}>
-    //       {account.account_num}
-    //     </NavLink>
-    //   </li>
-    // ));
-    // };
-    ///////////////////////////////////////////////////
-    ///////////////////////////////////////////////////
-    // This codes working with the Search input. No need for curly bracket after =>)
-    // const renderAccounts = (accountArray) =>
-    // accountArray
-    //   .filter((el) => matchSearchTerm(el))
-    //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-    //   .map((account) => (
-    //     <li key={account.id}>
-    //       <NavLink to={`/accounts/${account.id}`}>
-    //           {account.account_num} - {account.study_title}
-    //       </NavLink>
-    //     </li>
-    //   ));
-    ///////////////////////////////////////////////////
-    ///////////////////////////////////////////////////
-    // Using MUI DaraGrid
-    const renderAccounts = (accounts) =>
-    {
-      const sortedAccounts = [...accounts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      return (
-        <>
-          <Box
-            sx={{
-              height: 500,
-              width: '100%',
-              '& .actions': {
-                color: 'text.secondary',
-              },
-              '& .textPrimary': {
-                color: 'text.primary',
-              },
-            }}
-          >
-            <DataGrid
-              rows={sortedAccounts}
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10]}
-            >
-            </DataGrid>
-          </Box>
-        </>
-      );
-    };
+  // accountArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  // return accountArray.map((account) => (
+  //   <li key={account.id}>
+  //     <NavLink to={`/accounts/${account.id}`}>
+  //       {account.account_num}
+  //     </NavLink>
+  //   </li>
+  // ));
+  // };
+  // /////////////////////////////////////////////////
+  // /////////////////////////////////////////////////
+  // This codes working with the Search input. No need for curly bracket after =>)
+  // const renderAccounts = (accountArray) =>
+  // accountArray
+  //   .filter((el) => matchSearchTerm(el))
+  //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+  //   .map((account) => (
+  //     <li key={account.id}>
+  //       <NavLink to={`/accounts/${account.id}`}>
+  //           {account.account_num} - {account.study_title}
+  //       </NavLink>
+  //     </li>
+  //   ));
+  // /////////////////////////////////////////////////
+  // /////////////////////////////////////////////////
+
+  // Using MUI DaraGrid
+  const renderAccounts = () => {
+    const sortedAccounts = [...accounts].sort((a, b) => new
+    Date(b.created_at) - new Date(a.created_at));
+    return (
+      <Box
+        sx={{
+          height: 500,
+          width: '100%',
+          '& .actions': {
+            color: 'text.secondary',
+          },
+          '& .textPrimary': {
+            color: 'text.primary',
+          },
+        }}
+      >
+        <DataGrid
+          rows={sortedAccounts}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+        />
+      </Box>
+    );
+  };
 
   return (
     <section>
@@ -133,7 +134,7 @@ const AccountList = ({ accounts }) => {
           {/* <Button onClick={crash}>CRASH TEST</Button>
             <p style={{ color: "red" }}>{error.message}</p> */}
 
-          {/* // This is the Search box maybe needed in the future*/}
+          {/* // This is the Search box maybe needed in the future */}
           {/* <Grid item xs={6}>
             <TextField
               type="text"
@@ -148,7 +149,7 @@ const AccountList = ({ accounts }) => {
           </Grid> */}
         </div>
         <div className="eventList">
-          {renderAccounts(accounts)}
+          {renderAccounts()}
         </div>
       </Stack>
     </section>

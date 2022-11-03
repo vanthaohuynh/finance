@@ -8,6 +8,9 @@ export const handleAjaxError = (err) => {
     case 401:
       error('You are not authorized to perform this action.');
       break;
+    case 500:
+      error('Internal Server Error (500). Cannot delete this record. It is still referenced from other tables.');
+      break;
     default:
       error(`${err.response.statusText}`);
       break;
@@ -48,7 +51,6 @@ export const validateAmendment = (amendment) => {
 
   return errors;
 };
-
 
 export const validateExpense = (expense) => {
   const errors = {};
@@ -101,6 +103,26 @@ export const validateRevenue = (revenue) => {
 
   if (revenue.expense_category_id === '') {
     errors.expense_category_id = 'Expense Category is required';
+  }
+
+  return errors;
+};
+
+export const validateExpenseCategory = (expenseCategory) => {
+  const errors = {};
+
+  if (expenseCategory.name === '') {
+    errors.expenseCategory = 'Expense Category name is required';
+  }
+
+  return errors;
+};
+
+export const validateRevenueCategory = (revenueCategory) => {
+  const errors = {};
+
+  if (revenueCategory.name === '') {
+    errors.revenueCategory = 'Revenue Category name is required';
   }
 
   return errors;

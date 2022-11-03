@@ -99,8 +99,9 @@ const RevenueList = ({ revenues }) => {
   // /////////////////////////////////////////////////
   // /////////////////////////////////////////////////
   // Using MUI DaraGrid
-  const renderRevenues = (revenues) => {
-    const sortedRevenues = [...revenues].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const renderRevenues = () => {
+    const sortedRevenues = [...revenues].sort((a, b) => new
+    Date(b.created_at) - new Date(a.created_at));
     return (
       <Box
         sx={{
@@ -128,7 +129,7 @@ const RevenueList = ({ revenues }) => {
   return (
     <section>
       <Stack spacing={2}>
-        <div className="button-mui" align="left">
+        <div className="button-mui">
           <Button
             sx={{
               width: 125,
@@ -159,7 +160,7 @@ const RevenueList = ({ revenues }) => {
           </Grid> */}
         </div>
         <div className="eventList">
-          {renderRevenues(revenues)}
+          {renderRevenues()}
         </div>
       </Stack>
     </section>

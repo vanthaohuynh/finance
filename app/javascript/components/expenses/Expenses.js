@@ -19,14 +19,11 @@ const Expenses = ({ token }) => {
   const [isValidated, setIsValidated] = useState(false);
   const navigate = useNavigate();
   const confirm = useConfirm();
-  // const [error, setError] = useState(Error());
-  // const [isError, setIsError] = useState(false);
-  // const apiExpenseEndpoint = '/api/v1/expenses';
 
-  const urlValidation = '/validate_token';
   const apiExpenseEndpoint = '/api/v1/expenses';
   const apiAccountEndpoint = '/api/v1/accounts2';
   const apiExpenseCatEndpoint = '/api/v1/expense_categories';
+  const urlValidation = '/validate_token';
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   const fetchExpenseData = async () => {
@@ -92,7 +89,7 @@ const Expenses = ({ token }) => {
       }
     };
     validateToken();
-  }, []);
+  }, []); // Need to keep this empty
 
   // useEffect(() => {
   //   const fetchExpenseData = async () => {
@@ -178,7 +175,7 @@ const Expenses = ({ token }) => {
         try {
           const response = await axios.delete(`${apiExpenseEndpoint}/${expenseId}`);
           console.log('Expenses: deleteExpense: response: ', response);
-          if (response.status !== 204) {
+          if (response.status !== 200) {
             throw Error(response.statusText);
           }
           const newExpenses = expenses.filter((expense) => expense.id !== expenseId);
@@ -187,6 +184,10 @@ const Expenses = ({ token }) => {
           navigate('/expenses');
         } catch (err) {
           handleAjaxError(err);
+          // To be implemented: Using ErrorBoundary
+          // setError(err);
+          // setIsError(true);
+          // console.error(Error(err.message ? err.message : err));
         }
       })
       .catch(() => {
@@ -305,6 +306,8 @@ const Expenses = ({ token }) => {
                 element={(
                   <ErrorBoundary>
                     <ExpenseForm
+                      // For new Expense, do not pass expenses in order
+                      // to set up initial state (blank fields)
                       // expenses={expenses}
                       accounts={accounts}
                       expenseCategories={expenseCategories}

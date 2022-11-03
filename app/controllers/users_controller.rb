@@ -14,13 +14,10 @@ class UsersController < ApplicationController
 
   def login
     @user = User.find_by(email: params[:email])
-    # logger.debug "User: #{@user.inspect}"
     if @user&.authenticate(params[:password])
-      # logger.debug "User: #{@user.email} is authenticated"
       token = encode_token(user_id: @user.id)
       # time = Time.now + 24.hours.to_i
       # render json: { user: @user, token:, exp: time.strftime('%Y-%m-%d %H:%M') }, status: 200
-      # logger.debug "Token: #{token}"
       render json: { user: @user, token: }, status: 200
     else
       render json: { error: 'unauthorized' }, status: 401

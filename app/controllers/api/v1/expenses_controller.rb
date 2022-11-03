@@ -32,7 +32,7 @@ class Api::V1::ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
     @expense.destroy
-    head :no_content
+    render json: @expense
   end
 
   private

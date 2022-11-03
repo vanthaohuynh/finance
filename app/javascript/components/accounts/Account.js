@@ -11,12 +11,13 @@ import {
 } from '@mui/material';
 import { NumericFormat } from 'react-number-format';
 import Stack from '@mui/material/Stack';
+import axios from 'axios';
 import AccountAmendmentList from './AccountAmendmentList';
 import AmendmentForm from './AmendmentForm';
 import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 
-const Account = ({ accounts, onDelete }) => {
+const Account = ({ token, accounts, onDelete }) => {
   const { id } = useParams();
   const account = accounts.find((e) => e.id === Number(id));
   const [isShown, setIsShown] = useState(false);
@@ -24,23 +25,39 @@ const Account = ({ accounts, onDelete }) => {
   // const [amendmentList, setAmendmentList] = useState([]);
   const [isAmendment, setIsAmendment] = useState(true);
 
+  const apiAmentments = '/api/v1/account_amendments';
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await window.fetch('/api/v1/account_amendments');
-
-        if (!response.ok) throw Error(response.statusText);
-
-        const data = await response.json();
-        setAmendments(data);
-      } catch (err) {
-        handleAjaxError(err);
+        const response = await axios.get(apiAmentments);
+        if (response.status === 200) {
+          setAmendments(response.data);
+        }
+      } catch (error) {
+        handleAjaxError(error);
       }
-      // setIsLoading(false);
     };
-
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //       const response = await window.fetch('/api/v1/account_amendments');
+
+  //       if (!response.ok) throw Error(response.statusText);
+
+  //       const data = await response.json();
+  //       setAmendments(data);
+  //     } catch (err) {
+  //       handleAjaxError(err);
+  //     }
+  //     // setIsLoading(false);
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const amendmentList = amendments.filter((e) => e.account_id === Number(id));
 
@@ -57,29 +74,46 @@ const Account = ({ accounts, onDelete }) => {
 
   const addAmendment = async (newAmendment) => {
     try {
-      const response = await window.fetch('/api/v1/account_amendments', {
-        method: 'POST',
-        body: JSON.stringify(newAmendment),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) throw Error(response.statusText);
-
-      const savedAmendment = await response.json();
+      const response = await axios.post(apiAmentments, newAmendment);
+      if (response.status !== 200) {
+        throw Error(response.statusText);
+      }
+      const savedAmendment = response.data;
       const newAmendments = [...amendments, savedAmendment];
       setAmendments(newAmendments);
-      // window.alert('Account Added!');
-      success('Amendment Added!');
+      setIsAmendment(true);
+      success('Amendment added successfully');
       showAmendmentForm();
-      // navigate(`/accounts/${savedAccount.id}`);
-    } catch (err) {
-      handleAjaxError(err);
+    } catch (error) {
+      handleAjaxError(error);
     }
   };
 
+  // const addAmendment = async (newAmendment) => {
+  //   try {
+  //     const response = await window.fetch('/api/v1/account_amendments', {
+  //       method: 'POST',
+  //       body: JSON.stringify(newAmendment),
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
+  //     if (!response.ok) throw Error(response.statusText);
 
+  //     const savedAmendment = await response.json();
+  //     const newAmendments = [...amendments, savedAmendment];
+  //     setAmendments(newAmendments);
+  //     // window.alert('Account Added!');
+  //     success('Amendment Added!');
+  //     showAmendmentForm();
+  //     // navigate(`/accounts/${savedAccount.id}`);
+  //   } catch (err) {
+  //     handleAjaxError(err);
+  //   }
+  // };
+
+  // Not in use at the moment. Need to fix to use axios when needed
   const updateAmendment = async (updatedAmendment) => {
     try {
       const response = await window.fetch(
@@ -365,6 +399,7 @@ const Account = ({ accounts, onDelete }) => {
 };
 
 Account.propTypes = {
+  token: PropTypes.string.isRequired,
   accounts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     account_num: PropTypes.string,

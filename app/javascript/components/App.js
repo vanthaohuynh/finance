@@ -3,16 +3,18 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { ToastContainer } from 'react-toastify';
-import axios from 'axios';
+// import axios from 'axios';
 import Home from './Home';
 import Dashboard from './Dashboard';
-import Registration from './auth/Registration';
+// import Registration from './auth/Registration';
 import MainAppBar from './MainAppBar';
 import Expenses from './expenses/Expenses';
 import Revenues from './revenues/Revenues';
 import Accounts from './accounts/Accounts';
 import { handleAjaxError } from '../helpers/helpers';
 import './App.css';
+import ExpenseCategories from './categories/expense/ExpenseCategories';
+import RevenueCategories from './categories/revenue/RevenueCategories';
 
 const App = () => {
   const [loggedInStatus, setLoggedInStatus] = useState('NOT_LOGGED_IN');
@@ -32,7 +34,7 @@ const App = () => {
       console.log('App: useEffect: localStorage: loggedInStatus', loggedInStatus);
       console.log('App: useEffect: localStorage: user and token', getUser, getToken);
     }
-  }, []);
+  }, []); // Leave the array empty to run only once.
 
   // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   // if (user && token) {
@@ -300,11 +302,19 @@ const App = () => {
           />
           <Route
             path="/revenues/*"
-            element={<Revenues loggedInStatus={loggedInStatus} />}
+            element={<Revenues token={token} />}
           />
           <Route
             path="/accounts/*"
-            element={<Accounts loggedInStatus={loggedInStatus} />}
+            element={<Accounts token={token} />}
+          />
+          <Route
+            path="/expense_categories/*"
+            element={<ExpenseCategories token={token} />}
+          />
+          <Route
+            path="/revenue_categories/*"
+            element={<RevenueCategories token={token} />}
           />
         </Routes>
         <ToastContainer />

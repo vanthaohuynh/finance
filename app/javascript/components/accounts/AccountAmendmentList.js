@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
@@ -8,6 +8,14 @@ import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
 
 const AccountAmendmentList = ({ amendmentList }) => {
+  // const [isAmendmentEmpty, setIsAmendmentEmpty] = React.useState(false);
+  // Not working at the moment. If in use, need to fix the useEffect below
+  // useEffect(() => {
+  //   if (amendmentList.length === 0) {
+  //     setIsAmendmentEmpty(true);
+  //   }
+  // }, [amendmentList]);
+
   const columns = [
     {
       field: 'count',
@@ -54,7 +62,7 @@ const AccountAmendmentList = ({ amendmentList }) => {
     },
   ];
 
-  const renderAccountAmendments = (amendmentList) => {
+  const renderAccountAmendments = () => {
     const sortedAmendments = [...amendmentList]
       .sort((a, b) => a.count - b.count);
 
@@ -101,7 +109,7 @@ const AccountAmendmentList = ({ amendmentList }) => {
           </Button>
         </div> */}
         <div className="eventList">
-          {renderAccountAmendments(amendmentList)}
+          {renderAccountAmendments()}
         </div>
       </Stack>
     </section>

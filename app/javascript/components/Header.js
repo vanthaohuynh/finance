@@ -6,7 +6,7 @@ const Header = (props) => {
   const { header } = props;
   return (
     <header>
-      <Link to={`/${header}`.toLowerCase()}>
+      <Link to={`/${header}`.replace(/ /g, '_').toLowerCase()}>
         <h1>{header}</h1>
       </Link>
     </header>

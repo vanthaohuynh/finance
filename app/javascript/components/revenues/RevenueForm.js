@@ -1,10 +1,10 @@
 import React, {
-  useState, useEffect, useRef, useCallback,
+  useState, useEffect, useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { NumericFormat } from 'react-number-format';
-import Pikaday from 'pikaday';
+// import Pikaday from 'pikaday';
 import 'pikaday/css/pikaday.css';
 import {
   Grid,
@@ -20,9 +20,18 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { formatDate, isEmptyObject, validateRevenue } from '../../helpers/helpers';
 
-const RevenueForm = ({ revenues, accounts, revenueCategories, onSave }) => {
+const RevenueForm = ({
+  revenues,
+  accounts,
+  revenueCategories,
+  onSave,
+}) => {
   const { id } = useParams();
 
+  // **************************************************************************
+  // This function is very important. Need to keep it that way or else it won't work.
+  // Explain from web site:
+  // https://hibbard.eu/rails-react-crud-app/#building-the-api
   const initialRevenueState = useCallback(
     () => {
       const defaults = {
@@ -44,6 +53,7 @@ const RevenueForm = ({ revenues, accounts, revenueCategories, onSave }) => {
     },
     [revenues, id],
   );
+  // **************************************************************************
 
   const [revenue, setRevenue] = useState(initialRevenueState);
   const [formErrors, setFormErrors] = useState({});
@@ -51,9 +61,14 @@ const RevenueForm = ({ revenues, accounts, revenueCategories, onSave }) => {
   const cancelURL = revenue.id ? `/revenues/${revenue.id}` : '/revenues';
   const title = revenue.id ? `${revenue.invoice_num}` : 'New Revenue';
 
+  // This useEffect is important. DON'T TOUCH IT. Please ignore eslint warning.
+  // Need to keep expenses in the dependency array or else it won't work.
+  // explain from web site above.
+  // **************************************************************************
   useEffect(() => {
     setRevenue(initialRevenueState);
-  }, [revenues]);
+  }, [revenues]); // Please ignore eslint warning. Need to keep it that way
+  // **************************************************************************
 
   const updateRevenue = (key, value) => {
     setRevenue((prevRevenue) => ({ ...prevRevenue, [key]: value }));
@@ -112,6 +127,7 @@ const RevenueForm = ({ revenues, accounts, revenueCategories, onSave }) => {
     );
   };
 
+  // Will use this function when need to disable typing in date field
   const onKeyDown = (e) => {
     e.preventDefault();
   };
@@ -295,7 +311,8 @@ const RevenueForm = ({ revenues, accounts, revenueCategories, onSave }) => {
                     }}
                     variant="outlined"
                     color="primary"
-                    component={Link} to={cancelURL}
+                    component={Link}
+                    to={cancelURL}
                   >
                     Cancel
                   </Button>

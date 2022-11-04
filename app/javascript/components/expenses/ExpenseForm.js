@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { NumericFormat } from 'react-number-format';
 // import Pikaday from 'pikaday';
-import 'pikaday/css/pikaday.css';
+// import 'pikaday/css/pikaday.css';
 import {
   Grid,
   TextField,

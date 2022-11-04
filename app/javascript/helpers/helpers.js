@@ -11,6 +11,9 @@ export const handleAjaxError = (err) => {
     case 500:
       error('Internal Server Error (500). Cannot delete this record. It is still referenced from other tables.');
       break;
+    case 422:
+      error('Unprocessable Entity (422). You are adding a duplicate record. Value must be unique.');
+      break;
     default:
       error(`${err.response.statusText}`);
       break;

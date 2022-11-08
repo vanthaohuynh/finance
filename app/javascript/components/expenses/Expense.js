@@ -68,6 +68,7 @@ const Expense = ({ expenses, onDelete }) => {
             <TextField
               id="account_num"
               label="Account Number"
+              // value={expense.account.account_num || ''}
               value={expense.account_num || ''}
               size="small"
               fullWidth
@@ -78,6 +79,7 @@ const Expense = ({ expenses, onDelete }) => {
             <TextField
               id="expense_category_name"
               label="Expense Category"
+              // value={expense.expense_category.name || ''}
               value={expense.expense_category_name || ''}
               size="small"
               fullWidth

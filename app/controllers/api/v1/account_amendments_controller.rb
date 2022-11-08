@@ -4,11 +4,13 @@ class Api::V1::AccountAmendmentsController < ApplicationController
   # skip_before_action :verify_authenticity_token
 
   def index
-    @account_amendments = AccountAmendment
-                          .joins(:account)
-                          .select('account_amendments.*, accounts.id as account_id, accounts.account_num')
-                          .order('created_at DESC')
-    render json: @account_amendments
+    @account_amendments = AccountAmendment.all
+    render json: @account_amendments, include: %i[account]
+    # @account_amendments = AccountAmendment
+    #                       .joins(:account)
+    #                       .select('account_amendments.*, accounts.id as account_id, accounts.account_num')
+    #                       .order('created_at DESC')
+    # render json: @account_amendments
   end
 
   def create

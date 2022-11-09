@@ -15,6 +15,10 @@ import {
   FormControl,
   Stack,
 } from '@mui/material';
+// import { Label } from '@mui/icons-material';
+// import IconButton from '@mui/material/IconButton';
+// import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -42,6 +46,7 @@ const ExpenseForm = ({
         expense_category_id: '',
         expense_currency: 'CAD',
         notes: '',
+        // pdf_invoice: null,
       };
 
       const currExpense = id ? expenses.find((e) => e.id === Number(id)) : {};
@@ -128,9 +133,17 @@ const ExpenseForm = ({
   };
 
   // Will use this function when need to disable typing in date field
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
+  // const onKeyDown = (e) => {
+  //   e.preventDefault();
+  // };
+
+  // const handleFileInputChange = (e) => {
+  //   const { target } = e;
+  //   const { files } = target;
+  //   const file = files[0];
+  //   console.log('file: ', file);
+  //   updateExpense('pdf_invoice', file);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -281,10 +294,42 @@ const ExpenseForm = ({
                   variant="outlined"
                 />
               </Grid>
+              {/* <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="pdf_invoice"
+                  name="pdf_invoice"
+                  label="PDF Invoice"
+                  // onChange={handleFileInputChange}
+                  value={expense.pdf_invoice ? expense.pdf_invoice.name : ''}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  disabled
+                />
+              </Grid> */}
             </Grid>
             <div className="button-mui">
               <Grid item xs={6}>
                 <Stack spacing={2} direction="row">
+                  {/* <Button
+                    sx={{
+                      width: 100,
+                      height: 40,
+                    }}
+                    variant="outlined"
+                    color="primary"
+                    component="label"
+                  >
+                    Upload
+                    <input
+                      hidden
+                      accept=".pdf"
+                      type="file"
+                      onChange={handleFileInputChange}
+                      // style={{ display: 'none' }}
+                    />
+                  </Button> */}
                   <Button
                     sx={{
                       width: 100,
@@ -308,6 +353,20 @@ const ExpenseForm = ({
                   >
                     Save
                   </Button>
+                  {/* <IconButton
+                    color="primary"
+                    aria-label="upload PDF"
+                    component="label"
+                  >
+                    <input
+                      hidden
+                      accept=".pdf"
+                      multiple
+                      type="file"
+                      onChange={handleFileInputChange}
+                    />
+                    <PictureAsPdfIcon />
+                  </IconButton> */}
                 </Stack>
               </Grid>
             </div>

@@ -44,8 +44,8 @@ export const validateAmendment = (amendment) => {
     errors.budget_version = 'Budget Version is required';
   }
 
-  if (amendment.number_of_patients === 0) {
-    errors.number_of_patients = 'Number of Patients is required';
+  if (amendment.targeted_enrolling_number === 0) {
+    errors.targeted_enrolling_number = 'Targeted Enrolling Number is required';
   }
 
   if (amendment.cta_date === '' || amendment.cta_date === null) {

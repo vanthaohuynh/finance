@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
+import { format } from 'date-fns';
 
 const AccountAmendmentList = ({ amendmentList }) => {
   // const [isAmendmentEmpty, setIsAmendmentEmpty] = React.useState(false);
@@ -43,8 +44,8 @@ const AccountAmendmentList = ({ amendmentList }) => {
       editable: false,
     },
     {
-      field: 'number_of_patients',
-      headerName: 'N. Patients',
+      field: 'targeted_enrolling_number',
+      headerName: 'Targeted Enrolling #',
       width: 130,
       editable: false,
     },
@@ -57,8 +58,14 @@ const AccountAmendmentList = ({ amendmentList }) => {
     {
       field: 'created_at',
       headerName: 'Date Added',
-      width: 150,
+      width: 100,
       editable: false,
+      valueFormatter: (params) => {
+        const { value } = params;
+        const date = new Date(value);
+        // return date.toLocaleDateString();
+        return format(date, 'yyyy-MM-dd');
+      },
     },
   ];
 
@@ -122,7 +129,7 @@ AccountAmendmentList.propTypes = {
     account_id: PropTypes.number,
     account_num: PropTypes.string,
     budget_version: PropTypes.string,
-    number_of_patients: PropTypes.number,
+    targeted_enrolling_number: PropTypes.number,
     cta_date: PropTypes.string,
     notes: PropTypes.string,
   })).isRequired,

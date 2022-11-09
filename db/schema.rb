@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_04_171427) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_09_185405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "account_amendments", force: :cascade do |t|
     t.string "budget_version"
-    t.integer "number_of_patients"
+    t.integer "targeted_enrolling_number"
     t.date "cta_date"
     t.text "notes"
     t.datetime "created_at", null: false
@@ -32,12 +32,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_171427) do
     t.string "account_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "muhc_account"
     t.string "study_title"
-    t.string "study_name"
     t.string "sponsor_name"
     t.string "sponsor_contact"
-    t.integer "number_of_patients"
+    t.integer "targeted_enrolling_number"
     t.date "cta_date"
     t.string "phase"
     t.string "cim_contact"
@@ -47,6 +45,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_171427) do
     t.string "budget_currency"
     t.string "invoicing_terms"
     t.text "notes"
+    t.string "pi_name"
+    t.string "status"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|

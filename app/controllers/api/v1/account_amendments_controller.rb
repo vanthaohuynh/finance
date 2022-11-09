@@ -1,6 +1,6 @@
 class Api::V1::AccountAmendmentsController < ApplicationController
   before_action :authorized
-  before_action :set_account, only: %i[show edit update destroy]
+  # before_action :set_account, only: %i[show edit update destroy]
   # skip_before_action :verify_authenticity_token
 
   def index
@@ -48,6 +48,10 @@ class Api::V1::AccountAmendmentsController < ApplicationController
   private
 
   def account_amendment_params
-    params.require(:account_amendment).permit(:account_id, :number_of_patients, :cta_date, :budget_version, :count, :notes)
+    params.require(:account_amendment)
+          .permit(
+            :account_id, :targeted_enrolling_number, :cta_date,
+            :budget_version, :count, :notes
+          )
   end
 end

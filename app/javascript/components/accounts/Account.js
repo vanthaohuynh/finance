@@ -154,7 +154,7 @@ const Account = ({ token, accounts, onDelete }) => {
         <h2>
           {account.account_num}
           {' - '}
-          {account.study_name}
+          {account.study_title}
         </h2>
         <FormControl>
           <Grid container spacing={2}>
@@ -163,16 +163,6 @@ const Account = ({ token, accounts, onDelete }) => {
                 id="account_num"
                 label="Account Number"
                 value={account.account_num}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                id="muhc_account"
-                label="MUHC Account"
-                value={account.muhc_account ? account.muhc_account : ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -190,9 +180,9 @@ const Account = ({ token, accounts, onDelete }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                id="study_name"
-                label="Study Name"
-                value={account.study_name ? account.study_name : ''}
+                id="pi_name"
+                label="PI Name"
+                value={account.pi_name ? account.pi_name : ''}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -203,6 +193,16 @@ const Account = ({ token, accounts, onDelete }) => {
                 id="sponsor_name"
                 label="Sponsor Name"
                 value={account.sponsor_name ? account.sponsor_name : ''}
+                size="small"
+                fullWidth
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                id="status"
+                label="Status"
+                value={account.status ? account.status : 'Open'}
                 size="small"
                 fullWidth
                 variant="outlined"
@@ -299,12 +299,12 @@ const Account = ({ token, accounts, onDelete }) => {
             <Grid item xs={6}>
               <NumericFormat
                 type="text"
-                id="num_of_patients"
-                name="num_of_patients"
+                id="targeted_enrolling_number"
+                name="targeted_enrolling_number"
                 variant="outlined"
-                label="Number of Patients"
+                label="Targeted Enrolling Number"
                 customInput={TextField}
-                value={account.number_of_patients || ''}
+                value={account.targeted_enrolling_number || ''}
                 size="small"
                 fullWidth
                 thousandSeparator=","
@@ -403,12 +403,11 @@ Account.propTypes = {
   accounts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     account_num: PropTypes.string,
-    muhc_account: PropTypes.string,
     study_title: PropTypes.string,
-    study_name: PropTypes.string,
+    pi_name: PropTypes.string,
     sponsor_name: PropTypes.string,
     sponsor_contact: PropTypes.string,
-    number_of_patients: PropTypes.number,
+    targeted_enrolling_number: PropTypes.number,
     cta_date: PropTypes.string,
     phase: PropTypes.string,
     cim_contact: PropTypes.string,
@@ -419,6 +418,7 @@ Account.propTypes = {
     invoicing_terms: PropTypes.string,
     notes: PropTypes.string,
     created_at: PropTypes.string,
+    status: PropTypes.string,
     // updated_at: PropTypes.string,
   })).isRequired,
   // amendments: PropTypes.arrayOf(PropTypes.shape({

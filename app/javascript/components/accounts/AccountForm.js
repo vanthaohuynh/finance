@@ -31,12 +31,12 @@ const AccountForm = ({ accounts, onSave }) => {
     () => {
       const defaults = {
         account_num: '',
-        muhc_account: '',
+        status: 'Open',
         study_title: '',
-        study_name: '',
+        pi_name: '',
         sponsor_name: '',
         sponsor_contact: '',
-        number_of_patients: '',
+        targeted_enrolling_number: '',
         cta_date: null,
         phase: '',
         cim_contact: '',
@@ -62,7 +62,7 @@ const AccountForm = ({ accounts, onSave }) => {
   const [formErrors, setFormErrors] = useState({});
   const dateInput = useRef(null);
   const cancelURL = account.id ? `/accounts/${account.id}` : '/accounts';
-  const title = account.id ? `${account.account_num} - ${account.study_name}` : 'New Account';
+  const title = account.id ? `${account.account_num} - ${account.study_title}` : 'New Account';
 
   useEffect(() => {
     setAccount(initialAccountState);
@@ -179,37 +179,24 @@ const AccountForm = ({ accounts, onSave }) => {
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  id="muhc_account"
-                  name="muhc_account"
-                  label="MUHC Account"
-                  onChange={handleInputChange}
-                  value={account.muhc_account || ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="study_name"
-                  name="study_name"
-                  label="Study Name"
-                  onChange={handleInputChange}
-                  value={account.study_name || ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
                   id="study_title"
                   name="study_title"
                   label="Study Title"
                   onChange={handleInputChange}
                   value={account.study_title || ''}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="pi_name"
+                  name="pi_name"
+                  label="PI Name"
+                  onChange={handleInputChange}
+                  value={account.pi_name || ''}
                   size="small"
                   fullWidth
                   variant="outlined"
@@ -227,6 +214,24 @@ const AccountForm = ({ accounts, onSave }) => {
                   fullWidth
                   variant="outlined"
                 />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Status</InputLabel>
+                  <Select
+                    type="text"
+                    id="status"
+                    name="status"
+                    label="Status"
+                    onChange={handleInputChange}
+                    value={account.status || 'Open'}
+                    variant="outlined"
+                    native
+                  >
+                    <option key="open" value="open">Open</option>
+                    <option key="closed" value="closed">Closed</option>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={6}>
                 <TextField
@@ -306,7 +311,7 @@ const AccountForm = ({ accounts, onSave }) => {
                     variant="outlined"
                     native
                   >
-                    <option></option>
+                    <option> </option>
                     <option key="CAD" value="CAD">CAD</option>
                     <option key="USD" value="USD">USD</option>
                   </Select>
@@ -340,34 +345,19 @@ const AccountForm = ({ accounts, onSave }) => {
               </Grid>
               <Grid item xs={6}>
                 <NumericFormat
-                  id="number_of_patients"
-                  name="number_of_patients"
+                  id="targeted_enrolling_number"
+                  name="targeted_enrolling_number"
                   variant="outlined"
-                  label="Number of Patients"
+                  label="Targeted Enrolling Number"
                   customInput={TextField}
                   type="text"
                   onChange={handleNumberInputChange}
-                  value={account.number_of_patients || ''}
+                  value={account.targeted_enrolling_number || ''}
                   size="small"
                   fullWidth
                   thousandSeparator=","
                 />
               </Grid>
-              {/* <Grid item xs={6}> Using Pikaday
-                <TextField
-                  type="text"
-                  id="cta_date"
-                  name="cta_date"
-                  label="CTA Date (yyyy-mm-dd)"
-                  ref={dateInput}
-                  autoComplete="off"
-                  value={account.cta_date || ''}
-                  onChange={handleInputChange}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid> */}
               <Grid item xs={6}>
                 <DatePicker
                   type="text"

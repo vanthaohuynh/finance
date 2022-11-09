@@ -128,14 +128,14 @@ const AmendmentForm = ({ amendmentList, account, onCancel, onSave }) => {
               </Grid>
               <Grid item xs={6}>
                 <NumericFormat
-                  id="number_of_patients"
-                  name="number_of_patients"
+                  id="targeted_enrolling_number"
+                  name="targeted_enrolling_number"
                   variant="outlined"
-                  label="Number of Patients"
+                  label="Targeted Enrolling Number"
                   customInput={TextField}
                   type="text"
                   onChange={handleNumberInputChange}
-                  value={amendment.number_of_patients || ''}
+                  value={amendment.targeted_enrolling_number || ''}
                   size="small"
                   fullWidth
                   thousandSeparator=","
@@ -211,12 +211,12 @@ export default AmendmentForm;
 AmendmentForm.propTypes = {
   account: PropTypes.shape({
     id: PropTypes.number,
-    account_num: PropTypes.string,
-    study_name: PropTypes.string,
-    cta_date: PropTypes.string,
-    notes: PropTypes.string,
-    number_of_patients: PropTypes.number,
-    budget_version: PropTypes.string,
+    // account_num: PropTypes.string,
+    // study_name: PropTypes.string,
+    // cta_date: PropTypes.string,
+    // notes: PropTypes.string,
+    // targeted_enrolling_number: PropTypes.number,
+    // budget_version: PropTypes.string,
   }).isRequired,
   amendmentList: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
@@ -224,10 +224,10 @@ AmendmentForm.propTypes = {
     account_id: PropTypes.number,
     cta_date: PropTypes.string,
     notes: PropTypes.string,
-    number_of_patients: PropTypes.number,
+    targeted_enrolling_number: PropTypes.number,
     budget_version: PropTypes.string,
-    account_num: PropTypes.string,
-    study_name: PropTypes.string,
+    // account_num: PropTypes.string,
+    // study_title: PropTypes.string,
   })),
   onCancel: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,

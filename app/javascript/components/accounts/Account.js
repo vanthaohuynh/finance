@@ -270,7 +270,7 @@ const Account = ({ token, accounts, onDelete }) => {
                   variant="outlined"
                   native
                 >
-                  <option></option>
+                  <option> </option>
                   <option key="CAD" value="CAD">CAD</option>
                   <option key="USD" value="USD">USD</option>
                 </Select>

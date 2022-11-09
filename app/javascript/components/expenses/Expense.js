@@ -19,6 +19,16 @@ const Expense = ({ expenses, onDelete }) => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
+              id="account_num"
+              label="Account Number"
+              value={expense.account_num || ''}
+              size="small"
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               id="invoice_num"
               label="Invoice Number"
               value={expense.invoice_num || ''}
@@ -27,26 +37,6 @@ const Expense = ({ expenses, onDelete }) => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="invoice_date"
-              label="Invoice Date"
-              value={expense.invoice_date.replace(/\//g, '-') || ''}
-              size="small"
-              fullWidth
-              variant="outlined"
-            />
-          </Grid>
-          {/* <Grid item xs={6}>
-            <TextField
-              id="amount"
-              label="Amount"
-              value={`$ ${expense.amount}` || ''}
-              size="small"
-              fullWidth
-              variant="outlined"
-            />
-          </Grid> */}
           <Grid item xs={6}>
             <NumericFormat
               id="amount"
@@ -66,9 +56,9 @@ const Expense = ({ expenses, onDelete }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="account_num"
-              label="Account Number"
-              value={expense.account_num || ''}
+              id="invoice_date"
+              label="Invoice Date"
+              value={expense.invoice_date.replace(/\//g, '-') || ''}
               size="small"
               fullWidth
               variant="outlined"

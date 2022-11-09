@@ -154,74 +154,6 @@ const RevenueForm = ({
           <FormControl>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="invoice_num"
-                  name="invoice_num"
-                  label="Invoice Number"
-                  onChange={handleInputChange}
-                  value={revenue.invoice_num}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  required
-                  />
-              </Grid>
-              {/* <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="invoice_date"
-                  name="invoice_date"
-                  label="Invoice Date (yyyy-mm-dd)"
-                  ref={dateInput}
-                  autoComplete="off"
-                  value={revenue.invoice_date}
-                  onChange={handleInputChange}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  required
-                />
-              </Grid> */}
-              <Grid item xs={6}>
-                <DatePicker
-                  type="text"
-                  id="invoice_date"
-                  name="invoice_date"
-                  label="Invoice Date"
-                  inputFormat="yyyy-MM-dd"
-                  onChange={handleDateInputChange}
-                  value={revenue.invoice_date}
-                  // Use onKeyDown to disable typing in the date field
-                  // renderInput={
-                  //   (params) =>
-                  // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
-                  // }
-                  renderInput={
-                    (params) => <TextField size="small" fullWidth required {...params} />
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <NumericFormat
-                  id="amount"
-                  name="amount"
-                  variant="outlined"
-                  label="Amount"
-                  customInput={TextField}
-                  type="text"
-                  onChange={handleNumberInputChange}
-                  value={revenue.amount}
-                  size="small"
-                  fullWidth
-                  thousandSeparator=","
-                  decimalScale={2}
-                  fixedDecimalScale
-                  prefix="$ "
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
                 <FormControl size="small" fullWidth>
                   <InputLabel>Account Number *</InputLabel>
                   <Select
@@ -244,6 +176,58 @@ const RevenueForm = ({
                     ))}
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="invoice_num"
+                  name="invoice_num"
+                  label="Invoice Number"
+                  onChange={handleInputChange}
+                  value={revenue.invoice_num}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  required
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <NumericFormat
+                  id="amount"
+                  name="amount"
+                  variant="outlined"
+                  label="Amount"
+                  customInput={TextField}
+                  type="text"
+                  onChange={handleNumberInputChange}
+                  value={revenue.amount}
+                  size="small"
+                  fullWidth
+                  thousandSeparator=","
+                  decimalScale={2}
+                  fixedDecimalScale
+                  prefix="$ "
+                  required
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <DatePicker
+                  type="text"
+                  id="invoice_date"
+                  name="invoice_date"
+                  label="Invoice Date"
+                  inputFormat="yyyy-MM-dd"
+                  onChange={handleDateInputChange}
+                  value={revenue.invoice_date}
+                  // Use onKeyDown to disable typing in the date field
+                  // renderInput={
+                  //   (params) =>
+                  // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
+                  // }
+                  renderInput={
+                    (params) => <TextField size="small" fullWidth required {...params} />
+                  }
+                />
               </Grid>
               <Grid item xs={6}>
                 <FormControl size="small" fullWidth>

@@ -206,6 +206,7 @@ const Account = ({ token, accounts, onDelete }) => {
                 size="small"
                 fullWidth
                 variant="outlined"
+                disabled={account.status === 'Closed'}
               />
             </Grid>
             <Grid item xs={6}>

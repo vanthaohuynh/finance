@@ -227,9 +227,10 @@ const AccountForm = ({ accounts, onSave }) => {
                     value={account.status || 'Open'}
                     variant="outlined"
                     native
+                    disabled={account.status === 'Closed'}
                   >
-                    <option key="open" value="open">Open</option>
-                    <option key="closed" value="closed">Closed</option>
+                    <option key="open" value="Open">Open</option>
+                    <option key="closed" value="Closed">Closed</option>
                   </Select>
                 </FormControl>
               </Grid>

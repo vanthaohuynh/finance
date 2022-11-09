@@ -69,7 +69,7 @@ const AccountAmendmentList = ({ amendmentList }) => {
     return (
       <Box
         sx={{
-          height: 500,
+          height: 265,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',

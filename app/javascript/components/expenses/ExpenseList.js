@@ -45,14 +45,14 @@ const ExpenseList = ({ expenses }) => {
       },
     },
     {
-      field: 'invoice_date',
-      headerName: 'Invoice Date',
+      field: 'amount',
+      headerName: 'Amount',
       width: 150,
       editable: false,
     },
     {
-      field: 'amount',
-      headerName: 'Amount',
+      field: 'invoice_date',
+      headerName: 'Invoice Date',
       width: 150,
       editable: false,
     },
@@ -65,6 +65,12 @@ const ExpenseList = ({ expenses }) => {
     {
       field: 'expense_category_name',
       headerName: 'Expense Category',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'notes ',
+      headerName: 'Notes',
       width: 150,
       editable: false,
     },
@@ -105,7 +111,7 @@ const ExpenseList = ({ expenses }) => {
     return (
       <Box
         sx={{
-          height: 500,
+          height: 320,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',

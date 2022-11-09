@@ -19,9 +19,9 @@ const Revenue = ({ revenues, onDelete }) => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
-              id="invoice_num"
-              label="Invoice Number"
-              value={revenue.invoice_num || ''}
+              id="account_num"
+              label="Account Number"
+              value={revenue.account_num || ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -29,9 +29,9 @@ const Revenue = ({ revenues, onDelete }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="invoice_date"
-              label="Invoice Date"
-              value={revenue.invoice_date.replace(/\//g, '-') || ''}
+              id="invoice_num"
+              label="Invoice Number"
+              value={revenue.invoice_num || ''}
               size="small"
               fullWidth
               variant="outlined"
@@ -56,9 +56,9 @@ const Revenue = ({ revenues, onDelete }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="account_num"
-              label="Account Number"
-              value={revenue.account_num || ''}
+              id="invoice_date"
+              label="Invoice Date"
+              value={revenue.invoice_date.replace(/\//g, '-') || ''}
               size="small"
               fullWidth
               variant="outlined"

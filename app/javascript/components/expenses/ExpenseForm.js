@@ -167,58 +167,6 @@ const ExpenseForm = ({
           <FormControl>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="invoice_num"
-                  name="invoice_num"
-                  label="Invoice Number"
-                  onChange={handleInputChange}
-                  value={expense.invoice_num}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <DatePicker
-                  type="text"
-                  id="invoice_date"
-                  name="invoice_date"
-                  label="Invoice Date"
-                  inputFormat="yyyy-MM-dd"
-                  onChange={handleDateInputChange}
-                  value={expense.invoice_date}
-                  // Use onKeyDown to disable typing in the date field
-                  // renderInput={
-                  //   (params) =>
-                  // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
-                  // }
-                  renderInput={
-                    (params) => <TextField size="small" fullWidth required {...params} />
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <NumericFormat
-                  id="amount"
-                  name="amount"
-                  variant="outlined"
-                  label="Amount"
-                  customInput={TextField}
-                  type="text"
-                  onChange={handleNumberInputChange}
-                  value={expense.amount}
-                  size="small"
-                  fullWidth
-                  thousandSeparator=","
-                  decimalScale={2}
-                  fixedDecimalScale
-                  prefix="$ "
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
                 <FormControl size="small" fullWidth>
                   <InputLabel>Account Number *</InputLabel>
                   <Select
@@ -241,6 +189,58 @@ const ExpenseForm = ({
                     ))}
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  id="invoice_num"
+                  name="invoice_num"
+                  label="Invoice Number"
+                  onChange={handleInputChange}
+                  value={expense.invoice_num}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  required
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <NumericFormat
+                  id="amount"
+                  name="amount"
+                  variant="outlined"
+                  label="Amount"
+                  customInput={TextField}
+                  type="text"
+                  onChange={handleNumberInputChange}
+                  value={expense.amount}
+                  size="small"
+                  fullWidth
+                  thousandSeparator=","
+                  decimalScale={2}
+                  fixedDecimalScale
+                  prefix="$ "
+                  required
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <DatePicker
+                  type="text"
+                  id="invoice_date"
+                  name="invoice_date"
+                  label="Invoice Date"
+                  inputFormat="yyyy-MM-dd"
+                  onChange={handleDateInputChange}
+                  value={expense.invoice_date}
+                  // Use onKeyDown to disable typing in the date field
+                  // renderInput={
+                  //   (params) =>
+                  // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
+                  // }
+                  renderInput={
+                    (params) => <TextField size="small" fullWidth required {...params} />
+                  }
+                />
               </Grid>
               <Grid item xs={6}>
                 <FormControl size="small" fullWidth>

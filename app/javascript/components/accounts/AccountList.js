@@ -94,7 +94,7 @@ const AccountList = ({ accounts }) => {
     return (
       <Box
         sx={{
-          height: 500,
+          height: 460,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',
@@ -117,7 +117,7 @@ const AccountList = ({ accounts }) => {
   return (
     <section>
       <Stack spacing={2}>
-        <div className="button-mui" align="left">
+        <div className="button-mui">
           <Button
             sx={{
               width: 125,

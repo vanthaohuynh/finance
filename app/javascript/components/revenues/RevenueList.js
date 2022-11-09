@@ -45,14 +45,14 @@ const RevenueList = ({ revenues }) => {
       },
     },
     {
-      field: 'invoice_date',
-      headerName: 'Invoice Date',
+      field: 'amount',
+      headerName: 'Amount',
       width: 150,
       editable: false,
     },
     {
-      field: 'amount',
-      headerName: 'Amount',
+      field: 'invoice_date',
+      headerName: 'Invoice Date',
       width: 150,
       editable: false,
     },
@@ -65,6 +65,12 @@ const RevenueList = ({ revenues }) => {
     {
       field: 'revenue_category_name',
       headerName: 'Revenue Category',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'notes ',
+      headerName: 'Notes',
       width: 150,
       editable: false,
     },
@@ -105,7 +111,7 @@ const RevenueList = ({ revenues }) => {
     return (
       <Box
         sx={{
-          height: 500,
+          height: 320,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',

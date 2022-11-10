@@ -1,6 +1,7 @@
 class Revenue < ApplicationRecord
   belongs_to :account
   belongs_to :revenue_category
+  has_many :transactions
 
   validates :invoice_num, presence: true, uniqueness: true
   validates :amount, numericality: { greater_than: 0 }, presence: true

@@ -48,6 +48,8 @@ Rails.application.routes.draw do
   get 'revenue_categories/:id', to: 'site#index'
   get 'revenue_categories/:id/edit', to: 'site#index'
 
+  get 'transactions', to: 'site#index'
+
   namespace :api do
     namespace :v1 do
       resources :expenses, only: %i[index show create update destroy]
@@ -57,6 +59,7 @@ Rails.application.routes.draw do
       resources :expense_categories, only: %i[index show create update destroy]
       resources :revenue_categories, only: %i[index show create update destroy]
       resources :account_amendments, only: %i[index show create update destroy]
+      resources :transactions, only: %i[index show create update destroy]
     end
   end
 end

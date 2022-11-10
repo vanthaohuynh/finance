@@ -4,6 +4,7 @@ class Account < ApplicationRecord
   has_many :revenue_categories, through: :revenues
   has_many :revenues
   has_many :account_amendments
+  has_many :transactions
 
   validates :account_num, presence: true, uniqueness: true
 end

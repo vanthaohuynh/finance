@@ -42,6 +42,10 @@ const RevenueForm = ({
         revenue_category_id: '',
         revenue_currency: '',
         notes: '',
+        overhead: '',
+        after_overhead: '',
+        account_num: '',
+        revenue_category_name: '',
       };
 
       const currRevenue = id ? revenues.find((e) => e.id === Number(id)) : {};
@@ -68,6 +72,8 @@ const RevenueForm = ({
   useEffect(() => {
     setRevenue(initialRevenueState);
   }, [revenues]); // Please ignore eslint warning. Need to keep it that way
+  // but pay attention as it may cause problems in the future: because:
+  // some changes may not be reflected in the UI
   // **************************************************************************
 
   const updateRevenue = (key, value) => {
@@ -81,11 +87,15 @@ const RevenueForm = ({
     updateRevenue(name, val);
   };
 
-  const handleNumberInputChange = (e) => {
+  const handleAmountInputChange = (e) => {
     const { target } = e;
     const { name } = target;
     const val = Number(target.value.replace(/[^0-9.]/g, ''));
     updateRevenue(name, val);
+    const overheadTemp = val * 0.3;
+    updateRevenue('overhead', overheadTemp);
+    const afterOverheadTemp = val - overheadTemp;
+    updateRevenue('after_overhead', afterOverheadTemp);
   };
 
   const handleDateInputChange = (val) => {
@@ -93,6 +103,24 @@ const RevenueForm = ({
       return;
     }
     updateRevenue('invoice_date', formatDate(val));
+  };
+
+  const handleAccountInputChange = (e) => {
+    const { target } = e;
+    const { name } = target;
+    const val = target.value;
+    updateRevenue(name, val);
+    const account = accounts.find((a) => a.id === Number(val));
+    updateRevenue('account_num', account.account_num);
+  };
+
+  const handleCategoryInputChange = (e) => {
+    const { target } = e;
+    const { name } = target;
+    const val = target.value;
+    updateRevenue(name, val);
+    const category = revenueCategories.find((c) => c.id === Number(val));
+    updateRevenue('revenue_category_name', category.name);
   };
 
   // useEffect(() => {
@@ -160,7 +188,7 @@ const RevenueForm = ({
                     id="account_id"
                     name="account_id"
                     label="Account Number"
-                    onChange={handleInputChange}
+                    onChange={handleAccountInputChange}
                     native
                     value={revenue.account_id}
                     required
@@ -199,7 +227,7 @@ const RevenueForm = ({
                   label="Amount"
                   customInput={TextField}
                   type="text"
-                  onChange={handleNumberInputChange}
+                  onChange={handleAmountInputChange}
                   value={revenue.amount}
                   size="small"
                   fullWidth
@@ -208,6 +236,44 @@ const RevenueForm = ({
                   fixedDecimalScale
                   prefix="$ "
                   required
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <NumericFormat
+                  id="overhead"
+                  name="overhead"
+                  variant="outlined"
+                  label="Overhead"
+                  customInput={TextField}
+                  type="text"
+                  // onChange={handleNumberInputChange}
+                  value={revenue.overhead}
+                  size="small"
+                  fullWidth
+                  thousandSeparator=","
+                  decimalScale={2}
+                  fixedDecimalScale
+                  prefix="$ "
+                  disabled
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <NumericFormat
+                  id="after_overhead"
+                  name="after_overhead"
+                  variant="outlined"
+                  label="After Overhead"
+                  customInput={TextField}
+                  type="text"
+                  // onChange={handleNumberInputChange}
+                  value={revenue.after_overhead}
+                  size="small"
+                  fullWidth
+                  thousandSeparator=","
+                  decimalScale={2}
+                  fixedDecimalScale
+                  prefix="$ "
+                  disabled
                 />
               </Grid>
               <Grid item xs={6}>
@@ -236,7 +302,7 @@ const RevenueForm = ({
                     id="revenue_category_id"
                     name="revenue_category_id"
                     label="Revenue Category"
-                    onChange={handleInputChange}
+                    onChange={handleCategoryInputChange}
                     native
                     value={revenue.revenue_category_id || ''}
                     required

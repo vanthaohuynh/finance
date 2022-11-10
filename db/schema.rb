@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_09_185405) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_144902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -94,6 +94,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_185405) do
     t.string "invoice_num"
     t.string "expense_currency"
     t.text "notes"
+    t.string "account_num"
+    t.string "expense_category_name"
     t.index ["account_id"], name: "index_expenses_on_account_id"
     t.index ["expense_category_id"], name: "index_expenses_on_expense_category_id"
   end
@@ -115,6 +117,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_185405) do
     t.string "invoice_num"
     t.string "revenue_currency"
     t.text "notes"
+    t.float "overhead"
+    t.float "after_overhead"
+    t.string "account_num"
+    t.string "revenue_category_name"
     t.index ["account_id"], name: "index_revenues_on_account_id"
     t.index ["revenue_category_id"], name: "index_revenues_on_revenue_category_id"
   end

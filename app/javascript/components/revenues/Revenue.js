@@ -45,7 +45,41 @@ const Revenue = ({ revenues, onDelete }) => {
               label="Amount"
               customInput={TextField}
               type="text"
-              value={revenue.amount}
+              value={revenue.amount || ''}
+              size="small"
+              fullWidth
+              thousandSeparator=","
+              decimalScale={2}
+              fixedDecimalScale
+              prefix="$ "
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <NumericFormat
+              id="overhead"
+              name="overhead"
+              variant="outlined"
+              label="Overhead"
+              customInput={TextField}
+              type="text"
+              value={revenue.overhead || ''}
+              size="small"
+              fullWidth
+              thousandSeparator=","
+              decimalScale={2}
+              fixedDecimalScale
+              prefix="$ "
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <NumericFormat
+              id="after_overhead"
+              name="after_overhead"
+              variant="outlined"
+              label="After Overhead"
+              customInput={TextField}
+              type="text"
+              value={revenue.after_overhead || ''}
               size="small"
               fullWidth
               thousandSeparator=","
@@ -139,6 +173,8 @@ Revenue.propTypes = {
     account_num: PropTypes.string,
     revenue_category_name: PropTypes.string,
     created_at: PropTypes.string,
+    overhead: PropTypes.number,
+    after_overhead: PropTypes.number,
   })).isRequired,
   onDelete: PropTypes.func.isRequired,
 };

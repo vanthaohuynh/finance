@@ -7,14 +7,15 @@ class Api::V1::ExpensesController < ApplicationController
     # The below lines are working perfectly fine, except that I need the JOIN
     # in order to get account_num and expense_category_name (for expense_serializer.rb)
     # for ExpenseList to display on the grid.
-    # @expenses = Expense.all.order('created_at DESC')
+    @expenses = Expense.all.order('created_at DESC')
     # render json: @expenses, include: %i[account expense_category]
-    # Had to go back to the .joins method.
-    @expenses = Expense
-                .joins(:account, :expense_category)
-                .select('expenses.*, accounts.account_num, expense_categories.name as expense_category_name')
-                .order('created_at DESC')
     render json: @expenses
+    # Had to go back to the .joins method.
+    # @expenses = Expense
+    #             .joins(:account, :expense_category)
+    #             .select('expenses.*, accounts.account_num, expense_categories.name as expense_category_name')
+    #             .order('created_at DESC')
+    # render json: @expenses
   end
 
   def create
@@ -48,6 +49,11 @@ class Api::V1::ExpensesController < ApplicationController
   end
 
   def expense_params
-    params.require(:expense).permit(:pdf_invoice, :updated_at, :invoice_date, :invoice_num, :expense_currency, :amount, :account_id, :expense_category_id, :notes)
+    params.require(:expense)
+          .permit(
+            :pdf_invoice, :updated_at, :invoice_date, :invoice_num,
+            :expense_currency, :amount, :account_id, :expense_category_id,
+            :notes, :account_num, :expense_category_name
+          )
   end
 end

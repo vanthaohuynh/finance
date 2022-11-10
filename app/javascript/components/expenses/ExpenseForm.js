@@ -46,6 +46,8 @@ const ExpenseForm = ({
         expense_category_id: '',
         expense_currency: 'CAD',
         notes: '',
+        account_num: '',
+        expense_category_name: '',
         // pdf_invoice: null,
       };
 
@@ -100,6 +102,24 @@ const ExpenseForm = ({
     updateExpense('invoice_date', formatDate(val));
   };
 
+  const handleAccountInputChange = (e) => {
+    const { target } = e;
+    const { name } = target;
+    const val = target.value;
+    const account = accounts.find((a) => a.id === Number(val));
+    updateExpense(name, val);
+    updateExpense('account_num', account.account_num);
+  };
+
+  const handleCategoryInputChange = (e) => {
+    const { target } = e;
+    const { name } = target;
+    const val = target.value;
+    const expenseCategory = expenseCategories.find((c) => c.id === Number(val));
+    updateExpense(name, val);
+    updateExpense('expense_category_name', expenseCategory.name);
+  };
+
   // useEffect(() => {
   //   const p = new Pikaday({
   //     field: dateInput.current,
@@ -152,6 +172,8 @@ const ExpenseForm = ({
     if (!isEmptyObject(errors)) {
       setFormErrors(errors);
     } else {
+      updateExpense('account_num', expense.account_num);
+      updateExpense('expense_category_name', expense.expense_category_name);
       onSave(expense);
     }
   };
@@ -173,7 +195,7 @@ const ExpenseForm = ({
                     id="account_id"
                     name="account_id"
                     label="Account Number"
-                    onChange={handleInputChange}
+                    onChange={handleAccountInputChange}
                     native
                     value={expense.account_id}
                     required
@@ -249,7 +271,7 @@ const ExpenseForm = ({
                     id="expense_category_id"
                     name="expense_category_id"
                     label="Expense Category"
-                    onChange={handleInputChange}
+                    onChange={handleCategoryInputChange}
                     native
                     value={expense.expense_category_id || ''}
                     required

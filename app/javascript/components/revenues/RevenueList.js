@@ -51,6 +51,18 @@ const RevenueList = ({ revenues }) => {
       editable: false,
     },
     {
+      field: 'overhead',
+      headerName: 'Overhead',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'after_overhead',
+      headerName: 'After Overhead',
+      width: 150,
+      editable: false,
+    },
+    {
       field: 'invoice_date',
       headerName: 'Invoice Date',
       width: 150,
@@ -180,6 +192,8 @@ RevenueList.propTypes = {
     amount: PropTypes.number,
     account_num: PropTypes.string,
     revenue_category_name: PropTypes.string,
+    overhead: PropTypes.number,
+    after_overhead: PropTypes.number,
   })).isRequired,
 };
 

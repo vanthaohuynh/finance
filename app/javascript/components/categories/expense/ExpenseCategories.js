@@ -139,7 +139,7 @@ const ExpenseCategories = ({ token }) => {
 
   return (
     <>
-      <Header header="Expense Categories" />
+      {/* <Header header="Expense Categories" /> */}
       <div className="grid">
         {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (

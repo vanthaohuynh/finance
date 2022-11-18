@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   post :login, to: 'users#login'
   get :validate_token, to: 'users#validate_token'
 
+  # get :transactions, to: 'accounts#transactions'
+
   # post "/signup", to: "users#create"
   # get :authorized, to: 'sessions#show'
 
@@ -48,18 +50,22 @@ Rails.application.routes.draw do
   get 'revenue_categories/:id', to: 'site#index'
   get 'revenue_categories/:id/edit', to: 'site#index'
 
-  get 'transactions', to: 'site#index'
+  get 'accounts/:id/transactions', to: 'site#index'
 
   namespace :api do
     namespace :v1 do
       resources :expenses, only: %i[index show create update destroy]
       resources :accounts, only: %i[index show create update destroy]
-      resources :accounts2, only: %i[index show create update destroy]
+      resources :accounts2, only: %i[index]
+      resources :accounts3, only: %i[index]
       resources :revenues, only: %i[index show create update destroy]
       resources :expense_categories, only: %i[index show create update destroy]
       resources :revenue_categories, only: %i[index show create update destroy]
       resources :account_amendments, only: %i[index show create update destroy]
-      resources :transactions, only: %i[index show create update destroy]
+      # resources :transactions, only: %i[index]
+      # # resources :accounts
+      # get 'accounts' => 'accounts#index'
+      get 'accounts/:id/transactions', to: 'accounts#transactions', as: 'account_transactions'
     end
   end
 end

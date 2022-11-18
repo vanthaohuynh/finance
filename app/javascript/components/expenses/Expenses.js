@@ -15,6 +15,7 @@ const Expenses = ({ token }) => {
   const [expenses, setExpenses] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [expenseCategories, setExpenseCategories] = useState([]);
+  // const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Expenses = ({ token }) => {
   const apiExpenseEndpoint = '/api/v1/expenses';
   const apiAccountEndpoint = '/api/v1/accounts2';
   const apiExpenseCatEndpoint = '/api/v1/expense_categories';
+  // const apiTransactionEndpoint = '/api/v1/transactions';
   const urlValidation = '/validate_token';
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
@@ -148,6 +150,33 @@ const Expenses = ({ token }) => {
     }
   };
 
+  // const addTransaction = async (savedExpense) => {
+  //   const transaction = {
+  //     account_id: savedExpense.account_id,
+  //     account_num: savedExpense.account_num,
+  //     invoice_num: savedExpense.invoice_num,
+  //     invoice_date: savedExpense.invoice_date,
+  //     transaction_type: 'Expense',
+  //     transaction_category: savedExpense.expense_category_name,
+  //     transaction_amount: savedExpense.amount * -1,
+  //     transaction_currency: savedExpense.expense_currency,
+  //   };
+
+  //   try {
+  //     const response = await axios.post(apiTransactionEndpoint, transaction);
+  //     if (response.status !== 200) {
+  //       throw Error(response.statusText);
+  //     }
+  //     const savedTransaction = response.data;
+  //     const newTransactions = [...transactions, savedTransaction];
+  //     setTransactions(newTransactions);
+  //     // reloadTransactionData();
+  //     success('Transaction added successfully');
+  //   } catch (err) {
+  //     handleAjaxError(err);
+  //   }
+  // };
+
   const addExpense = async (newExpense) => {
     try {
       const response = await axios.post(apiExpenseEndpoint, newExpense);
@@ -159,6 +188,9 @@ const Expenses = ({ token }) => {
       const newExpenses = [...expenses, savedExpense];
       setExpenses(newExpenses);
       reloadExpenseData();
+
+      // addTransaction(savedExpense);
+
       success('Expense added successfully');
       navigate(`/expenses/${savedExpense.id}`);
     } catch (err) {
@@ -264,7 +296,7 @@ const Expenses = ({ token }) => {
 
   return (
     <>
-      <Header header="Expenses" />
+      {/* <Header header="Expenses" /> */}
       <div className="grid">
         {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (

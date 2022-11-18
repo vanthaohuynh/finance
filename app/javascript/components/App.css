@@ -69,8 +69,38 @@ header h1 a {
   margin: 0px 0px;
   width: 100%;
   height: calc(100vh - 145px);
+  padding-top: 20px;
 }
 
+.gridTransactions {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 20px;
+  margin: 0px 0px;
+  width: 100%;
+  padding-top: 20px;
+  /* height: calc(100vh - 145px); */
+}
+
+.transactionHeader {
+  grid-column: 1 / 11;
+}
+
+.transactionMenu {
+  grid-column: 1 / 3;
+  grid-row: 2 / 8;
+}
+
+.transactionChart {
+  grid-column: 3 /11;
+  grid-row: 2 / 8;
+}
+
+.transactionList {
+  padding-top: 50px;
+  grid-column: 3 / 11;
+  grid-row: 2 / 8;
+}
 /* .eventList {
   /* background: #f6f6f6;
   padding: 16px;
@@ -210,7 +240,7 @@ h2 a:hover {
 }
 
 .button-mui {
-  margin: 14px 12px 0 12px;
+  margin: 14px 12px 20px 12px;
   text-decoration: none;
 }
 

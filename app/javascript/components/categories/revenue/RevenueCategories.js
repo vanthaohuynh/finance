@@ -139,7 +139,7 @@ const RevenueCategories = ({ token }) => {
 
   return (
     <>
-      <Header header="Revenue Categories" />
+      {/* <Header header="Revenue Categories" /> */}
       <div className="grid">
         {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (

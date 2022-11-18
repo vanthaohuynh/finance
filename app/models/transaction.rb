@@ -1,7 +1,5 @@
 class Transaction < ApplicationRecord
   belongs_to :account
-  belongs_to :expense
-  belongs_to :revenue
 
   validates :account_id, presence: true
   # validates :expense_id

@@ -397,7 +397,8 @@ const AccountForm = ({ accounts, onSave }) => {
                     }}
                     variant="outlined"
                     color="primary"
-                    component={Link} to={cancelURL}
+                    component={Link}
+                    to={cancelURL}
                   >
                     Cancel
                   </Button>

@@ -23,7 +23,8 @@ const MainAppBar = ({
 }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  let pages = ['Revenues', 'Expenses', 'Accounts', 'Expense Categories', 'Revenue Categories'];
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+  let pages = ['Accounts', 'Revenues', 'Expenses', 'Expense Categories', 'Revenue Categories'];
   let dash = '/dashboard';
 
   const settings = ['Profile'];
@@ -45,6 +46,11 @@ const MainAppBar = ({
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setAnchorElNav(null);
   };
 
   return (
@@ -100,12 +106,23 @@ const MainAppBar = ({
                 }}
               >
                 {/* // This is the drop down menu in the mobile view (small screen size) */}
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                {/* {pages.map((page) => ( */}
+                {pages.map((page, index) => (
+                  <MenuItem
+                    key={page}
+                    selected={index === selectedIndex}
+                    // onClick={handleCloseNavMenu}
+                    onClick={(event) => handleMenuItemClick(event, index)}
+                  >
                     {/* <Typography textAlign="center"> */}
                     <Link
                       to={`/${page.replace(/ /g, '_').toLowerCase()}`}
-                      style={{ textDecoration: 'none', color: 'inherit' }}>
+                      style={{
+                        textDecoration: 'none',
+                        color: index === selectedIndex ? 'white' : 'inherit',
+                        backgroundColor: index === selectedIndex ? '#1876d2' : 'inherit',
+                      }}
+                    >
                       {page}
                     </Link>
                     {/* </Typography> */}
@@ -135,13 +152,21 @@ const MainAppBar = ({
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {/* // This is working fine. Using Link from react-router-dom */}
               {/* // This is Button Link for App Bar Menu (in full screen mode) */}
-              {pages.map((page) => (
+              {/* {pages.map((page) => ( */}
+              {pages.map((page, index) => (
                 <Button
                   key={page}
+                  selected={index === selectedIndex}
                   component={Link}
                   to={`/${page.replace(/ /g, '_').toLowerCase()}`}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={(event) => handleMenuItemClick(event, index)}
+                  // sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{
+                    my: 2,
+                    color: index === selectedIndex ? 'black' : 'white',
+                    backgroundColor: index === selectedIndex ? 'white' : 'inherit',
+                    display: 'block',
+                  }}
                 >
                   {page}
                 </Button>

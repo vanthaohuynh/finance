@@ -1,6 +1,6 @@
 class Api::V1::AccountsController < ApplicationController
   before_action :authorized
-  before_action :set_account, only: %i[show edit update destroy]
+  before_action :set_account, only: %i[show edit update destroy transactions]
   # skip_before_action :verify_authenticity_token
   # before_action :authenticate_user, only: %i[create update destroy]
 
@@ -10,6 +10,29 @@ class Api::V1::AccountsController < ApplicationController
                 .order('created_at DESC')
     render json: @accounts
   end
+
+  def transactions
+    @account = Account.find(params[:id])
+    render json: @account
+    # @transactions = Account
+    #                 .joins('FULL OUTER JOIN expenses ON accounts.id = expenses.account_id',
+    #                        'FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
+    #                 .where('accounts.id = ?', @account.id)
+    #                 .distinct
+    #                 .order('accounts.id' => :desc)
+    # render json: @transactions
+  end
+
+  # def transactions
+  #   @accounts = Account
+  #               .joins('FULL OUTER JOIN expenses ON accounts.id = expenses.account_id',
+  #                      'FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
+  #               .distinct
+  #               .order('accounts.id' => :desc)
+  #               # .group('account.id')
+  #               # .order('one_invoice_date' => :desc)
+  #   render json: @accounts
+  # end
 
   def create
     @account = Account.new(account_params)

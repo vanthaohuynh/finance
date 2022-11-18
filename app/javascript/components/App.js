@@ -11,6 +11,7 @@ import MainAppBar from './MainAppBar';
 import Expenses from './expenses/Expenses';
 import Revenues from './revenues/Revenues';
 import Accounts from './accounts/Accounts';
+import Transactions from './transactions/Transactions';
 import { handleAjaxError } from '../helpers/helpers';
 import './App.css';
 import ExpenseCategories from './categories/expense/ExpenseCategories';
@@ -296,6 +297,10 @@ const App = () => {
             path="/registration"
             element={<Registration loggedInStatus={loggedInStatus} />}
           /> */}
+          <Route
+            path="/transactions/*"
+            element={<Transactions token={token} />}
+          />
           <Route
             path="/expenses/*"
             element={<Expenses token={token} />}

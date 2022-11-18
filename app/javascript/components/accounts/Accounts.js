@@ -7,16 +7,20 @@ import Header from '../Header';
 import Account from './Account';
 import AccountForm from './AccountForm';
 import AccountList from './AccountList';
+import Transactions from './Transactions';
 // import AccountAmendmentList from './AccountAmendmentList';
 import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
+// import TransactionList from './TransactionList';
 
 const urlValidation = '/validate_token';
 const apiAccountEndpoint = '/api/v1/accounts';
+// const apiTransactionEndpoint = '/api/v1/accounts/transactions';
 
 const Accounts = ({ token }) => {
   const [accounts, setAccounts] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   // const [amendments, setAmendments] = useState([]);
   // const [selectedAmendments, setSelectedAmendments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,16 +42,27 @@ const Accounts = ({ token }) => {
     }
   };
 
+  // const fetchTransactionData = async () => {
+  //   try {
+  //     const response = await axios.get(apiTransactionEndpoint);
+  //     console.log('Accounts: fetchTransactionData: response: ', response);
+  //     if (response.status === 200) {
+  //       setTransactions(response.data);
+  //       setIsLoading(false);
+  //     }
+  //   } catch (err) {
+  //     handleAjaxError(err);
+  //   }
+  // };
+
   useEffect(() => {
     const validateToken = async () => {
       try {
-        console.log('Accounts: validateToken: (before calling axios) token: ', token);
         const response = await axios.get(urlValidation);
-        console.log('Accounts: validate_token: response: ', response);
         if (response.status === 200) {
-          console.log('Accounts: validate_token: response.data: ', response.data);
           setIsValidated(true);
           fetchAccountData();
+          // fetchTransactionData();
         } else {
           setIsValidated(false);
           // navigate('/api/v1/expenses');
@@ -262,47 +277,35 @@ const Accounts = ({ token }) => {
     }
   };
 
-  // const updateAccount = async (updatedAccount) => {
-  //   try {
-  //     const response = await window.fetch(
-  //       `/api/v1/accounts/${updatedAccount.id}`,
-  //       {
-  //         method: 'PATCH',
-  //         body: JSON.stringify(updatedAccount),
-  //         headers: {
-  //           Accept: 'application/json',
-  //           'Content-Type': 'application/json',
-  //         },
-  //       },
-  //     );
-
-  //     if (!response.ok) throw Error(response.statusText);
-
-  //     const newAccounts = accounts;
-  //     const idx = newAccounts.findIndex((account) => account.id === updatedAccount.id);
-  //     newAccounts[idx] = updatedAccount;
-  //     setAccounts(newAccounts);
-
-  //     success('Account Updated!');
-  //     navigate(`/accounts/${updatedAccount.id}`);
-  //   } catch (err) {
-  //     handleAjaxError(err);
-  //   }
-  // };
-
   return (
     <>
-      <Header header="Accounts" />
+      {/* <Header header="Accounts" /> */}
       <div className="grid">
         {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (
           <p>Loading...</p>
         ) : (
           <>
-            <ErrorBoundary>
+            {/* <ErrorBoundary>
               <AccountList accounts={accounts} />
-            </ErrorBoundary>
+            </ErrorBoundary> */}
             <Routes>
+              <Route
+                path=":id/transactions"
+                element={(
+                  <ErrorBoundary>
+                    <Transactions token={token} />
+                  </ErrorBoundary>
+                )}
+              />
+              <Route
+                path="/"
+                element={(
+                  <ErrorBoundary>
+                    <AccountList accounts={accounts} />
+                  </ErrorBoundary>
+                )}
+              />
               <Route
                 path=":id"
                 element={(

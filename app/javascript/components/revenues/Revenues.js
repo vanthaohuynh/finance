@@ -15,14 +15,16 @@ const Revenues = ({ token }) => {
   const [revenues, setRevenues] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [revenueCategories, setRevenueCategories] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
   const navigate = useNavigate();
   const confirm = useConfirm();
 
+  const apiRevenueEndpoint = '/api/v1/revenues';
   const apiAccountEndpoint = '/api/v1/accounts2';
   const apiRevenueCatEndpoint = '/api/v1/revenue_categories';
-  const apiRevenueEndpoint = '/api/v1/revenues';
+  const apiTransactionEndpoint = '/api/v1/transactions';
   const urlValidation = '/validate_token';
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
@@ -102,6 +104,32 @@ const Revenues = ({ token }) => {
     setIsLoading(false);
   };
 
+  const addTransaction = async (savedRevenue) => {
+    const transaction = {
+      account_id: savedRevenue.account_id,
+      account_num: savedRevenue.account_num,
+      invoice_num: savedRevenue.invoice_num,
+      invoice_date: savedRevenue.invoice_date,
+      transaction_type: 'Revenue',
+      transaction_category: savedRevenue.revenue_category_name,
+      transaction_amount: savedRevenue.amount,
+      transaction_currency: savedRevenue.revenue_currency
+    };
+
+    try {
+      const response = await axios.post(apiTransactionEndpoint, transaction);
+      if (response.status !== 200) {
+        throw Error(response.statusText);
+      }
+      const savedTransaction = response.data;
+      const newTransactions = [...transactions, savedTransaction];
+      setTransactions(newTransactions);
+      success('Transaction added successfully');
+    } catch (err) {
+      handleAjaxError(err);
+    }
+  };
+
   const addRevenue = async (newRevenue) => {
     try {
       const response = await axios.post(apiRevenueEndpoint, newRevenue);
@@ -112,6 +140,9 @@ const Revenues = ({ token }) => {
       const newRevenues = [...revenues, savedRevenue];
       setRevenues(newRevenues);
       reloadRevenueData();
+
+      addTransaction(savedRevenue);
+
       success('Revenue Added!');
       navigate(`/revenues/${savedRevenue.id}`);
     } catch (err) {
@@ -215,7 +246,7 @@ const Revenues = ({ token }) => {
 
   return (
     <>
-      <Header header="Revenues" />
+      {/* <Header header="Revenues" /> */}
       <div className="grid">
         {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (

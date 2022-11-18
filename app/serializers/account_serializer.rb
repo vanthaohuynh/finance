@@ -3,5 +3,6 @@ class AccountSerializer < ActiveModel::Serializer
              :sponsor_contact, :cim_contact, :cro_name, :cro_contact,
              :phase, :budget_currency, :invoicing_terms, :budget_version,
              :targeted_enrolling_number, :cta_date, :notes,
-             :created_at, :updated_at, :account_amendments
+             :created_at, :updated_at, :account_amendments,
+             :expenses, :revenues
 end

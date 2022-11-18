@@ -14,6 +14,7 @@ import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import AccountAmendmentList from './AccountAmendmentList';
 import AmendmentForm from './AmendmentForm';
+import Transactions from './Transactions';
 import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 
@@ -151,11 +152,56 @@ const Account = ({ token, accounts, onDelete }) => {
   return (
     <>
       <div className="eventContainer">
-        <h2>
+        <h3>
           {account.account_num}
           {' - '}
           {account.study_title}
-        </h2>
+        </h3>
+        <div className="button-mui">
+          <Grid item xs={6}>
+            <Stack spacing={2} direction="row">
+              <Button
+                sx={{
+                  width: 125,
+                  height: 40,
+                }}
+                type="submit"
+                variant="contained"
+                color="primary"
+                component={Link}
+                to={`/accounts/${account.id}/edit`}
+              >
+                Edit
+              </Button>
+              <Button
+                sx={{
+                  width: 175,
+                  height: 40,
+                }}
+                type="submit"
+                variant="outlined"
+                color="primary"
+                component={Link}
+                to={`/accounts/${account.id}/transactions`}
+              >
+                Transactions
+              </Button>
+              <Button
+                sx={{
+                  width: 175,
+                  height: 40,
+                }}
+                type="submit"
+                variant="outlined"
+                color="primary"
+                onClick={showAmendmentForm}
+              >
+                Add Amendment
+              </Button>
+            </Stack>
+          </Grid>
+        </div>
+
         <FormControl>
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -332,7 +378,7 @@ const Account = ({ token, accounts, onDelete }) => {
               />
             </Grid>
           </Grid>
-          <div className="button-mui">
+          {/* <div className="button-mui">
             <Grid item xs={6}>
               <Stack spacing={2} direction="row">
                 <Button
@@ -342,7 +388,6 @@ const Account = ({ token, accounts, onDelete }) => {
                   }}
                   variant="outlined"
                   color="primary"
-                  // onClick={() => onDelete(account.id)}
                   disabled
                 >
                   Delete
@@ -360,21 +405,9 @@ const Account = ({ token, accounts, onDelete }) => {
                 >
                   Edit
                 </Button>
-                <Button
-                  sx={{
-                    width: 175,
-                    height: 40,
-                  }}
-                  type="submit"
-                  variant="outlined"
-                  color="primary"
-                  onClick={showAmendmentForm}
-                >
-                  Add Amendment
-                </Button>
               </Stack>
             </Grid>
-          </div>
+          </div> */}
         </FormControl>
       </div>
       <div>

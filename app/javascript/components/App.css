@@ -70,6 +70,7 @@ header h1 a {
   width: 100%;
   height: calc(100vh - 145px);
   padding-top: 20px;
+  padding-bottom: 50px;
 }
 
 .gridTransactions {
@@ -78,13 +79,49 @@ header h1 a {
   grid-gap: 20px;
   margin: 0px 0px;
   width: 100%;
-  padding-top: 20px;
-  /* height: calc(100vh - 145px); */
+  /* padding-top: 20px; */
+  padding-bottom: 50px;
 }
 
-.transactionHeader {
-  grid-column: 1 / 11;
+.gridTransactionHeader {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 20px;
+  margin: 0px 0px;
+  width: 100%;
+  /* padding-top: 20px;
+  padding-bottom: 50px; */
 }
+
+.transactionHeaderAccount {
+  grid-column: 1 / span 3;
+}
+
+.transactionHeaderLabel {
+  grid-column: 4 / span 1;
+}
+
+.transactionHeaderDateFrom {
+  grid-column: 5 / span 2;
+}
+
+.transactionHeaderDateTo {
+  grid-column: 7 / span 2;
+}
+
+.gridAmendments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  margin: 0px 0px;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+/* .transactionHeader {
+  grid-column: 1 / 11;
+} */
 
 .transactionMenu {
   grid-column: 1 / 3;
@@ -98,13 +135,15 @@ header h1 a {
 
 .transactionList {
   padding-top: 50px;
+  padding-left: 20px;
   grid-column: 3 / 11;
   grid-row: 2 / 8;
 }
-/* .eventList {
+
+.eventList {
   /* background: #f6f6f6;
-  padding: 16px;
-} */
+  padding: 16px; */
+}
 
 .eventList h2 {
   font-size: 20px;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 import PropTypes from 'prop-types';
@@ -20,9 +20,7 @@ const apiAccountEndpoint = '/api/v1/accounts';
 
 const Accounts = ({ token }) => {
   const [accounts, setAccounts] = useState([]);
-  const [transactions, setTransactions] = useState([]);
-  // const [amendments, setAmendments] = useState([]);
-  // const [selectedAmendments, setSelectedAmendments] = useState([]);
+  const dataferchedRef = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
   const navigate = useNavigate();
@@ -42,38 +40,29 @@ const Accounts = ({ token }) => {
     }
   };
 
-  // const fetchTransactionData = async () => {
-  //   try {
-  //     const response = await axios.get(apiTransactionEndpoint);
-  //     console.log('Accounts: fetchTransactionData: response: ', response);
-  //     if (response.status === 200) {
-  //       setTransactions(response.data);
-  //       setIsLoading(false);
-  //     }
-  //   } catch (err) {
-  //     handleAjaxError(err);
-  //   }
-  // };
+  const validateToken = async () => {
+    try {
+      const response = await axios.get(urlValidation);
+      if (response.status === 200) {
+        setIsValidated(true);
+        fetchAccountData();
+        // fetchTransactionData();
+      } else {
+        setIsValidated(false);
+        // navigate('/api/v1/expenses');
+      }
+    } catch (err) {
+      handleAjaxError(err);
+      setIsValidated(false);
+      // navigate('/home');
+    }
+  };
 
   useEffect(() => {
-    const validateToken = async () => {
-      try {
-        const response = await axios.get(urlValidation);
-        if (response.status === 200) {
-          setIsValidated(true);
-          fetchAccountData();
-          // fetchTransactionData();
-        } else {
-          setIsValidated(false);
-          // navigate('/api/v1/expenses');
-        }
-      } catch (err) {
-        handleAjaxError(err);
-        setIsValidated(false);
-        // navigate('/home');
-      }
-    };
-    validateToken();
+    if (!dataferchedRef.current) {
+      dataferchedRef.current = true;
+      validateToken();
+    }
   }, []);
   // Working fine with old Session Cookies
   // useEffect(() => {
@@ -291,7 +280,7 @@ const Accounts = ({ token }) => {
             </ErrorBoundary> */}
             <Routes>
               <Route
-                path=":id/transactions"
+                path=":id/transactions/*"
                 element={(
                   <ErrorBoundary>
                     <Transactions token={token} />

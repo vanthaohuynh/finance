@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import AccountAmendmentList from './AccountAmendmentList';
 import AmendmentForm from './AmendmentForm';
-import Transactions from './Transactions';
+// import Transactions from './Transactions';
 import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 
@@ -409,8 +409,29 @@ const Account = ({ token, accounts, onDelete }) => {
             </Grid>
           </div> */}
         </FormControl>
+        <div className="gridAmendments">
+          <div>
+            {isAmendment && (
+              // <div className="eventList">
+              <div>
+                <AccountAmendmentList amendmentList={amendmentList} />
+              </div>
+            )}
+          </div>
+          <div>
+            {isShown
+            && (
+              <AmendmentForm
+                account={account}
+                amendmentList={amendmentList}
+                onCancel={showAmendmentForm}
+                onSave={addAmendment}
+              />
+            )}
+          </div>
+        </div>
       </div>
-      <div>
+      {/* <div>
         {isAmendment && (
           <div className="eventlist">
             <AccountAmendmentList amendmentList={amendmentList} />
@@ -427,7 +448,7 @@ const Account = ({ token, accounts, onDelete }) => {
             onSave={addAmendment}
           />
         )}
-      </div>
+      </div> */}
     </>
   );
 };

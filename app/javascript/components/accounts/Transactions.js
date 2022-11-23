@@ -22,11 +22,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { NumericFormat } from 'react-number-format';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Header from '../Header';
+// import Header from '../Header';
 import TransactionList from './TransactionList';
 import AccountSummaryCard from './AccountSummaryCard';
-import TransactionExpenseChart from './TransactionExpenseChart';
-import TransactionRevenueChart from './TransactionRevenueChart';
+import ExpenseChart from './ExpenseChart';
+import RevenueChart from './RevenueChart';
 import { info, success } from '../../helpers/notifications';
 import { formatDate, handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
@@ -38,6 +38,8 @@ const Transactions = ({ token }) => {
   const [account, setAccount] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [chartTransactionData, setChartTransactionData] = useState([]);
+  const [cardTransactionData, setCardTransactionData] = useState([]);
   const [dateFrom, setDateFrom] = useState(null);
   const [dateTo, setDateTo] = useState(null);
   const dataFetchedRef = useRef(false);
@@ -45,6 +47,19 @@ const Transactions = ({ token }) => {
   const navigate = useNavigate();
   const confirm = useConfirm();
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+  // const createSummaryCardData = (transactionData) => {
+  //   const revenueTransactions = transactionData.filter((transaction) => transaction.transaction_type === 'Revenue');
+  //   const expenseTransactions = transactionData.filter((transaction) => transaction.transaction_type === 'Expense');
+  //   const revenueTotal = revenueTransactions
+  //     .reduce((acc, transaction) => acc + transaction.amount, 0);
+  //   const expenseTotal = expenseTransactions
+  //     .reduce((acc, transaction) => acc + transaction.amount, 0);
+  //   const balance = revenueTotal - expenseTotal;
+  //   console.log('revenueTotal', revenueTotal);
+  //   console.log('expenseTotal', expenseTotal);
+  //   console.log('balance', balance);
+  // };
 
   const createTransactions = (account) => {
     // console.log('CreateTransactions:', account);
@@ -60,7 +75,8 @@ const Transactions = ({ token }) => {
           invoice_num: expense.invoice_num,
           transaction_type: 'Expense',
           category: expense.expense_category_name,
-          amount: (expense.amount) * -1,
+          amount: (expense.amount),
+          // amount: (expense.amount) * -1,
         };
         transactions.push(transaction);
       });
@@ -75,6 +91,8 @@ const Transactions = ({ token }) => {
           transaction_type: 'Revenue',
           category: revenue.revenue_category_name,
           amount: revenue.amount,
+          overhead: revenue.overhead,
+          after_overhead: revenue.after_overhead,
         };
         transactions.push(transaction);
       });
@@ -82,6 +100,9 @@ const Transactions = ({ token }) => {
     console.log('createTransaction', transactions);
     setTransactions(transactions);
     setFilteredTransactions(transactions);
+    setChartTransactionData(transactions);
+    // createSummaryCardData(transactions);
+    setCardTransactionData(transactions);
   };
 
   const fetchAccount = async () => {
@@ -125,6 +146,9 @@ const Transactions = ({ token }) => {
       });
       // console.log('handleDateFilter', filteredTransactions);
       setFilteredTransactions(newFilteredTransactions);
+      setChartTransactionData(newFilteredTransactions);
+      // createSummaryCardData(newFilteredTransactions);
+      setCardTransactionData(newFilteredTransactions);
     }
   };
 
@@ -219,8 +243,7 @@ const Transactions = ({ token }) => {
               </ErrorBoundary> */}
               {/* <div className="transactionHeader"> */}
               <div className="transactionMenu">
-                <AccountSummaryCard />
-                <AccountSummaryCard />
+                <AccountSummaryCard cardTransactionData={cardTransactionData} />
               </div>
               <div className="transactionChart">
                 <div>
@@ -238,7 +261,9 @@ const Transactions = ({ token }) => {
                           size="small"
                           sx={{ width: '100%', height: '100%' }}
                         >
-                          <TransactionRevenueChart />
+                          <RevenueChart
+                            chartTransactionData={chartTransactionData}
+                          />
                         </Card>
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -246,7 +271,9 @@ const Transactions = ({ token }) => {
                           size="small"
                           sx={{ width: '100%', height: '100%' }}
                         >
-                          <TransactionExpenseChart />
+                          <ExpenseChart
+                            chartTransactionData={chartTransactionData}
+                          />
                         </Card>
                       </Grid>
                     </Grid>

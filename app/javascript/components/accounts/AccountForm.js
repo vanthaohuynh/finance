@@ -32,14 +32,15 @@ const AccountForm = ({ accounts, onSave }) => {
       const defaults = {
         account_num: '',
         status: 'Open',
+        study_name: '',
         study_title: '',
         pi_name: '',
         sponsor_name: '',
         sponsor_contact: '',
         targeted_enrolling_number: '',
         cta_date: null,
-        phase: '',
-        cim_contact: '',
+        // phase: '',
+        // cim_contact: '',
         cro_name: '',
         cro_contact: '',
         budget_version: '',
@@ -179,6 +180,19 @@ const AccountForm = ({ accounts, onSave }) => {
               <Grid item xs={6}>
                 <TextField
                   type="text"
+                  id="study_name"
+                  name="study_name"
+                  label="Study Name"
+                  onChange={handleInputChange}
+                  value={account.study_name || ''}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
                   id="study_title"
                   name="study_title"
                   label="Study Title"
@@ -247,7 +261,7 @@ const AccountForm = ({ accounts, onSave }) => {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <TextField
                   type="text"
                   id="cim_contact"
@@ -259,7 +273,7 @@ const AccountForm = ({ accounts, onSave }) => {
                   fullWidth
                   variant="outlined"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={6}>
                 <TextField
                   type="text"
@@ -286,7 +300,7 @@ const AccountForm = ({ accounts, onSave }) => {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <TextField
                   type="text"
                   id="phase"
@@ -298,7 +312,7 @@ const AccountForm = ({ accounts, onSave }) => {
                   fullWidth
                   variant="outlined"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={6}>
                 <FormControl fullWidth size="small">
                   <InputLabel>Budget Currency</InputLabel>
@@ -387,13 +401,14 @@ const AccountForm = ({ accounts, onSave }) => {
                 />
               </Grid>
             </Grid>
-            <div className="button-mui">
+            <div className="button-mui-edit">
               <Grid item xs={6}>
                 <Stack spacing={2} direction="row">
                   <Button
                     sx={{
                       width: 100,
                       height: 40,
+                      backgroundColor: 'white',
                     }}
                     variant="outlined"
                     color="primary"

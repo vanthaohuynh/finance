@@ -5,15 +5,29 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
-const TransactionList = ({ transactions }) => {
+const ExpenseTransactionList = ({ transactions }) => {
+  const expenseTransactions = transactions.filter((transaction) => transaction.transaction_type === 'Expense');
   const columns = [
     {
-      field: 'account_num',
-      headerName: 'Account Number',
+      field: 'category',
+      headerName: 'Category',
       width: 150,
       editable: false,
+    },
+    {
+      field: 'amount',
+      headerName: 'Amount',
+      width: 125,
+      editable: false,
+      valueFormatter: (params) => {
+        const valueFormatted = Number(params.value).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return `${valueFormatted}`;
+      },
     },
     {
       field: 'invoice_date',
@@ -28,21 +42,9 @@ const TransactionList = ({ transactions }) => {
       editable: false,
     },
     {
-      field: 'category',
-      headerName: 'Category',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'transaction_type',
-      headerName: 'Type',
+      field: 'notes',
+      headerName: 'Notes',
       width: 100,
-      editable: false,
-    },
-    {
-      field: 'amount',
-      headerName: 'Amount',
-      width: 150,
       editable: false,
     },
     // {
@@ -55,12 +57,12 @@ const TransactionList = ({ transactions }) => {
 
   const renderTransactions = () => {
     // const sortedTransactions = [...transactions].sort((a, b) => (b.id) - (a.id));
-    const sortedTransactions = [...transactions].sort((a, b) => new
+    const sortedTransactions = [...expenseTransactions].sort((a, b) => new
     Date(a.invoice_date) - new Date(b.invoice_date));
     return (
       <Box
         sx={{
-          height: 320,
+          height: 500,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',
@@ -68,13 +70,29 @@ const TransactionList = ({ transactions }) => {
           '& .textPrimary': {
             color: 'text.primary',
           },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#b7d7f4',
+            color: 'black',
+            fontVariantCaps: 'all-small-caps',
+            fontStyle: 'bold',
+            fontSize: 18,
+          },
+          '& .MuiDataGrid-virtualScrollerRenderZone': {
+            '& .MuiDataGrid-row': {
+              '&:nth-child(2n)': { backgroundColor: 'rgba(235, 235, 235, .7)' },
+              '&:hover': { backgroundColor: '#d1e6f9' },
+            },
+          },
         }}
       >
         <DataGrid
+          rowHeight={35}
+          headerHeight={35}
           rows={sortedTransactions}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10]}
+          components={{ Toolbar: GridToolbar }}
         />
       </Box>
     );
@@ -106,10 +124,11 @@ const TransactionList = ({ transactions }) => {
   );
 };
 
-TransactionList.propTypes = {
+ExpenseTransactionList.propTypes = {
   transactions: PropTypes.arrayOf(PropTypes.shape({
     account_num: PropTypes.string,
     invoice_num: PropTypes.string,
+    invoice_id: PropTypes.number,
     invoice_date: PropTypes.string,
     transaction_type: PropTypes.string,
     category: PropTypes.string,
@@ -143,4 +162,4 @@ TransactionList.propTypes = {
 //   }).isRequired,
 // };
 
-export default TransactionList;
+export default ExpenseTransactionList;

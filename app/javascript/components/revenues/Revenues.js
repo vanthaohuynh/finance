@@ -178,54 +178,6 @@ const Revenues = ({ token }) => {
       });
   };
 
-  // const deleteRevenue = async (revenueId) => {
-  //   confirm({
-  //     title: 'Confirmation',
-  //     description: 'Are you sure you want to delete this revenue?',
-  //   })
-  //     .then(async () => {
-  //       try {
-  //         const response = await axios.delete(`${apiRevenueEndpoint}/${revenueId}`);
-  //         console.log('Success:', response);
-  //         success('Revenue Deleted!');
-  //         navigate('/revenues');
-  //         setRevenues(revenues.filter(revenue => revenue.id !== revenueId));
-  //       } catch (error) {
-  //         if (error.response) {
-  //           // setIsServerSideError(true);
-  //           // setServerErrors(error.response.data);
-  //           // console.log('Error Response:', error.response.data);
-  //           console.log('Error Response:', error.response);
-  //         } else if (error.request) {
-  //           console.log('Error Request', error.request);
-  //         } else {
-  //           console.log('Error', error.message);
-  //         }
-  //         console.log('Server Errors:', error);
-  //       }
-  //     });
-  // };
-
-  // Original codes from James Hibbard
-  // const sure = window.confirm('Are you sure?');
-  // if (sure) {
-  //   try {
-  //     const response = await window.fetch(`/api/v1/revenues/${revenueId}`, {
-  //       method: 'DELETE',
-  //     });
-
-  //     if (!response.ok) throw Error(response.statusText);
-
-  //     // window.alert('Revenue Deleted!');
-  //     success('Revenue Deleted!');
-  //     navigate('/revenues');
-  //     setRevenues(revenues.filter(revenue => revenue.id !== revenueId));
-  //   } catch (error) {
-  //     handleAjaxError(error);
-  //   }
-  // }
-  // };
-
   const updateRevenue = async (updatedRevenue) => {
     try {
       const response = await axios.patch(`${apiRevenueEndpoint}/${updatedRevenue.id}`, updatedRevenue);

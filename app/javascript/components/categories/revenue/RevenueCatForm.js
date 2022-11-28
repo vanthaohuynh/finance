@@ -95,69 +95,70 @@ const RevenueCatForm = ({ revenueCategories, onSave }) => {
       <div className="eventContainer">
         <h2>{title}</h2>
         {renderErrors()}
-      </div>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                type="text"
-                id="name"
-                name="name"
-                label="Name"
-                onChange={handleInputChange}
-                value={revenueCategory.name}
-                size="small"
-                fullWidth
-                variant="outlined"
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="text"
-                id="description"
-                name="description"
-                label="Description"
-                onChange={handleInputChange}
-                value={revenueCategory.description || ''}
-                size="small"
-                fullWidth
-                variant="outlined"
-              />
-            </Grid>
-          </Grid>
-          <div className="button-mui">
-            <Grid item xs={6}>
-              <Stack spacing={2} direction="row">
-                <Button
-                  sx={{
-                    width: 100,
-                    height: 40,
-                  }}
+        <form onSubmit={handleSubmit}>
+          <FormControl>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  type="text"
+                  id="name"
+                  name="name"
+                  label="Name"
+                  onChange={handleInputChange}
+                  value={revenueCategory.name}
+                  size="small"
+                  fullWidth
                   variant="outlined"
-                  color="primary"
-                  component={Link}
-                  to={cancelURL}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  sx={{
-                    width: 100,
-                    height: 40,
-                  }}
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                >
-                  Save
-                </Button>
-              </Stack>
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  type="text"
+                  id="description"
+                  name="description"
+                  label="Description"
+                  onChange={handleInputChange}
+                  value={revenueCategory.description || ''}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                />
+              </Grid>
             </Grid>
-          </div>
-        </FormControl>
-      </form>
+            <div className="button-mui-edit">
+              <Grid item xs={6}>
+                <Stack spacing={2} direction="row">
+                  <Button
+                    sx={{
+                      width: 100,
+                      height: 40,
+                      backgroundColor: 'white',
+                    }}
+                    variant="outlined"
+                    color="primary"
+                    component={Link}
+                    to={cancelURL}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    sx={{
+                      width: 100,
+                      height: 40,
+                    }}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    Save
+                  </Button>
+                </Stack>
+              </Grid>
+            </div>
+          </FormControl>
+        </form>
+      </div>
     </section>
   );
 };

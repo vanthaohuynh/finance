@@ -1,8 +1,9 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
-import PropTypes from 'prop-types';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -23,30 +24,45 @@ const AccountSummaryCard = ({ cardTransactionData }) => {
   // console.log('balance', balance);
 
   return (
-    <Card sx={{ minWidth: 250 }}>
+    <Card
+      sx={{
+        width: '100%',
+        // backgroundColor: '#4085E6',
+      }}
+      // variant="outlined"
+    >
+      <CardHeader
+        title="Account Summary"
+        variant="body"
+      />
       <CardContent>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+        {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Account Summary
+        </Typography> */}
+        <Typography variant="h5" component="div">
+          Revenue
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Revenues: $
+        <Typography variant="body2" component="div">
+          Total Revenue:
           {revenueTotal}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Overhead: $
+        <Typography variant="body2" component="div">
+          Total Overhead:
           {revenueOverHeadTotal}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          After Overhead: $
+        <Typography variant="body2" component="div">
+          Total Revenue After Overhead:
           {revenueAfterOverHeadTotal}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Expenses: $
+        <Typography variant="body2" component="div">
+          Total Expenses:
           {expenseTotal}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Balance: $
-          {balance}
+        <Typography variant="body2" component="div">
+          Balance:
+          {
+            balance
+          }
         </Typography>
       </CardContent>
       {/* <CardActions>

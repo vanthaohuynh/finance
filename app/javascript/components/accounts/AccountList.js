@@ -5,44 +5,28 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const AccountList = ({ accounts }) => {
-  // const [searchTerm, setSearchTerm] = useState('');
-  // const searchInput = useRef(null);
-  // const [error, setError] = useState({ message: "I'm an error message" });
-
-  // const crash = () => {
-  //   setError(null);
-  // };
-
-  // const updateSearchTerm = () => {
-  //   setSearchTerm(searchInput.current.value);
-  // };
-
-  // const matchSearchTerm = (obj) => {
-  //   const { id, created_at, updated_at, ...rest } = obj;
-  //   return Object.values(rest).some(
-  //     (value) => value?
-  //          // .toString()
-  //          // .toLowerCase()
-  //          // .indexOf(searchTerm?.toString().toLowerCase()) > -1
-  //   );
-  // };
-
   const columns = [
     {
       field: 'account_num',
       headerName: 'Account Number',
-      width: 200,
+      width: 150,
       editable: false,
       renderCell: (params) => {
         const { id } = params;
         const { value } = params;
         return (
-          <Link to={`/accounts/${id}`}>{value}</Link>
+          <Link to={`/accounts/${id}/transactions`}>{value}</Link>
         );
       },
+    },
+    {
+      field: 'study_name',
+      headerName: 'Study Name',
+      width: 150,
+      editable: false,
     },
     {
       field: 'study_title',
@@ -65,7 +49,7 @@ const AccountList = ({ accounts }) => {
     {
       field: 'status',
       headerName: 'Status',
-      width: 150,
+      width: 100,
       editable: false,
     },
     {
@@ -74,12 +58,12 @@ const AccountList = ({ accounts }) => {
       width: 150,
       editable: false,
     },
-    {
-      field: 'cims_contact',
-      headerName: 'CIMS Contact',
-      width: 150,
-      editable: false,
-    },
+    // {
+    //   field: 'cim_contact',
+    //   headerName: 'CIM Contact',
+    //   width: 150,
+    //   editable: false,
+    // },
     {
       field: 'cro_name',
       headerName: 'CRO Name',
@@ -92,12 +76,12 @@ const AccountList = ({ accounts }) => {
       width: 150,
       editable: false,
     },
-    {
-      field: 'phase',
-      headerName: 'Phase',
-      width: 150,
-      editable: false,
-    },
+    // {
+    //   field: 'phase',
+    //   headerName: 'Phase',
+    //   width: 150,
+    //   editable: false,
+    // },
     {
       field: 'budget_currency',
       headerName: 'Budget Currency',
@@ -136,43 +120,14 @@ const AccountList = ({ accounts }) => {
     },
   ];
 
-  // /////////////////////////////////////////////////
-  // This codes working without the Search (need a curly bracket after =>)
-  // const renderAccounts = (accountArray) => {
-  // accountArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  // return accountArray.map((account) => (
-  //   <li key={account.id}>
-  //     <NavLink to={`/accounts/${account.id}`}>
-  //       {account.account_num}
-  //     </NavLink>
-  //   </li>
-  // ));
-  // };
-  // /////////////////////////////////////////////////
-  // /////////////////////////////////////////////////
-  // This codes working with the Search input. No need for curly bracket after =>)
-  // const renderAccounts = (accountArray) =>
-  // accountArray
-  //   .filter((el) => matchSearchTerm(el))
-  //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-  //   .map((account) => (
-  //     <li key={account.id}>
-  //       <NavLink to={`/accounts/${account.id}`}>
-  //           {account.account_num} - {account.study_title}
-  //       </NavLink>
-  //     </li>
-  //   ));
-  // /////////////////////////////////////////////////
-  // /////////////////////////////////////////////////
-
-  // Using MUI DaraGrid
   const renderAccounts = () => {
-    const sortedAccounts = [...accounts].sort((a, b) => new
-    Date(b.created_at) - new Date(a.created_at));
+    // const sortedAccounts = [...accounts].sort((a, b) => new
+    // Date(b.created_at) - new Date(a.created_at));
+    const sortedAccounts = [...accounts].sort((a, b) => (a.account_num > b.account_num ? 1 : -1));
     return (
       <Box
         sx={{
-          height: 460,
+          height: 500,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',
@@ -180,13 +135,29 @@ const AccountList = ({ accounts }) => {
           '& .textPrimary': {
             color: 'text.primary',
           },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#b7d7f4',
+            color: 'black',
+            fontVariantCaps: 'all-small-caps',
+            fontStyle: 'bold',
+            fontSize: 18,
+          },
+          '& .MuiDataGrid-virtualScrollerRenderZone': {
+            '& .MuiDataGrid-row': {
+              '&:nth-child(2n)': { backgroundColor: 'rgba(235, 235, 235, .7)' },
+              '&:hover': { backgroundColor: '#d1e6f9' },
+            },
+          },
         }}
       >
         <DataGrid
+          rowHeight={35}
+          headerHeight={35}
           rows={sortedAccounts}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10]}
+          components={{ Toolbar: GridToolbar }}
         />
       </Box>
     );
@@ -200,6 +171,7 @@ const AccountList = ({ accounts }) => {
             sx={{
               width: 125,
               height: 40,
+              backgroundColor: 'white',
             }}
             variant="outlined"
             color="primary"
@@ -238,6 +210,7 @@ AccountList.propTypes = {
   accounts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     account_num: PropTypes.string,
+    study_name: PropTypes.string,
     study_title: PropTypes.string,
     pi_name: PropTypes.string,
     status: PropTypes.string,
@@ -245,8 +218,8 @@ AccountList.propTypes = {
     sponsor_contact: PropTypes.string,
     targeted_enrolling_number: PropTypes.number,
     cta_date: PropTypes.string,
-    phase: PropTypes.string,
-    cim_contact: PropTypes.string,
+    // phase: PropTypes.string,
+    // cim_contact: PropTypes.string,
     cro_name: PropTypes.string,
     cro_contact: PropTypes.string,
     budget_version: PropTypes.string,

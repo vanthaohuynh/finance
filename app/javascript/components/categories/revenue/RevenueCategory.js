@@ -39,13 +39,14 @@ const RevenueCategory = ({ revenueCategories, onDelete }) => {
             />
           </Grid>
         </Grid>
-        <div className="button-mui">
+        <div className="button-mui-edit">
           <Grid item xs={6}>
             <Stack spacing={2} direction="row">
               <Button
                 sx={{
                   width: 100,
                   height: 40,
+                  backgroundColor: 'white',
                 }}
                 variant="outlined"
                 color="primary"

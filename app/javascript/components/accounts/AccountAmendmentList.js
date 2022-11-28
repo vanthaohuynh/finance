@@ -84,9 +84,24 @@ const AccountAmendmentList = ({ amendmentList }) => {
           '& .textPrimary': {
             color: 'text.primary',
           },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#b7d7f4',
+            color: 'black',
+            fontVariantCaps: 'all-small-caps',
+            fontStyle: 'bold',
+            fontSize: 18,
+          },
+          '& .MuiDataGrid-virtualScrollerRenderZone': {
+            '& .MuiDataGrid-row': {
+              '&:nth-child(2n)': { backgroundColor: 'rgba(235, 235, 235, .7)' },
+              '&:hover': { backgroundColor: '#d1e6f9' },
+            },
+          },
         }}
       >
         <DataGrid
+          rowHeight={35}
+          headerHeight={35}
           rows={sortedAmendments}
           columns={columns}
           pageSize={10}

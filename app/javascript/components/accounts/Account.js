@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import AccountAmendmentList from './AccountAmendmentList';
 import AmendmentForm from './AmendmentForm';
-// import Transactions from './Transactions';
+// import TextField from '../styled/TextField';
 import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 
@@ -42,23 +42,6 @@ const Account = ({ token, accounts, onDelete }) => {
     };
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //       const response = await window.fetch('/api/v1/account_amendments');
-
-  //       if (!response.ok) throw Error(response.statusText);
-
-  //       const data = await response.json();
-  //       setAmendments(data);
-  //     } catch (err) {
-  //       handleAjaxError(err);
-  //     }
-  //     // setIsLoading(false);
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   const amendmentList = amendments.filter((e) => e.account_id === Number(id));
 
@@ -155,9 +138,9 @@ const Account = ({ token, accounts, onDelete }) => {
         <h3>
           {account.account_num}
           {' - '}
-          {account.study_title}
+          {account.study_name}
         </h3>
-        <div className="button-mui">
+        <div className="button-mui-edit">
           <Grid item xs={6}>
             <Stack spacing={2} direction="row">
               <Button
@@ -173,10 +156,11 @@ const Account = ({ token, accounts, onDelete }) => {
               >
                 Edit
               </Button>
-              <Button
+              {/* <Button
                 sx={{
                   width: 175,
                   height: 40,
+                  backgroundColor: 'white',
                 }}
                 type="submit"
                 variant="outlined"
@@ -185,11 +169,12 @@ const Account = ({ token, accounts, onDelete }) => {
                 to={`/accounts/${account.id}/transactions`}
               >
                 Transactions
-              </Button>
+              </Button> */}
               <Button
                 sx={{
                   width: 175,
                   height: 40,
+                  backgroundColor: 'white',
                 }}
                 type="submit"
                 variant="outlined"
@@ -203,15 +188,39 @@ const Account = ({ token, accounts, onDelete }) => {
         </div>
 
         <FormControl>
-          <Grid container spacing={2}>
+          <Grid
+            // sx={{
+            //   backgroundColor: 'white',
+            // }}
+            container
+            spacing={2}
+          >
             <Grid item xs={6}>
               <TextField
+                // sx={{
+                //   backgroundColor: 'white',
+                //   width: { sm: 200, md: 300 },
+                //   '& .MuiInputBase-root': {
+                //     height: 35,
+                //   },
+                // }}
                 id="account_num"
                 label="Account Number"
                 value={account.account_num}
                 size="small"
                 fullWidth
                 variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                id="study_name"
+                label="Study Name"
+                value={account.study_name ? account.study_name : ''}
+                size="small"
+                fullWidth
+                variant="outlined"
+                placeholder="Study Name"
               />
             </Grid>
             <Grid item xs={6}>
@@ -265,7 +274,7 @@ const Account = ({ token, accounts, onDelete }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <TextField
                 id="cim_contact"
                 label="CIM Contact"
@@ -274,7 +283,7 @@ const Account = ({ token, accounts, onDelete }) => {
                 fullWidth
                 variant="outlined"
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={6}>
               <TextField
                 id="cro_name"
@@ -295,7 +304,7 @@ const Account = ({ token, accounts, onDelete }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <TextField
                 id="phase"
                 label="Phase"
@@ -304,8 +313,8 @@ const Account = ({ token, accounts, onDelete }) => {
                 fullWidth
                 variant="outlined"
               />
-            </Grid>
-            <Grid item xs={6}>
+            </Grid> */}
+            {/* <Grid item xs={6}>
               <FormControl fullWidth size="small">
                 <InputLabel>Budget Currency</InputLabel>
                 <Select
@@ -322,7 +331,7 @@ const Account = ({ token, accounts, onDelete }) => {
                   <option key="USD" value="USD">USD</option>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item xs={6}>
               <TextField
                 id="invoicing_terms"
@@ -458,14 +467,15 @@ Account.propTypes = {
   accounts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     account_num: PropTypes.string,
+    study_name: PropTypes.string,
     study_title: PropTypes.string,
     pi_name: PropTypes.string,
     sponsor_name: PropTypes.string,
     sponsor_contact: PropTypes.string,
     targeted_enrolling_number: PropTypes.number,
     cta_date: PropTypes.string,
-    phase: PropTypes.string,
-    cim_contact: PropTypes.string,
+    // phase: PropTypes.string,
+    // cim_contact: PropTypes.string,
     cro_name: PropTypes.string,
     cro_contact: PropTypes.string,
     budget_version: PropTypes.string,

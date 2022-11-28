@@ -3,6 +3,7 @@ import {
   Routes,
   useNavigate,
   useParams,
+  Link,
 } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 import Stack from '@mui/material/Stack';
@@ -16,6 +17,9 @@ import {
   InputLabel,
   Select,
 } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SearchIcon from '@mui/icons-material/Search';
+import Paper from '@mui/material/Paper';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -23,8 +27,11 @@ import { NumericFormat } from 'react-number-format';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 // import Header from '../Header';
-import TransactionList from './TransactionList';
-import AccountSummaryCard from './AccountSummaryCard';
+import RevenueTransactionList from './RevenueTransactionList';
+import ExpenseTransactionList from './ExpenseTransactionList';
+import AccountSummaryTable from './AccountSummaryTable';
+import RevenueCalendarYearTable from './RevenueCalendarYearTable';
+import RevenueRIYearTable from './RevenueRIYearTable';
 import ExpenseChart from './ExpenseChart';
 import RevenueChart from './RevenueChart';
 import { info, success } from '../../helpers/notifications';
@@ -73,6 +80,7 @@ const Transactions = ({ token }) => {
           account_num,
           invoice_date: expense.invoice_date,
           invoice_num: expense.invoice_num,
+          invoice_id: expense.id,
           transaction_type: 'Expense',
           category: expense.expense_category_name,
           amount: (expense.amount),
@@ -88,6 +96,7 @@ const Transactions = ({ token }) => {
           account_num,
           invoice_date: revenue.invoice_date,
           invoice_num: revenue.invoice_num,
+          invoice_id: revenue.id,
           transaction_type: 'Revenue',
           category: revenue.revenue_category_name,
           amount: revenue.amount,
@@ -101,7 +110,6 @@ const Transactions = ({ token }) => {
     setTransactions(transactions);
     setFilteredTransactions(transactions);
     setChartTransactionData(transactions);
-    // createSummaryCardData(transactions);
     setCardTransactionData(transactions);
   };
 
@@ -175,7 +183,7 @@ const Transactions = ({ token }) => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <div className="gridTransactionHeader">
           <Typography className="transactionHeaderAccount" variant="h5" component="div">
-            {account.account_num} - {account.study_title}
+            {account.account_num} - {account.study_name}
           </Typography>
           <Typography className="transactionHeaderLabel" variant="body1" component="div" align="right">
             Period:
@@ -212,24 +220,37 @@ const Transactions = ({ token }) => {
             sx={{
               width: 100,
               height: 40,
+              backgroundColor: 'white',
             }}
             variant="outlined"
             color="primary"
+            startIcon={<SearchIcon />}
             onClick={handleDateFilter}
           >
             Go
           </Button>
           <Button
             sx={{
-              width: 150,
+              width: 200,
               height: 40,
+              backgroundColor: 'white',
             }}
             variant="outlined"
             color="primary"
-            // onClick={}
+            startIcon={<SettingsIcon />}
+            component={Link}
+            to={`/accounts/${id}`}
           >
-            Export PDF
+            Account Settings
           </Button>
+        </div>
+
+        <div className="gridAccountSummary">
+          {/* <div className="transactionCard"> */}
+          {/* <AccountSummaryCard cardTransactionData={cardTransactionData} /> */}
+          <AccountSummaryTable cardTransactionData={cardTransactionData} />
+          <RevenueCalendarYearTable transactions={transactions} />
+          <RevenueRIYearTable transactions={transactions} />
         </div>
 
         <div className="gridTransactions">
@@ -238,25 +259,35 @@ const Transactions = ({ token }) => {
             <p>Loading...</p>
           ) : (
             <>
-              {/* <ErrorBoundary>
-                <AccountList accounts={accounts} />
-              </ErrorBoundary> */}
-              {/* <div className="transactionHeader"> */}
-              <div className="transactionMenu">
+              {/* <div className="transactionCard">
                 <AccountSummaryCard cardTransactionData={cardTransactionData} />
-              </div>
-              <div className="transactionChart">
-                <div>
-                  <Box sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-around',
+              </div> */}
+              <div className="revenueTransactions">
+                <Paper
+                  sx={{
+                    width: '100%',
                     overflow: 'hidden',
-                    backgroundColor: 'background.paper',
                   }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-around',
+                      overflow: 'hidden',
+                      backgroundColor: 'background.paper',
+                      // backgroundColor: 'ECF0F1',
+                      // padding: 1,
+                    }}
                   >
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
+                    <Grid
+                      // sx={{
+                      //   backgroundColor: 'ECF0F1',
+                      // }}
+                      container
+                      spacing={2}
+                    >
+                      <Grid item xs={6} md={5}>
                         <Card
                           size="small"
                           sx={{ width: '100%', height: '100%' }}
@@ -266,7 +297,39 @@ const Transactions = ({ token }) => {
                           />
                         </Card>
                       </Grid>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={6} md={7}>
+                        <div className="transactionList">
+                          <RevenueTransactionList transactions={filteredTransactions} />
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Paper>
+              </div>
+
+              <div className="expenseTransactions">
+                <Paper
+                  sx={{
+                    width: '100%',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-around',
+                      overflow: 'hidden',
+                      backgroundColor: 'background.paper',
+                      // backgroundColor: 'ECF0F1',
+                      // padding: 1,
+                    }}
+                  >
+                    <Grid
+                      container
+                      spacing={2}
+                    >
+                      <Grid item xs={6} md={5}>
                         <Card
                           size="small"
                           sx={{ width: '100%', height: '100%' }}
@@ -276,55 +339,15 @@ const Transactions = ({ token }) => {
                           />
                         </Card>
                       </Grid>
+                      <Grid item xs={6} md={7}>
+                        <div className="transactionList">
+                          <ExpenseTransactionList transactions={filteredTransactions} />
+                        </div>
+                      </Grid>
                     </Grid>
                   </Box>
-                </div>
-                <div className="transactionList">
-                  <TransactionList transactions={filteredTransactions} />
-                </div>
+                </Paper>
               </div>
-              <Routes>
-                {/* <Route
-                  path="/"
-                  element={(
-                    <TransactionList
-                      account={account}
-                    />
-                  )}
-                /> */}
-                {/*
-                <Route
-                  path=":id"
-                  element={(
-                    <ErrorBoundary>
-                      <Account
-                        token={token}
-                        accounts={accounts}
-                        onDelete={deleteAccount}
-                      />
-                    </ErrorBoundary>
-                  )}
-                />
-                <Route
-                  path=":id/edit"
-                  element={(
-                    <ErrorBoundary>
-                      <AccountForm
-                        accounts={accounts}
-                        onSave={updateAccount}
-                      />
-                    </ErrorBoundary>
-                    )}
-                />
-                <Route
-                  path="new"
-                  element={(
-                    <ErrorBoundary>
-                      <AccountForm onSave={addAccount} />
-                    </ErrorBoundary>
-                )}
-                /> */}
-              </Routes>
             </>
           )}
         </div>

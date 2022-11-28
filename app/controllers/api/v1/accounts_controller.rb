@@ -75,7 +75,7 @@ class Api::V1::AccountsController < ApplicationController
     params.require(:account)
           .permit(
             :updated_at, :account_num, :muhc_account, :study_title,
-            :pi_name, :sponsor_name, :sponsor_contact,
+            :pi_name, :sponsor_name, :sponsor_contact, :study_name,
             :targeted_enrolling_number, :cta_date, :phase,
             :cim_contact, :cro_name, :cro_contact, :budget_version,
             :budget_currency, :invoicing_terms, :notes, :status

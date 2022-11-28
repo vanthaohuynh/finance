@@ -184,216 +184,217 @@ const ExpenseForm = ({
         <div className="eventContainer">
           <h2>{title}</h2>
           {renderErrors()}
+          <form onSubmit={handleSubmit}>
+            <FormControl>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel>Account Number *</InputLabel>
+                    <Select
+                      id="account_id"
+                      name="account_id"
+                      label="Account Number"
+                      onChange={handleAccountInputChange}
+                      native
+                      value={expense.account_id}
+                      required
+                    >
+                      <option value=""> </option>
+                      {accounts.map((account) => (
+                        <option
+                          key={account.id}
+                          value={account.id}
+                        >
+                          {account.account_num}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    type="text"
+                    id="invoice_num"
+                    name="invoice_num"
+                    label="Invoice Number"
+                    onChange={handleInputChange}
+                    value={expense.invoice_num}
+                    size="small"
+                    fullWidth
+                    variant="outlined"
+                    required
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <NumericFormat
+                    id="amount"
+                    name="amount"
+                    variant="outlined"
+                    label="Amount"
+                    customInput={TextField}
+                    type="text"
+                    onChange={handleNumberInputChange}
+                    value={expense.amount}
+                    size="small"
+                    fullWidth
+                    thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale
+                    prefix="$ "
+                    required
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <DatePicker
+                    type="text"
+                    id="invoice_date"
+                    name="invoice_date"
+                    label="Invoice Date"
+                    inputFormat="yyyy-MM-dd"
+                    onChange={handleDateInputChange}
+                    value={expense.invoice_date}
+                    // Use onKeyDown to disable typing in the date field
+                    // renderInput={
+                    //   (params) =>
+                    // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
+                    // }
+                    renderInput={
+                      (params) => <TextField size="small" fullWidth required {...params} />
+                    }
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel>Expense Category *</InputLabel>
+                    <Select
+                      id="expense_category_id"
+                      name="expense_category_id"
+                      label="Expense Category"
+                      onChange={handleCategoryInputChange}
+                      native
+                      value={expense.expense_category_id || ''}
+                      required
+                    >
+                      <option value=""> </option>
+                      {expenseCategories.map((expenseCategory) => (
+                        <option
+                          key={expenseCategory.id}
+                          value={expenseCategory.id}
+                        >
+                          {expenseCategory.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    type="text"
+                    id="expense_currency"
+                    name="expense_currency"
+                    label="Expense Currency"
+                    onChange={handleInputChange}
+                    value={expense.expense_currency || 'CAD'}
+                    size="small"
+                    fullWidth
+                    variant="outlined"
+                    disabled
+                    required
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    type="text"
+                    id="notes"
+                    name="notes"
+                    label="Notes"
+                    onChange={handleInputChange}
+                    value={expense.notes || ''}
+                    size="small"
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Grid>
+                {/* <Grid item xs={6}>
+                  <TextField
+                    type="text"
+                    id="pdf_invoice"
+                    name="pdf_invoice"
+                    label="PDF Invoice"
+                    // onChange={handleFileInputChange}
+                    value={expense.pdf_invoice ? expense.pdf_invoice.name : ''}
+                    size="small"
+                    fullWidth
+                    variant="outlined"
+                    disabled
+                  />
+                </Grid> */}
+              </Grid>
+              <div className="button-mui-edit">
+                <Grid item xs={6}>
+                  <Stack spacing={2} direction="row">
+                    {/* <Button
+                      sx={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      variant="outlined"
+                      color="primary"
+                      component="label"
+                    >
+                      Upload
+                      <input
+                        hidden
+                        accept=".pdf"
+                        type="file"
+                        onChange={handleFileInputChange}
+                        // style={{ display: 'none' }}
+                      />
+                    </Button> */}
+                    <Button
+                      sx={{
+                        width: 100,
+                        height: 40,
+                        backgroundColor: 'white',
+                      }}
+                      variant="outlined"
+                      color="primary"
+                      component={Link}
+                      to={cancelURL}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      sx={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                    >
+                      Save
+                    </Button>
+                    {/* <IconButton
+                      color="primary"
+                      aria-label="upload PDF"
+                      component="label"
+                    >
+                      <input
+                        hidden
+                        accept=".pdf"
+                        multiple
+                        type="file"
+                        onChange={handleFileInputChange}
+                      />
+                      <PictureAsPdfIcon />
+                    </IconButton> */}
+                  </Stack>
+                </Grid>
+              </div>
+            </FormControl>
+          </form>
         </div>
-        <form onSubmit={handleSubmit}>
-          <FormControl>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <FormControl size="small" fullWidth>
-                  <InputLabel>Account Number *</InputLabel>
-                  <Select
-                    id="account_id"
-                    name="account_id"
-                    label="Account Number"
-                    onChange={handleAccountInputChange}
-                    native
-                    value={expense.account_id}
-                    required
-                  >
-                    <option value=""> </option>
-                    {accounts.map((account) => (
-                      <option
-                        key={account.id}
-                        value={account.id}
-                      >
-                        {account.account_num}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="invoice_num"
-                  name="invoice_num"
-                  label="Invoice Number"
-                  onChange={handleInputChange}
-                  value={expense.invoice_num}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <NumericFormat
-                  id="amount"
-                  name="amount"
-                  variant="outlined"
-                  label="Amount"
-                  customInput={TextField}
-                  type="text"
-                  onChange={handleNumberInputChange}
-                  value={expense.amount}
-                  size="small"
-                  fullWidth
-                  thousandSeparator=","
-                  decimalScale={2}
-                  fixedDecimalScale
-                  prefix="$ "
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <DatePicker
-                  type="text"
-                  id="invoice_date"
-                  name="invoice_date"
-                  label="Invoice Date"
-                  inputFormat="yyyy-MM-dd"
-                  onChange={handleDateInputChange}
-                  value={expense.invoice_date}
-                  // Use onKeyDown to disable typing in the date field
-                  // renderInput={
-                  //   (params) =>
-                  // <TextField size="small" fullWidth required onKeyDown={onKeyDown} {...params} />
-                  // }
-                  renderInput={
-                    (params) => <TextField size="small" fullWidth required {...params} />
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl size="small" fullWidth>
-                  <InputLabel>Expense Category *</InputLabel>
-                  <Select
-                    id="expense_category_id"
-                    name="expense_category_id"
-                    label="Expense Category"
-                    onChange={handleCategoryInputChange}
-                    native
-                    value={expense.expense_category_id || ''}
-                    required
-                  >
-                    <option value=""> </option>
-                    {expenseCategories.map((expenseCategory) => (
-                      <option
-                        key={expenseCategory.id}
-                        value={expenseCategory.id}
-                      >
-                        {expenseCategory.name}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="expense_currency"
-                  name="expense_currency"
-                  label="Expense Currency"
-                  onChange={handleInputChange}
-                  value={expense.expense_currency || 'CAD'}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  disabled
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="notes"
-                  name="notes"
-                  label="Notes"
-                  onChange={handleInputChange}
-                  value={expense.notes || ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid>
-              {/* <Grid item xs={6}>
-                <TextField
-                  type="text"
-                  id="pdf_invoice"
-                  name="pdf_invoice"
-                  label="PDF Invoice"
-                  // onChange={handleFileInputChange}
-                  value={expense.pdf_invoice ? expense.pdf_invoice.name : ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  disabled
-                />
-              </Grid> */}
-            </Grid>
-            <div className="button-mui">
-              <Grid item xs={6}>
-                <Stack spacing={2} direction="row">
-                  {/* <Button
-                    sx={{
-                      width: 100,
-                      height: 40,
-                    }}
-                    variant="outlined"
-                    color="primary"
-                    component="label"
-                  >
-                    Upload
-                    <input
-                      hidden
-                      accept=".pdf"
-                      type="file"
-                      onChange={handleFileInputChange}
-                      // style={{ display: 'none' }}
-                    />
-                  </Button> */}
-                  <Button
-                    sx={{
-                      width: 100,
-                      height: 40,
-                    }}
-                    variant="outlined"
-                    color="primary"
-                    component={Link}
-                    to={cancelURL}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    sx={{
-                      width: 100,
-                      height: 40,
-                    }}
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                  >
-                    Save
-                  </Button>
-                  {/* <IconButton
-                    color="primary"
-                    aria-label="upload PDF"
-                    component="label"
-                  >
-                    <input
-                      hidden
-                      accept=".pdf"
-                      multiple
-                      type="file"
-                      onChange={handleFileInputChange}
-                    />
-                    <PictureAsPdfIcon />
-                  </IconButton> */}
-                </Stack>
-              </Grid>
-            </div>
-          </FormControl>
-        </form>
       </LocalizationProvider>
     </section>
   );

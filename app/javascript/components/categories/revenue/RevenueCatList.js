@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const RevenueCategoryList = ({ revenueCategories }) => {
   const columns = [
@@ -45,13 +45,29 @@ const RevenueCategoryList = ({ revenueCategories }) => {
           '& .textPrimary': {
             color: 'text.primary',
           },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#b7d7f4',
+            color: 'black',
+            fontVariantCaps: 'all-small-caps',
+            fontStyle: 'bold',
+            fontSize: 18,
+          },
+          '& .MuiDataGrid-virtualScrollerRenderZone': {
+            '& .MuiDataGrid-row': {
+              '&:nth-child(2n)': { backgroundColor: 'rgba(235, 235, 235, .7)' },
+              '&:hover': { backgroundColor: '#d1e6f9' },
+            },
+          },
         }}
       >
         <DataGrid
+          rowHeight={35}
+          headerHeight={35}
           rows={sortedRevenueCategories}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10]}
+          components={{ Toolbar: GridToolbar }}
         />
       </Box>
     );
@@ -65,6 +81,7 @@ const RevenueCategoryList = ({ revenueCategories }) => {
             sx={{
               width: 125,
               height: 40,
+              backgroundColor: 'white',
             }}
             variant="outlined"
             color="primary"

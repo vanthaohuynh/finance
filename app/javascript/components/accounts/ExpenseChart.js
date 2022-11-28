@@ -26,6 +26,8 @@ const ExpenseChart = ({ chartTransactionData }) => {
       title="Expense"
       dataSource={chartData}
       type="doughnut"
+      innerRadius={0.5}
+      size={{ width: 500 }}
     >
       <Series
         argumentField="category"

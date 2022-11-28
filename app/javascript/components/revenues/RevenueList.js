@@ -5,32 +5,76 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const RevenueList = ({ revenues }) => {
-  // const [searchTerm, setSearchTerm] = useState('');
-  // const searchInput = useRef(null);
-  // const [error, setError] = useState({ message: "I'm an error message" });
-
-  // For Testing Error Boundary
-  // const crash = () => {
-  //   setError(null);
-  // };
-
-  // For Search Input
-  // const updateSearchTerm = () => {
-  //   setSearchTerm(searchInput.current.value);
-  // };
-
-  // const matchSearchTerm = (obj) => {
-  //   const { id, created_at, updated_at, ...rest } = obj;
-  //   return Object.values(rest).some(
-  //     (value) => value?.toString().toLowerCase().indexOf(searchTerm?.toString()
-  // .toLowerCase()) > -1
-  //   );
-  // };
-
   const columns = [
+    {
+      field: 'account_num',
+      headerName: 'Account Number',
+      width: 150,
+      editable: false,
+      renderCell: (params) => (
+        <Link to={`/accounts/${params.row.account_id}/transactions`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: 'revenue_category_name',
+      headerName: 'Category',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'amount',
+      headerName: 'Amount',
+      width: 125,
+      editable: false,
+      valueFormatter: (params) => {
+        const valueFormatted = Number(params.value).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return `${valueFormatted}`;
+      },
+    },
+    {
+      field: 'overhead',
+      headerName: 'Overhead',
+      width: 125,
+      editable: false,
+      valueFormatter: (params) => {
+        const valueFormatted = Number(params.value).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return `${valueFormatted}`;
+      },
+    },
+    {
+      field: 'after_overhead',
+      headerName: 'After Overhead',
+      width: 125,
+      editable: false,
+      valueFormatter: (params) => {
+        const valueFormatted = Number(params.value).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return `${valueFormatted}`;
+      },
+    },
+    {
+      field: 'deposit_date',
+      headerName: 'Deposit Date',
+      width: 100,
+      editable: false,
+    },
+    {
+      field: 'invoice_date',
+      headerName: 'Invoice Date',
+      width: 100,
+      editable: false,
+    },
     {
       field: 'invoice_num',
       headerName: 'Invoice Number',
@@ -43,42 +87,6 @@ const RevenueList = ({ revenues }) => {
           <Link to={`/revenues/${id}`}>{value}</Link>
         );
       },
-    },
-    {
-      field: 'amount',
-      headerName: 'Amount',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'overhead',
-      headerName: 'Overhead',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'after_overhead',
-      headerName: 'After Overhead',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'invoice_date',
-      headerName: 'Invoice Date',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'account_num',
-      headerName: 'Account Number',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'revenue_category_name',
-      headerName: 'Revenue Category',
-      width: 150,
-      editable: false,
     },
     {
       field: 'notes ',
@@ -118,12 +126,13 @@ const RevenueList = ({ revenues }) => {
   // /////////////////////////////////////////////////
   // Using MUI DaraGrid
   const renderRevenues = () => {
-    const sortedRevenues = [...revenues].sort((a, b) => new
-    Date(b.created_at) - new Date(a.created_at));
+    // const sortedRevenues = [...revenues].sort((a, b) => new
+    // Date(b.created_at) - new Date(a.created_at));
+    const sortedRevenues = [...revenues].sort((a, b) => (a.account_num > b.account_num ? 1 : -1));
     return (
       <Box
         sx={{
-          height: 320,
+          height: 500,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',
@@ -131,15 +140,30 @@ const RevenueList = ({ revenues }) => {
           '& .textPrimary': {
             color: 'text.primary',
           },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#b7d7f4',
+            color: 'black',
+            fontVariantCaps: 'all-small-caps',
+            fontStyle: 'bold',
+            fontSize: 18,
+          },
+          '& .MuiDataGrid-virtualScrollerRenderZone': {
+            '& .MuiDataGrid-row': {
+              '&:nth-child(2n)': { backgroundColor: 'rgba(235, 235, 235, .7)' },
+              '&:hover': { backgroundColor: '#d1e6f9' },
+            },
+          },
         }}
       >
         <DataGrid
+          rowHeight={35}
+          headerHeight={35}
           rows={sortedRevenues}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10]}
+          components={{ Toolbar: GridToolbar }}
         />
-        {/* </DataGrid> */}
       </Box>
     );
   };
@@ -152,6 +176,7 @@ const RevenueList = ({ revenues }) => {
             sx={{
               width: 125,
               height: 40,
+              backgroundColor: 'white',
             }}
             variant="outlined"
             color="primary"

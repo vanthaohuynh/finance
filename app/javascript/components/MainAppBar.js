@@ -53,6 +53,10 @@ const MainAppBar = ({
     setAnchorElNav(null);
   };
 
+  const clearSelectedIndex = () => {
+    setSelectedIndex(-1);
+  };
+
   return (
     <AppBar position="static">
       { loggedInStatus === 'LOGGED_IN' && (
@@ -64,6 +68,7 @@ const MainAppBar = ({
               noWrap
               component={Link}
               to={dash}
+              onClick={clearSelectedIndex}
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -136,6 +141,7 @@ const MainAppBar = ({
               noWrap
               component={Link}
               to={dash}
+              onClick={clearSelectedIndex}
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },

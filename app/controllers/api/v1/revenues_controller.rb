@@ -44,7 +44,7 @@ class Api::V1::RevenuesController < ApplicationController
   def revenue_params
     params.require(:revenue)
           .permit(
-            :updated_at, :invoice_date, :invoice_num, :amount,
+            :updated_at, :invoice_date, :invoice_num, :amount, :deposit_date,
             :account_id, :revenue_category_id, :revenue_currency, :notes,
             :overhead, :after_overhead, :account_num, :revenue_category_name
           )

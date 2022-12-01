@@ -6,8 +6,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { Grid } from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
+import {
+  DataGrid,
+  GridToolbar,
+  GridFooter,
+  GridFooterContainer,
+} from '@mui/x-data-grid';
 
 const RevenuePastThreeYears = ({ revenuePast3years }) => {
   console.log('RevenuePastThreeYears: ', revenuePast3years);
@@ -40,6 +45,18 @@ const RevenuePastThreeYears = ({ revenuePast3years }) => {
       },
     },
   ];
+
+  const CustomFooter = () => {
+    <GridFooterContainer>
+      {/* Add what you want here */}
+      {/* {formattedTotal} */}
+      <GridFooter
+        sx={{
+          border: 'none', // To delete double border.
+        }}
+      />
+    </GridFooterContainer>;
+  };
 
   const renderTransactions = () => {
     const sortedAccounts = [...revenuePast3years].sort((a, b) => (a.account_num > b.account_num ? 1 : -1));
@@ -74,9 +91,12 @@ const RevenuePastThreeYears = ({ revenuePast3years }) => {
           headerHeight={35}
           rows={sortedAccounts}
           columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          components={{ Toolbar: GridToolbar }}
+          pageSize={100}
+          rowsPerPageOptions={[100]}
+          components={{
+            Toolbar: GridToolbar,
+            Footer: CustomFooter,
+          }}
         />
       </Box>
     );

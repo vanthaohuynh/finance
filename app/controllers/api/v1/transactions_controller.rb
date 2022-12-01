@@ -66,7 +66,19 @@ class Api::V1::TransactionsController < ApplicationController
                 .joins('FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
                 .select('accounts.*, SUM(revenues.amount) AS revenue_total')
                 .where('accounts.status = ?', 'Open')
-                .by_year(Date.current.year)
+                .get_revenue_curr_year(Date.current.year)
+                .distinct
+                .group('accounts.id')
+                .order('accounts.id')
+    render json: @accounts
+  end
+
+  def expense_currentyear
+    @accounts = Account
+                .joins('FULL OUTER JOIN expenses ON accounts.id = expenses.account_id')
+                .select('accounts.*, SUM(expenses.amount) AS expense_total')
+                .where('accounts.status = ?', 'Open')
+                .get_expense_curr_year(Date.current.year)
                 .distinct
                 .group('accounts.id')
                 .order('accounts.id')

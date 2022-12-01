@@ -19,40 +19,21 @@ const RevenueList = ({ revenues }) => {
       ),
     },
     {
-      field: 'revenue_category_name',
-      headerName: 'Category',
+      field: 'invoice_num',
+      headerName: 'Invoice Number',
       width: 150,
       editable: false,
+      renderCell: (params) => {
+        const { id } = params;
+        const { value } = params;
+        return (
+          <Link to={`/revenues/${id}`}>{value}</Link>
+        );
+      },
     },
     {
       field: 'amount',
       headerName: 'Amount',
-      width: 125,
-      editable: false,
-      valueFormatter: (params) => {
-        const valueFormatted = Number(params.value).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
-        });
-        return `${valueFormatted}`;
-      },
-    },
-    {
-      field: 'overhead',
-      headerName: 'Overhead',
-      width: 125,
-      editable: false,
-      valueFormatter: (params) => {
-        const valueFormatted = Number(params.value).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
-        });
-        return `${valueFormatted}`;
-      },
-    },
-    {
-      field: 'after_overhead',
-      headerName: 'After Overhead',
       width: 125,
       editable: false,
       valueFormatter: (params) => {
@@ -76,16 +57,35 @@ const RevenueList = ({ revenues }) => {
       editable: false,
     },
     {
-      field: 'invoice_num',
-      headerName: 'Invoice Number',
-      width: 200,
+      field: 'revenue_category_name',
+      headerName: 'Category',
+      width: 150,
       editable: false,
-      renderCell: (params) => {
-        const { id } = params;
-        const { value } = params;
-        return (
-          <Link to={`/revenues/${id}`}>{value}</Link>
-        );
+    },
+    {
+      field: 'overhead',
+      headerName: 'Overhead',
+      width: 125,
+      editable: false,
+      valueFormatter: (params) => {
+        const valueFormatted = Number(params.value).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return `${valueFormatted}`;
+      },
+    },
+    {
+      field: 'after_overhead',
+      headerName: 'After OH',
+      width: 125,
+      editable: false,
+      valueFormatter: (params) => {
+        const valueFormatted = Number(params.value).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return `${valueFormatted}`;
       },
     },
     {

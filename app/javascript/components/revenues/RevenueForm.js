@@ -289,6 +289,21 @@ const RevenueForm = ({
                 <Grid item xs={6}>
                   <DatePicker
                     type="text"
+                    id="deposit_date"
+                    name="deposit_date"
+                    label="Deposit Date"
+                    inputFormat="yyyy-MM-dd"
+                    onChange={handleDepositDateInputChange}
+                    // value={revenue.deposit_date ? revenue.deposit_date : null}
+                    value={revenue.deposit_date}
+                    renderInput={
+                      (params) => <TextField size="small" fullWidth {...params} />
+                    }
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <DatePicker
+                    type="text"
                     id="invoice_date"
                     name="invoice_date"
                     label="Invoice Date"
@@ -302,21 +317,6 @@ const RevenueForm = ({
                     // }
                     renderInput={
                       (params) => <TextField size="small" fullWidth required {...params} />
-                    }
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <DatePicker
-                    type="text"
-                    id="deposit_date"
-                    name="deposit_date"
-                    label="Deposit Date"
-                    inputFormat="yyyy-MM-dd"
-                    onChange={handleDepositDateInputChange}
-                    // value={revenue.deposit_date ? revenue.deposit_date : null}
-                    value={revenue.deposit_date}
-                    renderInput={
-                      (params) => <TextField size="small" fullWidth {...params} />
                     }
                   />
                 </Grid>

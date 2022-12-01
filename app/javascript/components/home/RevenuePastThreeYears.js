@@ -109,7 +109,7 @@ const RevenuePastThreeYears = ({ revenuePast3years }) => {
           <Typography
             sx={{
               color: 'text.primary',
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: 'bold',
               fontVariantCaps: 'all-small-caps',
               backgroundColor: '#f4d5a6',
@@ -118,7 +118,7 @@ const RevenuePastThreeYears = ({ revenuePast3years }) => {
             display="block"
             align="center"
           >
-            Revenue for Active Studies in the past 3 Years
+            Revenue Active Studies Last 3 Years
           </Typography>
           {renderTransactions()}
           <Grid container spacing={2}>

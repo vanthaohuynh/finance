@@ -109,7 +109,7 @@ const RevenueCurrentYear = ({ revenueCurrentYear }) => {
           <Typography
             sx={{
               color: 'text.primary',
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: 'bold',
               fontVariantCaps: 'all-small-caps',
               backgroundColor: '#e2b0f2',

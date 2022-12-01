@@ -72,6 +72,7 @@ Rails.application.routes.draw do
       get 'revenue_currentyear', to: 'transactions#revenue_currentyear'
       get 'revenue_current_ri_year', to: 'transactions#revenue_current_ri_year'
       get 'revenue_past_ri_year', to: 'transactions#revenue_past_ri_year'
+      get 'expense_currentyear', to: 'transactions#expense_currentyear'
     end
   end
 end

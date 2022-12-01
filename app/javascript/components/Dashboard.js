@@ -17,6 +17,8 @@ import Receivable from './home/Receivable';
 import RevenuePastThreeYears from './home/RevenuePastThreeYears';
 import RevenueCurrentYear from './home/RevenueCurrentYear';
 import RevenueCurrentRiYear from './home/RevenueCurrentRiYear';
+import ExpenseTransactions from './home/ExpenseTransactions';
+import ExpenseCurrentYear from './home/ExpenseCurrentYear';
 import { handleAjaxError } from '../helpers/helpers';
 
 // import ExpenseChartDashboard from './home/ExpenseChartDashboard';
@@ -28,6 +30,8 @@ const apiReceivable = '/api/v1/receivable';
 const apiRevenuePast3years = '/api/v1/revenue_past3years';
 const apiRevenueCurrentYear = '/api/v1/revenue_currentyear';
 const apiRevenueCurrentRiYear = '/api/v1/revenue_current_ri_year';
+const apiExpenseTransactions = '/api/v1/expense_transactions';
+const apiExpenseCurrentYear = '/api/v1/expense_currentyear';
 
 const apiRevenuePastYear = '/api/v1/revenue_pastyear';
 const apiRevenuePastRiYear = '/api/v1/revenue_past_ri_year';
@@ -41,6 +45,8 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
   const [revenuePast3years, setRevenuePast3years] = useState([]);
   const [revenueCurrentYear, setRevenueCurrentYear] = useState([]);
   const [revenueCurrentRiYear, setRevenueCurrentRiYear] = useState([]);
+  const [expenseTransactions, setExpenseTransactions] = useState([]);
+  const [expenseCurrentYear, setExpenseCurrentYear] = useState([]);
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   const fetchBillable = async () => {
@@ -103,6 +109,30 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
     }
   };
 
+  const fetchExpenseTransactions = async () => {
+    try {
+      const response = await axios.get(apiExpenseTransactions);
+      console.log('Dashboard ExpenseTransactions: ', response);
+      if (response.status === 200) {
+        setExpenseTransactions(response.data);
+      }
+    } catch (err) {
+      handleAjaxError(err);
+    }
+  };
+
+  const fetchExpenseCurrentYear = async () => {
+    try {
+      const response = await axios.get(apiExpenseCurrentYear);
+      console.log('Dashboard apiExpenseCurrentYear: ', response);
+      if (response.status === 200) {
+        setExpenseCurrentYear(response.data);
+      }
+    } catch (err) {
+      handleAjaxError(err);
+    }
+  };
+
   const validateToken = async () => {
     try {
       const response = await axios.get(urlValidation);
@@ -112,6 +142,8 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
         fetchRevenuePast3Years();
         fetchRevenueCurrentYear();
         fetchRevenueCurrentRiYear();
+        fetchExpenseTransactions();
+        fetchExpenseCurrentYear();
       }
     } catch (err) {
       handleAjaxError(err);
@@ -128,6 +160,11 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
 
   return (
     <section>
+      {/* <div className="gridTest">
+        <Paper elevation={3}>
+          <Billable billable={billable} />
+        </Paper>
+      </div> */}
       <div className="gridDashboard">
         <Paper elevation={3}>
           <Billable billable={billable} />
@@ -143,6 +180,14 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
         </Paper>
         <Paper elevation={3}>
           <RevenueCurrentRiYear revenueCurrentRiYear={revenueCurrentRiYear} />
+        </Paper>
+      </div>
+      <div className="gridDashboard">
+        <Paper elevation={3}>
+          <ExpenseTransactions expenseTransactions={expenseTransactions} />
+        </Paper>
+        <Paper elevation={3}>
+          <ExpenseCurrentYear expenseCurrentYear={expenseCurrentYear} />
         </Paper>
       </div>
     </section>

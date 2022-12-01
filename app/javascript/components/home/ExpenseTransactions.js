@@ -14,9 +14,9 @@ import {
   GridFooterContainer,
 } from '@mui/x-data-grid';
 
-const Billable = ({ billable }) => {
-  console.log('Billable: ', billable);
-  const total = billable.reduce((acc, cur) => acc + cur.revenue_total, 0);
+const ExpenseTransactions = ({ expenseTransactions }) => {
+  console.log('ExpenseTransactions: ', expenseTransactions);
+  const total = expenseTransactions.reduce((acc, cur) => acc + cur.expense_total, 0);
   const formattedTotal = Number(total).toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -32,7 +32,7 @@ const Billable = ({ billable }) => {
       ),
     },
     {
-      field: 'revenue_total',
+      field: 'expense_total',
       headerName: 'Amount',
       width: 175,
       editable: false,
@@ -59,7 +59,7 @@ const Billable = ({ billable }) => {
   };
 
   const renderTransactions = () => {
-    const sortedAccounts = [...billable].sort((a, b) => (a.account_num > b.account_num ? 1 : -1));
+    const sortedAccounts = [...expenseTransactions].sort((a, b) => (a.account_num > b.account_num ? 1 : -1));
     return (
       <Box
         sx={{
@@ -112,13 +112,13 @@ const Billable = ({ billable }) => {
               fontSize: 20,
               fontWeight: 'bold',
               fontVariantCaps: 'all-small-caps',
-              backgroundColor: '#76b1e8',
+              backgroundColor: '#eaff96',
             }}
             variant="button"
             display="block"
             align="center"
           >
-            Billable Activities for Current Studies
+            Expense Activities for Current Studies
           </Typography>
           {renderTransactions()}
           <Grid container spacing={2}>
@@ -157,11 +157,11 @@ const Billable = ({ billable }) => {
   );
 };
 
-Billable.propTypes = {
-  billable: PropTypes.arrayOf(PropTypes.shape({
+ExpenseTransactions.propTypes = {
+  expenseTransactions: PropTypes.arrayOf(PropTypes.shape({
     account_num: PropTypes.string,
-    revenue_total: PropTypes.number,
+    expense_total: PropTypes.number,
   })).isRequired,
 };
 
-export default Billable;
+export default ExpenseTransactions;

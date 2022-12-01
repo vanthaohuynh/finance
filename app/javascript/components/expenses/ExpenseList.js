@@ -19,11 +19,18 @@ const ExpenseList = ({ expenses }) => {
       ),
     },
     {
-      field: 'expense_category_name',
-      headerName: 'Category',
+      field: 'invoice_num',
+      headerName: 'Invoice Number',
       headerClassName: 'super-app-theme--header',
       width: 150,
       editable: false,
+      renderCell: (params) => {
+        const { id } = params;
+        const { value } = params;
+        return (
+          <Link to={`/expenses/${id}`}>{value}</Link>
+        );
+      },
     },
     {
       field: 'amount',
@@ -47,18 +54,11 @@ const ExpenseList = ({ expenses }) => {
       editable: false,
     },
     {
-      field: 'invoice_num',
-      headerName: 'Invoice Number',
+      field: 'expense_category_name',
+      headerName: 'Category',
       headerClassName: 'super-app-theme--header',
-      width: 200,
+      width: 150,
       editable: false,
-      renderCell: (params) => {
-        const { id } = params;
-        const { value } = params;
-        return (
-          <Link to={`/expenses/${id}`}>{value}</Link>
-        );
-      },
     },
     {
       field: 'notes ',

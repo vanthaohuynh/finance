@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_26_231635) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_29_144536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_26_231635) do
     t.string "pi_name"
     t.string "status"
     t.string "study_name"
+    t.float "expense_total"
+    t.float "revenue_total"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|

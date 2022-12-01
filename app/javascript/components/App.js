@@ -19,6 +19,7 @@ import RevenueCategories from './categories/revenue/RevenueCategories';
 
 const App = () => {
   const [loggedInStatus, setLoggedInStatus] = useState('NOT_LOGGED_IN');
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
   const [user, setUser] = useState({});
   const [token, setToken] = useState('');
   const navigate = useNavigate();
@@ -36,35 +37,6 @@ const App = () => {
       console.log('App: useEffect: localStorage: user and token', getUser, getToken);
     }
   }, []); // Leave the array empty to run only once.
-
-  // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  // if (user && token) {
-  //   axios.get(url)
-  //     .then((response) => {
-  //       console.log('App: useEffect: response: ', response);
-  //       if (response.status === 200) {
-  //         console.log('App: useEffect: response.data: ', response.data);
-  //         setLoggedInStatus('LOGGED_IN');
-  //         setUser(response.data.user);
-  //         setToken(response.data.token);
-  //         // navigate('/dashboard');
-  //       } else {
-  //         setLoggedInStatus('NOT_LOGGED_IN');
-  //         setUser({});
-  //         setToken('');
-  //         // navigate('/');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       handleAjaxError(error);
-  //     });
-  // } else {
-  //   setLoggedInStatus('NOT_LOGGED_IN');
-  //   setUser({});
-  //   setToken('');
-  //   // navigate('/');
-  // }
-  // }, []);
 
   const handleLogin = (data) => {
     console.log('App: handleLogin: data: ', data);
@@ -86,183 +58,10 @@ const App = () => {
     navigate('/');
   };
 
-  // useEffect(() => {
-  //   if (user && token) {
-  //     console.log('App: useEffect: user and token ', user, token);
-  //     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  //     // axios.defaults.headers.common['Content-Type'] = 'application/json';
-  //     // axios.defaults.headers.common.Accept = 'application/json';
-  //     const checkLoginStatus = async () => {
-  //       try {
-  //         const response = await axios.get(url);
-  //         console.log('App: useEffect: checkLoginStatus: response: ', response);
-  //         if (response.status === 200) {
-  //           // setLoggedInStatus('LOGGED_IN');
-  //           // setUser(response.data.user);
-  //           // setToken(response.data.token);
-  //         } else {
-  //           // setLoggedInStatus('NOT_LOGGED_IN');
-  //           // setUser({});
-  //           // setToken('');
-  //         }
-  //       } catch (error) {
-  //         // No need to do anything because this is just an initial check
-  //         // handleAjaxError(error);
-  //       }
-  //       //  catch (err) {
-  //       //   handleAjaxError(err);
-  //       //   setLoggedInStatus('NOT_LOGGED_IN');
-  //       //   setUser({});
-  //       //   setToken('');
-  //       // }
-  //     };
-  //     // checkLoginStatus();
-  //   }
-  // }, []);
-
-    //   try {
-    //   //   axios.get('/validate_token')
-    //   //     .then((response) => {
-    //   //       console.log('App: useEffect: response: ', response);
-    //   //       if (response.data.status === 'verified') {
-    //   //         setLoggedInStatus('LOGGED_IN');
-    //   //         setUser(response.data.user);
-    //   //         setToken(response.data.token);
-    //   //       } else {
-    //   //         setLoggedInStatus('NOT_LOGGED_IN');
-    //   //         setUser({});
-    //   //         setToken('');
-    //   //       }
-    //   //     })
-    //   //     .catch((error) => {
-    //   //       console.log('App: useEffect: error: ', error);
-    //   //       handleAjaxError(error);
-    //   //     });
-    //   // } catch (error) {
-    //   //   console.log('App: useEffect: error: ', error);
-    //   //   handleAjaxError(error);
-    //   // }
-    // }
-  // }, [user, token]);
-
-  // useEffect(() => {
-    // const token = window.localStorage.getItem('token');
-    // const user = window.localStorage.getItem('user');
-    // console.log('App: useEffect: token: ', token);
-    // console.log('App: useEffect: user: ', user);
-    // if (token && user) {
-    //   console.log('App: useEffect: token and user: ', token, user);
-    //   const checkLoginStatus = async () => {
-    //     const url = 'http://localhost:3000/auto_login';
-    //     const headers = {
-    //       'Content-Type': 'application/json',
-    //       Accept: 'application/json',
-    //       Authorization: `Bearer ${token}`,
-    //     };
-    //     console.log('App: useEffect: checkLoginStatus: headers: ', headers);
-    //     try {
-    //       const response = await axios.get(url, { headers });
-    //       console.log('App: checkLoginStatus: response: ', response);
-    //       if (response.status === 200) {
-    //         handleLogin(response.data);
-    //       } else {
-    //         console.log('RemoveItem localStorage');
-    //         window.localStorage.removeItem('token');
-    //         window.localStorage.removeItem('user');
-    //         handleLogout();
-    //       }
-    //     } catch (err) {
-    //       handleAjaxError(err);
-    //     }
-    //   };
-    //   checkLoginStatus();
-    // }
-  // }, []);
-
-  // Using cookies
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:3000/logged_in', { withCredentials: true });
-  //       // console.log('App: checkLoginStatus: response: ', response);
-  //       if (response.data.logged_in && loggedInStatus === 'NOT_LOGGED_IN') {
-  //         setLoggedInStatus('LOGGED_IN');
-  //         setUser(response.data.user);
-  //       } else if (!response.data.logged_in && loggedInStatus === 'LOGGED_IN') {
-  //         setLoggedInStatus('NOT_LOGGED_IN');
-  //         setUser({});
-  //       }
-  //     } catch (error) {
-  //       handleAjaxError(error);
-  //     }
-  //   };
-  //   checkLoginStatus();
-  // }, [loggedInStatus]);
-
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:3000/auto_login', { withCredentials: true });
-  //       if (response.data.logged_in && loggedInStatus === 'NOT_LOGGED_IN') {
-  //         setLoggedInStatus('LOGGED_IN');
-  //         setUser(response.data.user);
-  //       } else if (!response.data.logged_in && loggedInStatus === 'LOGGED_IN') {
-  //         setLoggedInStatus('NOT_LOGGED_IN');
-  //         setUser({});
-  //       }
-  //     } catch (error) {
-  //       handleAjaxError(error);
-  //     }
-  //   };
-  //   checkLoginStatus();
-  // }, [loggedInStatus]);
-
-      // console.log('App: checkLoginStatus: response: ', response);
-
-      // axios
-      //   .get('http://localhost:3000/auto_login')
-      //   .then((response) => {
-      //     console.log('App: checkLoginStatus: response: ', response);
-      //     if (
-      //       response.data.status === '200'
-      //       && loggedInStatus === 'NOT_LOGGED_IN'
-      //     ) {
-      //       setLoggedInStatus('LOGGED_IN');
-      //       setUser(response.data.user);
-      //       // console.log('App: checkLoginStatus: user: ', user);
-      //     } else if (
-      //       !response.data.logged_in
-      //       && loggedInStatus === 'LOGGED_IN'
-      //     ) {
-      //       setLoggedInStatus('NOT_LOGGED_IN');
-      //       setUser({});
-      //       // console.log('App: checkLoginStatus:', loggedInStatus);
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log('App: checkLoginStatus: error: ', error);
-      //     handleAjaxError(error);
-      //   });
-    // };
-  //   checkLoginStatus();
-  //   console.log('App: useEffect: checkLoginStatus: ', loggedInStatus);
-  //   // console.log('App: useEffect: checkLoginStatus: user: ', user);
-  // }, [loggedInStatus]);
-
-  // const handleLogoutClick = () => {
-  //   axios
-  //     .delete('http://localhost:3000/logout', { withCredentials: true })
-  //     .then((response) => {
-  //       console.log('Home: handleLogoutClick: response: ', response);
-  //       handleLogout();
-  //       navigate('/');
-  //       // redirect('/');
-  //     })
-  //     .catch((error) => {
-  //       console.log('Home: handleLogoutClick: error: ', error);
-  //       handleAjaxError(error);
-  //     });
-  // };
+  const handleSelectedIndex = (index) => {
+    console.log('App: handleSelectedIndex: index: ', index);
+    setSelectedIndex(index);
+  };
 
   return (
     <ConfirmProvider>
@@ -272,6 +71,8 @@ const App = () => {
           userEmail={user.email}
           loggedInStatus={loggedInStatus}
           handleLogout={handleLogout}
+          selectedIndex={selectedIndex}
+          handleSelectedIndex={handleSelectedIndex}
           // handleLogoutClick={handleLogoutClick}
         />
       ) : null}
@@ -291,7 +92,12 @@ const App = () => {
           />
           <Route
             path="/dashboard"
-            element={<Dashboard />}
+            element={(
+              <Dashboard
+                token={token}
+                handleSelectedIndex={handleSelectedIndex}
+              />
+            )}
           />
           {/* <Route
             path="/registration"
@@ -303,15 +109,30 @@ const App = () => {
           /> */}
           <Route
             path="/expenses/*"
-            element={<Expenses token={token} />}
+            element={(
+              <Expenses
+                token={token}
+                handleSelectedIndex={handleSelectedIndex}
+              />
+            )}
           />
           <Route
             path="/revenues/*"
-            element={<Revenues token={token} />}
+            element={(
+              <Revenues
+                token={token}
+                handleSelectedIndex={handleSelectedIndex}
+              />
+            )}
           />
           <Route
             path="/accounts/*"
-            element={<Accounts token={token} />}
+            element={(
+              <Accounts
+                token={token}
+                handleSelectedIndex={handleSelectedIndex}
+              />
+            )}
           />
           <Route
             path="/expense_categories/*"

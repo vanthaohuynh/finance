@@ -15,9 +15,9 @@ import ErrorBoundary from '../../ErrorBoundary';
 const urlValidation = '/validate_token';
 const apiAccountEndpoint = '/api/v1/accounts';
 
-const Accounts = ({ token }) => {
+const Accounts = ({ token, handleSelectedIndex }) => {
   const [accounts, setAccounts] = useState([]);
-  const dataferchedRef = useRef(false);
+  const dataFetchedRef = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
   const navigate = useNavigate();
@@ -56,9 +56,10 @@ const Accounts = ({ token }) => {
   };
 
   useEffect(() => {
-    if (!dataferchedRef.current) {
-      dataferchedRef.current = true;
+    if (!dataFetchedRef.current) {
+      dataFetchedRef.current = true;
       validateToken();
+      handleSelectedIndex(0);
     }
   }, []);
 
@@ -185,6 +186,7 @@ const Accounts = ({ token }) => {
 
 Accounts.propTypes = {
   token: PropTypes.string.isRequired,
+  handleSelectedIndex: PropTypes.func.isRequired,
 };
 
 export default Accounts;

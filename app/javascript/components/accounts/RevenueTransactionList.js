@@ -46,10 +46,10 @@ const RevenueTransactionList = ({ transactions }) => {
       headerName: 'Invoice Number',
       width: 150,
       editable: false,
-      // It works but not all the time
-      // renderCell: (params) => (
-      //   <Link to={`/revenues/${params.row.invoice_id}`}>{params.value}</Link>
-      // ),
+      // Not working. Try to fix later (need props in Revenue.js)
+      renderCell: (params) => (
+        <Link to={`/revenues/${params.row.invoice_id}`}>{params.value}</Link>
+      ),
     },
     {
       field: 'notes',
@@ -125,6 +125,7 @@ RevenueTransactionList.propTypes = {
     invoice_num: PropTypes.string,
     invoice_id: PropTypes.number,
     invoice_date: PropTypes.string,
+    deposit_date: PropTypes.string,
     transaction_type: PropTypes.string,
     category: PropTypes.string,
     amount: PropTypes.number,

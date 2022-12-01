@@ -37,7 +37,7 @@ const AccountSummaryTable = ({ cardTransactionData }) => {
   const rows = [
     createData('Total Revenue', revenueTotal),
     createData('Total Overhead', revenueOverHeadTotal),
-    createData('Total Revenue After O.', revenueAfterOverHeadTotal),
+    createData('Total After OH', revenueAfterOverHeadTotal),
     createData('Total Expenses', expenseTotal),
     // createData('Balance', balance),
   ];

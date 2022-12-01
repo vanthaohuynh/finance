@@ -1,13 +1,14 @@
 class Api::V1::AccountsController < ApplicationController
   before_action :authorized
-  before_action :set_account, only: %i[show edit update destroy transactions]
+  before_action :set_account, only: %i[show edit update destroy transactions rev_ri_year1]
   # skip_before_action :verify_authenticity_token
   # before_action :authenticate_user, only: %i[create update destroy]
 
   def index
     @accounts = Account
                 .select('accounts.*')
-                .order('created_at DESC')
+                # .order('created_at DESC')
+                .order('accounts.account_num')
     render json: @accounts
   end
 
@@ -63,6 +64,18 @@ class Api::V1::AccountsController < ApplicationController
     else
       render json: @account.errors, status: :unprocessable_entity
     end
+  end
+
+  def rev_ri_year
+    from_date = Date.new(Date.current.year, 4, 1)
+    to_date = Date.new(Date.current.year + 1, 3, 31)
+    @revenues = Account
+                .joins('FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
+                .select('accounts.*, SUM(revenues.amount) AS revenue_total')
+                .where(['accounts.status = ? AND accounts.id = ? AND revenues.deposit_date BETWEEN ? AND ?', 'Open', @account, from_date, to_date])
+                .distinct
+                .group('accounts.id')
+    render json: @revenues
   end
 
   private

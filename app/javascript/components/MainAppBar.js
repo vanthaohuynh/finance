@@ -19,11 +19,16 @@ import { Link } from 'react-router-dom';
 // background color of AppBar: #1876d2
 
 const MainAppBar = ({
-  userRoleID, userEmail, loggedInStatus, handleLogout,
+  userRoleID,
+  userEmail,
+  loggedInStatus,
+  handleLogout,
+  selectedIndex,
+  handleSelectedIndex,
 }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+  // const [selectedIndex, setSelectedIndex] = React.useState(-1);
   let pages = ['Accounts', 'Revenues', 'Expenses', 'Expense Categories', 'Revenue Categories'];
   let dash = '/dashboard';
 
@@ -49,12 +54,14 @@ const MainAppBar = ({
   };
 
   const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
+    handleSelectedIndex(index);
+    // setSelectedIndex(index);
     setAnchorElNav(null);
   };
 
   const clearSelectedIndex = () => {
-    setSelectedIndex(-1);
+    handleSelectedIndex(-1);
+    // setSelectedIndex(-1);
   };
 
   return (
@@ -223,6 +230,8 @@ MainAppBar.propTypes = {
   userEmail: PropTypes.string.isRequired,
   loggedInStatus: PropTypes.string.isRequired,
   handleLogout: PropTypes.func.isRequired,
+  selectedIndex: PropTypes.number.isRequired,
+  handleSelectedIndex: PropTypes.func.isRequired,
 };
 
 export default MainAppBar;

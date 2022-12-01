@@ -36,6 +36,7 @@ const RevenueForm = ({
     () => {
       const defaults = {
         invoice_date: null,
+        deposit_date: null,
         invoice_num: '',
         amount: '',
         account_id: '',
@@ -52,6 +53,9 @@ const RevenueForm = ({
       if (!isEmptyObject(currRevenue)) {
         // Need to replace - with / to fix problem with Javascript Date object off by one day
         currRevenue.invoice_date = currRevenue.invoice_date.replace(/-/g, '\/');
+        if (currRevenue.deposit_date) {
+          currRevenue.deposit_date = currRevenue.deposit_date.replace(/-/g, '\/');
+        }
       }
       return { ...defaults, ...currRevenue };
     },
@@ -103,6 +107,13 @@ const RevenueForm = ({
       return;
     }
     updateRevenue('invoice_date', formatDate(val));
+  };
+
+  const handleDepositDateInputChange = (val) => {
+    if (val === 'Invalid Date' || val === null) {
+      return;
+    }
+    updateRevenue('deposit_date', formatDate(val));
   };
 
   const handleAccountInputChange = (e) => {
@@ -295,6 +306,21 @@ const RevenueForm = ({
                   />
                 </Grid>
                 <Grid item xs={6}>
+                  <DatePicker
+                    type="text"
+                    id="deposit_date"
+                    name="deposit_date"
+                    label="Deposit Date"
+                    inputFormat="yyyy-MM-dd"
+                    onChange={handleDepositDateInputChange}
+                    // value={revenue.deposit_date ? revenue.deposit_date : null}
+                    value={revenue.deposit_date}
+                    renderInput={
+                      (params) => <TextField size="small" fullWidth {...params} />
+                    }
+                  />
+                </Grid>
+                <Grid item xs={6}>
                   <FormControl size="small" fullWidth>
                     <InputLabel>Revenue Category *</InputLabel>
                     <Select
@@ -318,7 +344,7 @@ const RevenueForm = ({
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                   <FormControl size="small" fullWidth>
                     <InputLabel>Revenue Currency *</InputLabel>
                     <Select
@@ -335,7 +361,7 @@ const RevenueForm = ({
                       <option key="USD" value="USD">USD</option>
                     </Select>
                   </FormControl>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={6}>
                   <TextField
                     type="text"

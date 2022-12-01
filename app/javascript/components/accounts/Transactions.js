@@ -55,19 +55,6 @@ const Transactions = ({ token }) => {
   const confirm = useConfirm();
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-  // const createSummaryCardData = (transactionData) => {
-  //   const revenueTransactions = transactionData.filter((transaction) => transaction.transaction_type === 'Revenue');
-  //   const expenseTransactions = transactionData.filter((transaction) => transaction.transaction_type === 'Expense');
-  //   const revenueTotal = revenueTransactions
-  //     .reduce((acc, transaction) => acc + transaction.amount, 0);
-  //   const expenseTotal = expenseTransactions
-  //     .reduce((acc, transaction) => acc + transaction.amount, 0);
-  //   const balance = revenueTotal - expenseTotal;
-  //   console.log('revenueTotal', revenueTotal);
-  //   console.log('expenseTotal', expenseTotal);
-  //   console.log('balance', balance);
-  // };
-
   const createTransactions = (account) => {
     // console.log('CreateTransactions:', account);
     let transactionID = 0;
@@ -95,6 +82,7 @@ const Transactions = ({ token }) => {
           id: transactionID += 1,
           account_num,
           invoice_date: revenue.invoice_date,
+          deposit_date: revenue.deposit_date,
           invoice_num: revenue.invoice_num,
           invoice_id: revenue.id,
           transaction_type: 'Revenue',

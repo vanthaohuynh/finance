@@ -100,6 +100,17 @@ const Revenue = ({ revenues, onDelete }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              id="deposit_date"
+              label="Deposit Date"
+              // value={revenue.deposit_date.replace(/\//g, '-') || ''}
+              value={revenue.deposit_date ? revenue.deposit_date.replace(/\//g, '-') : ''}
+              size="small"
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               id="revenue_category_name"
               label="Revenue Category"
               value={revenue.revenue_category_name || ''}
@@ -108,7 +119,7 @@ const Revenue = ({ revenues, onDelete }) => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <TextField
               id="revenue_currency"
               label="Revenue Currency"
@@ -117,7 +128,7 @@ const Revenue = ({ revenues, onDelete }) => {
               fullWidth
               variant="outlined"
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={6}>
             <TextField
               id="notes"
@@ -169,6 +180,7 @@ Revenue.propTypes = {
   revenues: PropTypes.arrayOf(PropTypes.shape({
     // id: PropTypes.number,
     invoice_date: PropTypes.string,
+    deposit_date: PropTypes.string,
     invoice_num: PropTypes.string,
     amount: PropTypes.number,
     account_num: PropTypes.string,

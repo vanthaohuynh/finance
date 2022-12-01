@@ -132,6 +132,35 @@ header h1 a {
   padding-bottom: 50px;
 }
 
+.gridDashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr; */
+  grid-gap: 20px;
+  /* column-gap: 50px; */
+  margin: 0px 0px;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  padding-left: 50;
+  padding-right: 50;
+}
+
+.billable {
+  grid-column: 2 / span 4;
+  grid-row: 1 / 5;
+}
+
+.receivable {
+  grid-column: 6 / span 4;
+  grid-row: 1 / 5;
+}
+
+.past3years {
+  grid-column: 10 / span 4;
+  grid-row: 1 / 5;
+}
+
 /* .transactionCard {
   grid-column: 1 / 3;
   grid-row: 1 / 10;
@@ -155,8 +184,10 @@ header h1 a {
 }
 
 .eventList {
-  /* background: #f6f6f6;
-  padding: 16px; */
+  /* background: #f6f6f6; */
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 16px;
   background-color: white;
 }
 

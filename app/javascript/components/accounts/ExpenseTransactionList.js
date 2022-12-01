@@ -40,6 +40,10 @@ const ExpenseTransactionList = ({ transactions }) => {
       headerName: 'Invoice Number',
       width: 150,
       editable: false,
+      // Not working. Try to fix later (need props in Expense.js)
+      renderCell: (params) => (
+        <Link to={`/expenses/${params.row.invoice_id}`}>{params.value}</Link>
+      ),
     },
     {
       field: 'notes',

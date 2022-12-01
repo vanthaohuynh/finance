@@ -11,7 +11,7 @@ import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
-const Revenues = ({ token }) => {
+const Revenues = ({ token, handleSelectedIndex }) => {
   const [revenues, setRevenues] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [revenueCategories, setRevenueCategories] = useState([]);
@@ -87,6 +87,7 @@ const Revenues = ({ token }) => {
       }
     };
     validateToken();
+    handleSelectedIndex(1);
   }, []); // Need to keep this dependencies array empty
 
   const reloadRevenueData = async () => {
@@ -103,32 +104,6 @@ const Revenues = ({ token }) => {
     }
     setIsLoading(false);
   };
-
-  // const addTransaction = async (savedRevenue) => {
-  //   const transaction = {
-  //     account_id: savedRevenue.account_id,
-  //     account_num: savedRevenue.account_num,
-  //     invoice_num: savedRevenue.invoice_num,
-  //     invoice_date: savedRevenue.invoice_date,
-  //     transaction_type: 'Revenue',
-  //     transaction_category: savedRevenue.revenue_category_name,
-  //     transaction_amount: savedRevenue.amount,
-  //     transaction_currency: savedRevenue.revenue_currency
-  //   };
-
-  //   try {
-  //     const response = await axios.post(apiTransactionEndpoint, transaction);
-  //     if (response.status !== 200) {
-  //       throw Error(response.statusText);
-  //     }
-  //     const savedTransaction = response.data;
-  //     const newTransactions = [...transactions, savedTransaction];
-  //     setTransactions(newTransactions);
-  //     success('Transaction added successfully');
-  //   } catch (err) {
-  //     handleAjaxError(err);
-  //   }
-  // };
 
   const addRevenue = async (newRevenue) => {
     try {
@@ -260,6 +235,7 @@ const Revenues = ({ token }) => {
 
 Revenues.propTypes = {
   token: PropTypes.string.isRequired,
+  handleSelectedIndex: PropTypes.func.isRequired,
 };
 
 export default Revenues;

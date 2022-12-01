@@ -4,5 +4,5 @@ class AccountSerializer < ActiveModel::Serializer
              :budget_currency, :invoicing_terms, :budget_version,
              :targeted_enrolling_number, :cta_date, :notes,
              :created_at, :updated_at, :account_amendments,
-             :expenses, :revenues
+             :expenses, :revenues, :expense_total, :revenue_total
 end

@@ -82,12 +82,12 @@ const AccountList = ({ accounts }) => {
     //   width: 150,
     //   editable: false,
     // },
-    {
-      field: 'budget_currency',
-      headerName: 'Budget Currency',
-      width: 150,
-      editable: false,
-    },
+    // {
+    //   field: 'budget_currency',
+    //   headerName: 'Budget Currency',
+    //   width: 150,
+    //   editable: false,
+    // },
     {
       field: 'invoicing_terms',
       headerName: 'Invoicing Terms',

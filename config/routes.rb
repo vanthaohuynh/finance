@@ -63,6 +63,15 @@ Rails.application.routes.draw do
       resources :revenue_categories, only: %i[index show create update destroy]
       resources :account_amendments, only: %i[index show create update destroy]
       get 'accounts/:id/transactions', to: 'accounts#transactions', as: 'account_transactions'
+      # get 'transactions', to: 'transactions#index'
+      get 'revenue_transactions', to: 'transactions#revenue_transactions'
+      get 'expense_transactions', to: 'transactions#expense_transactions'
+      get 'billable', to: 'transactions#billable'
+      get 'receivable', to: 'transactions#receivable'
+      get 'revenue_past3years', to: 'transactions#revenue_past3years'
+      get 'revenue_currentyear', to: 'transactions#revenue_currentyear'
+      get 'revenue_current_ri_year', to: 'transactions#revenue_current_ri_year'
+      get 'revenue_past_ri_year', to: 'transactions#revenue_past_ri_year'
     end
   end
 end

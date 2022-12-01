@@ -11,7 +11,7 @@ import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
-const Expenses = ({ token }) => {
+const Expenses = ({ token, handleSelectedIndex }) => {
   const [expenses, setExpenses] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [expenseCategories, setExpenseCategories] = useState([]);
@@ -91,6 +91,7 @@ const Expenses = ({ token }) => {
       }
     };
     validateToken();
+    handleSelectedIndex(2);
   }, []); // Need to keep this empty
 
   // useEffect(() => {
@@ -358,6 +359,7 @@ const Expenses = ({ token }) => {
 
 Expenses.propTypes = {
   token: PropTypes.string.isRequired,
+  handleSelectedIndex: PropTypes.func.isRequired,
 };
 
 export default Expenses;

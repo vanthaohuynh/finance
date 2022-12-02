@@ -19,7 +19,8 @@ import { info, success, error } from '../../helpers/notifications';
 
 const theme = createTheme();
 
-const Login = ({ handleSuccessfulAuth }) => {
+// const Login = ({ handleSuccessfulAuth }) => {
+const Login = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // const [rememberMe, setRememberMe] = useState(false);
@@ -46,7 +47,8 @@ const Login = ({ handleSuccessfulAuth }) => {
       console.log('Login: handleSubmit: response: ', response.data.status);
       if (response.status === 200) {
         console.log('Login: handleSubmit: response.data: ', response.data);
-        handleSuccessfulAuth(response.data);
+        // handleSuccessfulAuth(response.data);
+        handleLogin(response.data);
       } else {
         setErrorLogin(true);
         error('Login failed. Please try again.');
@@ -56,34 +58,6 @@ const Login = ({ handleSuccessfulAuth }) => {
       setErrorLogin(true);
     }
   };
-
-  // const handleSubmit = (e) => {
-  //   axios
-  //     .post(
-  //       'http://localhost:3000/sessions',
-  //       {
-  //         user: {
-  //           email,
-  //           password,
-  //         },
-  //       },
-  //       { withCredentials: true },
-  //     )
-  //     .then((response) => {
-  //       // console.log('Login response:', response);
-  //       if (response.data.status === 'created') {
-  //         handleSuccessfulAuth(response.data);
-  //       } else {
-  //         setErrorLogin(true);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log('Login error', err);
-  //       // setRegistrationErrors(error.response.data.errors);
-  //       handleAjaxError(err);
-  //     });
-  //   e.preventDefault();
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -167,11 +141,12 @@ const Login = ({ handleSuccessfulAuth }) => {
 };
 
 Login.propTypes = {
-  handleSuccessfulAuth: PropTypes.func,
+  // handleSuccessfulAuth: PropTypes.func,
+  handleLogin: PropTypes.func.isRequired,
 };
 
-Login.defaultProps = {
-  handleSuccessfulAuth: () => {},
-};
+// Login.defaultProps = {
+//   handleSuccessfulAuth: () => {},
+// };
 
 export default Login;

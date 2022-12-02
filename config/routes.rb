@@ -21,7 +21,8 @@ Rails.application.routes.draw do
 
   root to: 'site#index'
 
-  get 'home', to: 'site#index'
+  # get 'home', to: 'site#index'
+  get '/', to: 'site#index'
   get 'dashboard', to: 'site#index'
   get 'registration', to: 'site#index'
 

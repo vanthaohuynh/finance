@@ -5,6 +5,7 @@ import { ConfirmProvider } from 'material-ui-confirm';
 import { ToastContainer } from 'react-toastify';
 // import axios from 'axios';
 import Home from './Home';
+import Login from './auth/Login';
 import Dashboard from './Dashboard';
 // import Registration from './auth/Registration';
 import MainAppBar from './MainAppBar';
@@ -21,6 +22,7 @@ const App = () => {
   const [loggedInStatus, setLoggedInStatus] = useState('NOT_LOGGED_IN');
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
   const [user, setUser] = useState({});
+  const [userRoleID, setUserRoleID] = useState(0);
   const [token, setToken] = useState('');
   const navigate = useNavigate();
 
@@ -32,6 +34,12 @@ const App = () => {
     if (getUser && getToken) {
       setLoggedInStatus('LOGGED_IN');
       setUser(getUser);
+      setUserRoleID(getUser.role_id);
+      if (getUser.role_id === 1) {
+        navigate('/expenses');
+      } else {
+        navigate('/dashboard');
+      }
       setToken(getToken);
       console.log('App: useEffect: localStorage: loggedInStatus', loggedInStatus);
       console.log('App: useEffect: localStorage: user and token', getUser, getToken);
@@ -42,6 +50,12 @@ const App = () => {
     console.log('App: handleLogin: data: ', data);
     setLoggedInStatus('LOGGED_IN');
     setUser(data.user);
+    setUserRoleID(data.user.role_id);
+    if (data.user.role_id === 1) {
+      navigate('/expenses');
+    } else {
+      navigate('/dashboard');
+    }
     setToken(data.token);
     window.localStorage.setItem('user', JSON.stringify(data.user));
     window.localStorage.setItem('token', data.token);
@@ -65,86 +79,107 @@ const App = () => {
 
   return (
     <ConfirmProvider>
-      {loggedInStatus === 'LOGGED_IN' ? (
+      {loggedInStatus === 'NOT_LOGGED_IN' ? (
+        <Login handleLogin={handleLogin} />
+      ) : (
         <MainAppBar
-          userRoleID={user.role_id}
+          userRoleID={userRoleID}
           userEmail={user.email}
           loggedInStatus={loggedInStatus}
           handleLogout={handleLogout}
           selectedIndex={selectedIndex}
           handleSelectedIndex={handleSelectedIndex}
-          // handleLogoutClick={handleLogoutClick}
         />
-      ) : null}
-
-      <Container maxWidth="xl">
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={(
-              <Home
-                handleLogin={handleLogin}
-                loggedInStatus={loggedInStatus}
-                // handleLogout={handleLogout}
-              />
-            )}
-          />
-          <Route
-            path="/dashboard"
-            element={(
-              <Dashboard
-                token={token}
-                handleSelectedIndex={handleSelectedIndex}
-              />
-            )}
-          />
-          {/* <Route
-            path="/registration"
-            element={<Registration loggedInStatus={loggedInStatus} />}
-          /> */}
-          {/* <Route
-            path="/transactions/*"
-            element={<Transactions token={token} />}
-          /> */}
-          <Route
-            path="/expenses/*"
-            element={(
-              <Expenses
-                token={token}
-                handleSelectedIndex={handleSelectedIndex}
-              />
-            )}
-          />
-          <Route
-            path="/revenues/*"
-            element={(
-              <Revenues
-                token={token}
-                handleSelectedIndex={handleSelectedIndex}
-              />
-            )}
-          />
-          <Route
-            path="/accounts/*"
-            element={(
-              <Accounts
-                token={token}
-                handleSelectedIndex={handleSelectedIndex}
-              />
-            )}
-          />
-          <Route
-            path="/expense_categories/*"
-            element={<ExpenseCategories token={token} />}
-          />
-          <Route
-            path="/revenue_categories/*"
-            element={<RevenueCategories token={token} />}
-          />
-        </Routes>
-        <ToastContainer />
-      </Container>
+      )}
+      {userRoleID === 1 ? (
+        <Container maxWidth="xl">
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={(
+                <Home
+                  loggedInStatus={loggedInStatus}
+                  userRoleID={userRoleID}
+                />
+              )}
+            />
+            <Route
+              path="/expenses/*"
+              element={(
+                <Expenses
+                  token={token}
+                  handleSelectedIndex={handleSelectedIndex}
+                />
+              )}
+            />
+          </Routes>
+        </Container>
+      ) : (
+        <Container maxWidth="xl">
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={(
+                <Home
+                  loggedInStatus={loggedInStatus}
+                  userRoleID={userRoleID}
+                />
+              )}
+            />
+            <Route
+              path="/dashboard"
+              element={(
+                <Dashboard
+                  token={token}
+                  handleSelectedIndex={handleSelectedIndex}
+                />
+              )}
+            />
+            <Route
+              path="/expenses/*"
+              element={(
+                <Expenses
+                  token={token}
+                  handleSelectedIndex={handleSelectedIndex}
+                />
+              )}
+            />
+            <Route
+              path="/revenues/*"
+              element={(
+                <Revenues
+                  token={token}
+                  handleSelectedIndex={handleSelectedIndex}
+                />
+              )}
+            />
+            <Route
+              path="/accounts/*"
+              element={(
+                <Accounts
+                  token={token}
+                  handleSelectedIndex={handleSelectedIndex}
+                />
+              )}
+            />
+            <Route
+              path="/expense_categories/*"
+              element={<ExpenseCategories token={token} />}
+            />
+            <Route
+              path="/revenue_categories/*"
+              element={<RevenueCategories token={token} />}
+            />
+            {/* <Route
+              path="/registration"
+              element={<Registration loggedInStatus={loggedInStatus} />}
+            /> */}
+          </Routes>
+          <ToastContainer />
+        </Container>
+      )}
     </ConfirmProvider>
   );
 };

@@ -1,54 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate, redirect } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
 // import Registration from './auth/Registration';
-import Login from './auth/Login';
-import { handleAjaxError } from '../helpers/helpers';
+// import Login from './auth/Login';
+// import { handleAjaxError } from '../helpers/helpers';
 
 const Home = (props) => {
   const { loggedInStatus } = props;
-  const { handleLogin } = props;
+  const { userRoleID } = props;
   const navigate = useNavigate();
+  // const [dash, setDash] = useState('');
   console.log('Home: ', loggedInStatus);
+  console.log('Home: userRoleID: ', userRoleID);
+  // useEffect(() => {
+  //   if (userRoleID === 1) {
+  //     setDash('/expenses');
+  //   } else {
+  //     setDash('/revenues');
+  //   }
+  // }, [userRoleID]);
 
-  const handleSuccessfulAuth = (data) => {
-    console.log('Home: handleSuccessfulAuth: data: ', data);
-    // Update parent state
-    // console.log('Home: handleSuccessfulAuth: data: ', data);
-    handleLogin(data);
-    // console.log('Home: data_user_role_id:', data.user.role_id);
-    if (data.user.role_id === 1) {
-      navigate('/expenses');
-    } else {
-      navigate('/dashboard');
-    }
-  };
+  // const handleSuccessfulAuth = (data) => {
+  //   console.log('Home: handleSuccessfulAuth: data: ', data);
+  //   handleLogin(data);
+  // };
 
   return (
     <div>
-      {/* <h1>Home</h1> */}
-      {/* <h3>
-        Status:
-        {loggedInStatus}
-      </h3> */}
-      {/* <Registration handleSuccessfulAuth={handleSuccessfulAuth} /> */}
-      {/* <button type="button" onClick={() => handleLogoutClick()}>
-        Log out
-      </button> */}
-      { loggedInStatus === 'NOT_LOGGED_IN' ? (
+      {/* { loggedInStatus === 'NOT_LOGGED_IN' ? (
         <Login handleSuccessfulAuth={handleSuccessfulAuth} />
       ) : (
-        // redirect('/dashboard')
-        navigate('/dashboard')
-      )}
+        navigate(dash)
+      )} */}
     </div>
   );
 };
 
 Home.propTypes = {
   loggedInStatus: PropTypes.string.isRequired,
-  handleLogin: PropTypes.func.isRequired,
+  userRoleID: PropTypes.number.isRequired,
 };
 
 export default Home;

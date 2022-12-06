@@ -110,6 +110,7 @@ const App = () => {
                 <Expenses
                   token={token}
                   handleSelectedIndex={handleSelectedIndex}
+                  handleLogout={handleLogout}
                 />
               )}
             />
@@ -134,6 +135,7 @@ const App = () => {
                 <Dashboard
                   token={token}
                   handleSelectedIndex={handleSelectedIndex}
+                  handleLogout={handleLogout}
                 />
               )}
             />
@@ -143,6 +145,7 @@ const App = () => {
                 <Expenses
                   token={token}
                   handleSelectedIndex={handleSelectedIndex}
+                  handleLogout={handleLogout}
                 />
               )}
             />
@@ -152,6 +155,7 @@ const App = () => {
                 <Revenues
                   token={token}
                   handleSelectedIndex={handleSelectedIndex}
+                  handleLogout={handleLogout}
                 />
               )}
             />
@@ -161,16 +165,17 @@ const App = () => {
                 <Accounts
                   token={token}
                   handleSelectedIndex={handleSelectedIndex}
+                  handleLogout={handleLogout}
                 />
               )}
             />
             <Route
               path="/expense_categories/*"
-              element={<ExpenseCategories token={token} />}
+              element={<ExpenseCategories token={token} handleLogout={handleLogout} />}
             />
             <Route
               path="/revenue_categories/*"
-              element={<RevenueCategories token={token} />}
+              element={<RevenueCategories token={token} handleLogout={handleLogout} />}
             />
             {/* <Route
               path="/registration"

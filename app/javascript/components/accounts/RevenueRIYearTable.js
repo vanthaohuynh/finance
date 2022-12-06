@@ -10,18 +10,45 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 const RevenueRIYearTable = ({ transactions }) => {
-  const revenueTransactions = transactions.filter((transaction) => transaction.transaction_type === 'Revenue');
-  // const revenueTotal = revenueTransactions
-  //   .reduce((acc, transaction) => acc + transaction.amount, 0);
-  // const revenueOverHeadTotal = revenueTransactions
-  //   .reduce((acc, transaction) => acc + transaction.overhead, 0);
-  // const revenueAfterOverHeadTotal = revenueTotal - revenueOverHeadTotal;
+  const revenueTransactions = transactions
+    .filter((transaction) => transaction.transaction_type === 'Revenue' && transaction.deposit_date !== null);
 
-  const total = 0;
-  const thisyearTotal = 0;
-  const lastyearTotal = 0;
-  const twoyearsagoTotal = 0;
-  const threeyearsagoTotal = 0;
+  let thisyearTotal = 0;
+  let lastyearTotal = 0;
+  let twoyearsagoTotal = 0;
+  let threeyearsagoTotal = 0;
+  let total = 0;
+
+  const currentYear = new Date().getFullYear();
+  const currentFromDate = new Date(currentYear.toString() + "-04-01T00:00:00");
+  const currentToDate = new Date((currentYear + 1).toString() + "-03-31T00:00:00");
+  const currentYearLabel = currentYear.toString() + "-04-01 - " + (currentYear + 1).toString() + "-03-31";
+  const lastYear = currentYear - 1;
+  const lastFromDate = new Date(lastYear.toString() + "-04-01T00:00:00");
+  const lastToDate = new Date(currentYear.toString() + "-03-31T00:00:00");
+  const lastYearLabel = lastYear.toString() + "-04-01 - " + currentYear.toString() + "-03-31";
+  const twoYearsAgo = currentYear - 2;
+  const twoFromDate = new Date(twoYearsAgo.toString() + "-04-01T00:00:00");
+  const twoToDate = new Date(lastYear.toString() + "-03-31T00:00:00");
+  const twoYearsAgoLabel = twoYearsAgo.toString() + "-04-01 - " + lastYear.toString() + "-03-31";
+  const threeYearsAgo = currentYear - 3;
+  const threeFromDate = new Date(threeYearsAgo.toString() + "-04-01T00:00:00");
+  const threeToDate = new Date(twoYearsAgo.toString() + "-03-31T00:00:00");
+  const threeYearsAgoLabel = threeYearsAgo.toString() + "-04-01 - " + twoYearsAgo.toString() + "-03-31";
+
+  revenueTransactions.forEach((transaction) => {
+    const DepositDate = new Date(transaction.deposit_date);
+    total += transaction.amount;
+    if (DepositDate >= currentFromDate && DepositDate <= currentToDate) {
+      thisyearTotal += transaction.amount;
+    } else if (DepositDate >= lastFromDate && DepositDate <= lastToDate) {
+      lastyearTotal += transaction.amount;
+    } else if (DepositDate >= twoFromDate && DepositDate <= twoToDate) {
+      twoyearsagoTotal += transaction.amount;
+    } else if (DepositDate >= threeFromDate && DepositDate <= threeToDate) {
+      threeyearsagoTotal += transaction.amount;
+    }
+  });
 
   function createData(name, value) {
     const valueFormatted = Number(value).toLocaleString('en-US', {
@@ -32,10 +59,10 @@ const RevenueRIYearTable = ({ transactions }) => {
   }
 
   const rows = [
-    createData('2019-04-01 - 2020-03-31', threeyearsagoTotal),
-    createData('2020-04-01 - 2021-03-31', twoyearsagoTotal),
-    createData('2021-04-01 - 2022-03-31', lastyearTotal),
-    createData('2022-04-01 - Current', thisyearTotal),
+    createData(threeYearsAgoLabel, threeyearsagoTotal),
+    createData(twoYearsAgoLabel, twoyearsagoTotal),
+    createData(lastYearLabel, lastyearTotal),
+    createData(currentYearLabel, thisyearTotal),
   ];
 
   const formattedTotal = Number(total).toLocaleString('en-US', {
@@ -122,7 +149,7 @@ RevenueRIYearTable.propTypes = {
     transaction_type: PropTypes.string,
     category: PropTypes.string,
     amount: PropTypes.number,
-    currency: PropTypes.string,
+    // currency: PropTypes.string,
   })).isRequired,
 };
 

@@ -6,7 +6,7 @@ export const handleAjaxError = (err) => {
   console.log('handleAjaxError: err: ', err);
   switch (err.response.status) {
     case 401:
-      error('You are not authorized to perform this action.');
+      error('Your session has expired. Please log in again.');
       break;
     case 500:
       error('Internal Server Error (500). Cannot delete this record. It is still referenced from other tables.');

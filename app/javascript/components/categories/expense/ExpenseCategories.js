@@ -11,7 +11,7 @@ import { info, success } from '../../../helpers/notifications';
 import { handleAjaxError } from '../../../helpers/helpers';
 import ErrorBoundary from '../../../ErrorBoundary';
 
-const ExpenseCategories = ({ token }) => {
+const ExpenseCategories = ({ token, handleLogout }) => {
   const [expenseCategories, setExpenseCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
@@ -44,12 +44,11 @@ const ExpenseCategories = ({ token }) => {
           fetchExpenseCategoryData();
         } else {
           setIsValidated(false);
-          // navigate('/api/v1/expenses');
         }
       } catch (err) {
         handleAjaxError(err);
         setIsValidated(false);
-        // navigate('/home');
+        handleLogout();
       }
     };
     validateToken();
@@ -193,6 +192,7 @@ const ExpenseCategories = ({ token }) => {
 
 ExpenseCategories.propTypes = {
   token: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default ExpenseCategories;

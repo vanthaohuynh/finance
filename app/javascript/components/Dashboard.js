@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Card,
@@ -13,6 +14,7 @@ import {
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import Billable from './home/Billable';
+// import Billable2 from './home/Billable2';
 import Receivable from './home/Receivable';
 import RevenuePastThreeYears from './home/RevenuePastThreeYears';
 import RevenueCurrentYear from './home/RevenueCurrentYear';
@@ -36,7 +38,7 @@ const apiExpenseCurrentYear = '/api/v1/expense_currentyear';
 const apiRevenuePastYear = '/api/v1/revenue_pastyear';
 const apiRevenuePastRiYear = '/api/v1/revenue_past_ri_year';
 
-const Dashboard = ({ token, handleSelectedIndex }) => {
+const Dashboard = ({ token, handleSelectedIndex, handleLogout }) => {
   // const [loggedInStatus, setLoggedInStatus] = useState('NOT_LOGGED_IN');
   // const [user, setUser] = useState({});
   const dataFetchedRef = useRef(false);
@@ -47,6 +49,7 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
   const [revenueCurrentRiYear, setRevenueCurrentRiYear] = useState([]);
   const [expenseTransactions, setExpenseTransactions] = useState([]);
   const [expenseCurrentYear, setExpenseCurrentYear] = useState([]);
+  const navigate = useNavigate();
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   const fetchBillable = async () => {
@@ -147,6 +150,8 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
       }
     } catch (err) {
       handleAjaxError(err);
+      console.log('Dashboard validateToken: ', err);
+      handleLogout();
     }
   };
 
@@ -166,6 +171,9 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
         </Paper>
       </div> */}
       <div className="gridDashboard">
+        {/* <Paper elevation={3}>
+          <Billable2 billable={billable} />
+        </Paper> */}
         <Paper elevation={3}>
           <Billable billable={billable} />
         </Paper>
@@ -197,34 +205,7 @@ const Dashboard = ({ token, handleSelectedIndex }) => {
 Dashboard.propTypes = {
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default Dashboard;
-
-      {/* <Box sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: 'background.paper',
-      }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <Card
-              size="small"
-              sx={{ width: '100%', height: '100%' }}
-            >
-              <RevenueChartDashboard />
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Card
-              size="small"
-              sx={{ width: '100%', height: '100%' }}
-            >
-              <ExpenseChartDashboard />
-            </Card>
-          </Grid>
-        </Grid>
-      </Box> */}

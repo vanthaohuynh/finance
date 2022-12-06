@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_29_144536) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_06_155021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -123,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_144536) do
     t.string "account_num"
     t.string "revenue_category_name"
     t.date "deposit_date"
+    t.boolean "calculate_over_head", default: false
     t.index ["account_id"], name: "index_revenues_on_account_id"
     t.index ["revenue_category_id"], name: "index_revenues_on_revenue_category_id"
   end

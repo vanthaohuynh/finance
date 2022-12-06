@@ -40,7 +40,7 @@ import ErrorBoundary from '../../ErrorBoundary';
 
 const urlValidation = '/validate_token';
 
-const Transactions = ({ token }) => {
+const Transactions = ({ token, handleLogout }) => {
   const { id } = useParams();
   const [account, setAccount] = useState([]);
   const [transactions, setTransactions] = useState([]);
@@ -122,6 +122,7 @@ const Transactions = ({ token }) => {
       }
     } catch (err) {
       handleAjaxError(err);
+      handleLogout();
     }
   };
 
@@ -346,6 +347,7 @@ const Transactions = ({ token }) => {
 
 Transactions.propTypes = {
   token: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default Transactions;

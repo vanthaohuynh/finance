@@ -11,7 +11,7 @@ import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
-const Revenues = ({ token, handleSelectedIndex }) => {
+const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
   const [revenues, setRevenues] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [revenueCategories, setRevenueCategories] = useState([]);
@@ -76,14 +76,10 @@ const Revenues = ({ token, handleSelectedIndex }) => {
           fetchRevenueData();
           fetchAccountData();
           fetchRevenueCategoryData();
-        } else {
-          setIsValidated(false);
-          throw Error(response.statusText);
-          // navigate('/login');
         }
       } catch (err) {
         handleAjaxError(err);
-        isValidated(false);
+        handleLogout();
       }
     };
     validateToken();
@@ -236,6 +232,7 @@ const Revenues = ({ token, handleSelectedIndex }) => {
 Revenues.propTypes = {
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default Revenues;

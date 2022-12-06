@@ -2,13 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
-import { Grid, TextField, Button, InputLabel, Select } from '@mui/material';
+import {
+  Grid,
+  TextField,
+  Button,
+  Checkbox,
+  FormControlLabel,
+} from '@mui/material';
 import { NumericFormat } from 'react-number-format';
 import Stack from '@mui/material/Stack';
 
 const Revenue = ({ revenues, onDelete }) => {
   const { id } = useParams();
   const revenue = revenues.find((e) => e.id === Number(id));
+  console.log('revenue', revenue);
 
   return (
     <div className="eventContainer">
@@ -62,7 +69,8 @@ const Revenue = ({ revenues, onDelete }) => {
               label="Overhead"
               customInput={TextField}
               type="text"
-              value={revenue.overhead || ''}
+              // value={revenue.overhead || ''}
+              value={revenue.calculate_over_head ? revenue.overhead : ''}
               size="small"
               fullWidth
               thousandSeparator=","
@@ -79,7 +87,8 @@ const Revenue = ({ revenues, onDelete }) => {
               label="After Overhead"
               customInput={TextField}
               type="text"
-              value={revenue.after_overhead || ''}
+              // value={revenue.after_overhead || ''}
+              value={revenue.calculate_over_head ? revenue.after_overhead : ''}
               size="small"
               fullWidth
               thousandSeparator=","
@@ -139,6 +148,17 @@ const Revenue = ({ revenues, onDelete }) => {
               variant="outlined"
             />
           </Grid>
+          <Grid item xs={6}>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  id="calculate_over_head"
+                  checked={revenue.calculate_over_head || false}
+                />
+              )}
+              label="Calculate Overhead"
+            />
+          </Grid>
         </Grid>
         <div className="button-mui-edit">
           <Grid item xs={6}>
@@ -188,6 +208,7 @@ Revenue.propTypes = {
     created_at: PropTypes.string,
     overhead: PropTypes.number,
     after_overhead: PropTypes.number,
+    calculate_over_head: PropTypes.bool,
   })).isRequired,
   onDelete: PropTypes.func.isRequired,
 };

@@ -11,7 +11,7 @@ import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
-const Expenses = ({ token, handleSelectedIndex }) => {
+const Expenses = ({ token, handleSelectedIndex, handleLogout }) => {
   const [expenses, setExpenses] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [expenseCategories, setExpenseCategories] = useState([]);
@@ -71,23 +71,19 @@ const Expenses = ({ token, handleSelectedIndex }) => {
   useEffect(() => {
     const validateToken = async () => {
       try {
-        console.log('Expenses: validateToken: (before calling axios) token: ', token);
         const response = await axios.get(urlValidation);
-        console.log('Expenses: validate_token: response: ', response);
         if (response.status === 200) {
-          console.log('Expenses: validate_token: response.data: ', response.data);
           setIsValidated(true);
           fetchExpenseData();
           fetchAccountData();
           fetchExpenseCategoryData();
         } else {
           setIsValidated(false);
-          // navigate('/api/v1/expenses');
         }
       } catch (err) {
         handleAjaxError(err);
         setIsValidated(false);
-        // navigate('/home');
+        handleLogout();
       }
     };
     validateToken();
@@ -360,6 +356,7 @@ const Expenses = ({ token, handleSelectedIndex }) => {
 Expenses.propTypes = {
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default Expenses;

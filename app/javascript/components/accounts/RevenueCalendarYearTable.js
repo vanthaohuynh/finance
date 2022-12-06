@@ -10,18 +10,34 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 const RevenueCalendarYearTable = ({ transactions }) => {
-  const revenueTransactions = transactions.filter((transaction) => transaction.transaction_type === 'Revenue');
-  // const revenueTotal = revenueTransactions
-  //   .reduce((acc, transaction) => acc + transaction.amount, 0);
-  // const revenueOverHeadTotal = revenueTransactions
-  //   .reduce((acc, transaction) => acc + transaction.overhead, 0);
-  // const revenueAfterOverHeadTotal = revenueTotal - revenueOverHeadTotal;
+  const revenueTransactions = transactions
+    .filter((transaction) => transaction.transaction_type === 'Revenue' && transaction.deposit_date !== null);
 
-  const total = 0;
-  const thisyearTotal = 0;
-  const lastyearTotal = 0;
-  const twoyearsagoTotal = 0;
-  const threeyearsagoTotal = 0;
+  console.log('Filtered Revenue Transactions:', revenueTransactions);
+  let thisyearTotal = 0;
+  let lastyearTotal = 0;
+  let twoyearsagoTotal = 0;
+  let threeyearsagoTotal = 0;
+  let total = 0;
+
+  const currentYear = new Date().getFullYear();
+  const lastYear = currentYear - 1;
+  const twoYearsAgo = currentYear - 2;
+  const threeYearsAgo = currentYear - 3;
+
+  revenueTransactions.forEach((transaction) => {
+    const DepositDate = new Date(transaction.deposit_date);
+    total += transaction.amount;
+    if (DepositDate.getFullYear() === currentYear) {
+      thisyearTotal += transaction.amount;
+    } else if (DepositDate.getFullYear() === lastYear) {
+      lastyearTotal += transaction.amount;
+    } else if (DepositDate.getFullYear() === twoYearsAgo) {
+      twoyearsagoTotal += transaction.amount;
+    } else if (DepositDate.getFullYear() === threeYearsAgo) {
+      threeyearsagoTotal += transaction.amount;
+    }
+  });
 
   function createData(name, value) {
     const valueFormatted = Number(value).toLocaleString('en-US', {
@@ -32,10 +48,11 @@ const RevenueCalendarYearTable = ({ transactions }) => {
   }
 
   const rows = [
-    createData('2019', threeyearsagoTotal),
-    createData('2020', twoyearsagoTotal),
-    createData('2021', lastyearTotal),
-    createData('2022', thisyearTotal),
+    createData(threeYearsAgo, threeyearsagoTotal),
+    createData(twoYearsAgo, twoyearsagoTotal),
+    createData(lastYear, lastyearTotal),
+    createData(currentYear, thisyearTotal),
+    // createData('Total', total),
   ];
 
   const formattedTotal = Number(total).toLocaleString('en-US', {
@@ -70,7 +87,7 @@ const RevenueCalendarYearTable = ({ transactions }) => {
                 fontWeight: 'bold',
               }}
             >
-              Revenue by Calendar Year
+              Revenue by Fiscal Year
             </TableCell>
           </TableRow>
         </TableHead>

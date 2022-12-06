@@ -14,6 +14,8 @@ import {
   InputLabel,
   FormControl,
   Stack,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -47,6 +49,7 @@ const RevenueForm = ({
         after_overhead: '',
         account_num: '',
         revenue_category_name: '',
+        calculate_over_head: false,
       };
 
       const currRevenue = id ? revenues.find((e) => e.id === Number(id)) : {};
@@ -65,6 +68,7 @@ const RevenueForm = ({
 
   const [revenue, setRevenue] = useState(initialRevenueState);
   const [formErrors, setFormErrors] = useState({});
+  const [isChecked, setIsChecked] = useState(false);
   // const dateInput = useRef(null);
   const cancelURL = revenue.id ? `/revenues/${revenue.id}` : '/revenues';
   const title = revenue.id ? `${revenue.invoice_num}` : 'New Revenue';
@@ -96,10 +100,12 @@ const RevenueForm = ({
     const { name } = target;
     const val = Number(target.value.replace(/[^0-9.]/g, ''));
     updateRevenue(name, val);
-    const overheadTemp = val * 0.3;
-    updateRevenue('overhead', overheadTemp);
-    const afterOverheadTemp = val - overheadTemp;
-    updateRevenue('after_overhead', afterOverheadTemp);
+    if (isChecked) {
+      const overheadTemp = val * 0.3;
+      updateRevenue('overhead', overheadTemp);
+      const afterOverheadTemp = val - overheadTemp;
+      updateRevenue('after_overhead', afterOverheadTemp);
+    }
   };
 
   const handleDateInputChange = (val) => {
@@ -134,20 +140,23 @@ const RevenueForm = ({
     updateRevenue('revenue_category_name', category.name);
   };
 
-  // useEffect(() => {
-  //   const p = new Pikaday({
-  //     field: dateInput.current,
-  //     toString: (date) => formatDate(date),
-  //     onSelect: (date) => {
-  //       const formattedDate = formatDate(date);
-  //       dateInput.current.value = formattedDate;
-  //       updateRevenue('invoice_date', formattedDate);
-  //     },
-  //   });
-  //   // Return a cleanup function.
-  //   // React will call this prior to unmounting.
-  //   return () => p.destroy();
-  // }, []);
+  const handleCheckboxInputChange = (e) => {
+    const { target } = e;
+    const { name } = target;
+    const val = target.checked;
+    console.log('val', val);
+    updateRevenue(name, val);
+    setIsChecked(val);
+    if (val === true) {
+      const overheadTemp = revenue.amount * 0.3;
+      updateRevenue('overhead', overheadTemp);
+      const afterOverheadTemp = revenue.amount - overheadTemp;
+      updateRevenue('after_overhead', afterOverheadTemp);
+    } else {
+      updateRevenue('overhead', '');
+      updateRevenue('after_overhead', '');
+    }
+  };
 
   const renderErrors = () => {
     if (isEmptyObject(formErrors)) {
@@ -373,6 +382,19 @@ const RevenueForm = ({
                     size="small"
                     fullWidth
                     variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControlLabel
+                    control={(
+                      <Checkbox
+                        id="calculate_over_head"
+                        name="calculate_over_head"
+                        onChange={handleCheckboxInputChange}
+                        checked={revenue.calculate_over_head || false}
+                      />
+                    )}
+                    label="Calculate Overhead"
                   />
                 </Grid>
               </Grid>

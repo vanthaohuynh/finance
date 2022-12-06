@@ -8,14 +8,14 @@ import Account from './Account';
 import AccountForm from './AccountForm';
 import AccountList from './AccountList';
 import Transactions from './Transactions';
-import { info, success } from '../../helpers/notifications';
+import { info, success, error } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
 const urlValidation = '/validate_token';
 const apiAccountEndpoint = '/api/v1/accounts';
 
-const Accounts = ({ token, handleSelectedIndex }) => {
+const Accounts = ({ token, handleSelectedIndex, handleLogout }) => {
   const [accounts, setAccounts] = useState([]);
   const dataFetchedRef = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,15 +43,11 @@ const Accounts = ({ token, handleSelectedIndex }) => {
       if (response.status === 200) {
         setIsValidated(true);
         fetchAccountData();
-        // fetchTransactionData();
-      } else {
-        setIsValidated(false);
-        // navigate('/api/v1/expenses');
       }
     } catch (err) {
       handleAjaxError(err);
       setIsValidated(false);
-      // navigate('/home');
+      handleLogout();
     }
   };
 
@@ -187,6 +183,7 @@ const Accounts = ({ token, handleSelectedIndex }) => {
 Accounts.propTypes = {
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default Accounts;

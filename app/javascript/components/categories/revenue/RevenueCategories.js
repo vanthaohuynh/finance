@@ -11,7 +11,7 @@ import { info, success } from '../../../helpers/notifications';
 import { handleAjaxError } from '../../../helpers/helpers';
 import ErrorBoundary from '../../../ErrorBoundary';
 
-const RevenueCategories = ({ token }) => {
+const RevenueCategories = ({ token, handleLogout }) => {
   const [revenueCategories, setRevenueCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
@@ -49,7 +49,7 @@ const RevenueCategories = ({ token }) => {
       } catch (err) {
         handleAjaxError(err);
         setIsValidated(false);
-        // navigate('/home');
+        handleLogout();
       }
     };
     validateToken();
@@ -193,6 +193,7 @@ const RevenueCategories = ({ token }) => {
 
 RevenueCategories.propTypes = {
   token: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default RevenueCategories;

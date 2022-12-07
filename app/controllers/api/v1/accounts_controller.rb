@@ -59,11 +59,7 @@ class Api::V1::AccountsController < ApplicationController
 
   def destroy
     @account.destroy
-    if @account.destroy
-      head :no_content, status: :ok
-    else
-      render json: @account.errors, status: :unprocessable_entity
-    end
+    render json: @account
   end
 
   def rev_ri_year

@@ -44,7 +44,7 @@ const ExpenseForm = ({
         amount: '',
         account_id: '',
         expense_category_id: '',
-        expense_currency: 'CAD',
+        // expense_currency: 'CAD',
         notes: '',
         account_num: '',
         expense_category_name: '',
@@ -287,7 +287,7 @@ const ExpenseForm = ({
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                   <TextField
                     type="text"
                     id="expense_currency"
@@ -301,7 +301,7 @@ const ExpenseForm = ({
                     disabled
                     required
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={6}>
                   <TextField
                     type="text"

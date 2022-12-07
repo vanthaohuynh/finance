@@ -14,7 +14,7 @@ import {
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import Billable from './home/Billable';
-// import Billable2 from './home/Billable2';
+import Billable2 from './home/Billable2';
 import Receivable from './home/Receivable';
 import RevenuePastThreeYears from './home/RevenuePastThreeYears';
 import RevenueCurrentYear from './home/RevenueCurrentYear';

@@ -12,12 +12,28 @@ const ExpenseChart = ({ chartTransactionData }) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    const expenseData = chartTransactionData.filter((transaction) => transaction.transaction_type === 'Expense');
-    const expenseChartData = expenseData.map((transaction) => ({
-      amount: transaction.amount,
-      category: transaction.category,
-    }));
-    setChartData(expenseChartData);
+    const expenseData = [...chartTransactionData]
+      .filter((transaction) => transaction.transaction_type === 'Expense');
+    // Function groupBy from https:
+    // https://learnwithparam.com/blog/how-to-group-by-array-of-objects-using-a-key/
+    /* eslint-disable-next-line */
+    const groupBy = (array, key) => {
+      return array.reduce((result, currentValue) => {
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(
+          currentValue,
+        );
+        return result;
+      }, {}); // empty object is the initial value for result object
+    };
+
+    const expenseGroupByCategory = groupBy(expenseData, 'category');
+
+    const expenseGroupByCategorySum = Object.keys(expenseGroupByCategory).map((key) => {
+      const sum = expenseGroupByCategory[key].reduce((a, b) => a + b.amount, 0);
+      return { category: key, amount: sum };
+    });
+
+    setChartData(expenseGroupByCategorySum);
   }, [chartTransactionData]);
   console.log('Expense chartData', chartData);
 

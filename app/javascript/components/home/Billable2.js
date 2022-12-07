@@ -201,32 +201,31 @@ const Billable2 = ({ billable }) => {
     // };
 
     return (
-      // <Box
-      //   sx={{
-      //     height: 350,
-      //     width: '100%',
-      //     '& .actions': {
-      //       color: 'text.secondary',
-      //     },
-      //     '& .textPrimary': {
-      //       color: 'text.primary',
-      //     },
-      //     '& .MuiDataGrid-columnHeaders': {
-      //       backgroundColor: '#b7d7f4',
-      //       color: 'black',
-      //       fontVariantCaps: 'all-small-caps',
-      //       fontStyle: 'bold',
-      //       fontSize: 18,
-      //     },
-      //     '& .MuiDataGrid-virtualScrollerRenderZone': {
-      //       '& .MuiDataGrid-row': {
-      //         '&:nth-child(2n)': { backgroundColor: 'rgba(235, 235, 235, .7)' },
-      //         '&:hover': { backgroundColor: '#d1e6f9' },
-      //       },
-      //     },
-      //   }}
-      // >
-      <Paper
+      <Box
+        sx={{
+          height: 350,
+          width: '100%',
+          '& .actions': {
+            color: 'text.secondary',
+          },
+          '& .textPrimary': {
+            color: 'text.primary',
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#b7d7f4',
+            color: 'black',
+            fontVariantCaps: 'all-small-caps',
+            fontStyle: 'bold',
+            fontSize: 18,
+          },
+          '& .MuiDataGrid-virtualScrollerRenderZone': {
+            '& .MuiDataGrid-row': {
+              '&:nth-child(2n)': { backgroundColor: 'rgba(235, 235, 235, .7)' },
+              '&:hover': { backgroundColor: '#d1e6f9' },
+            },
+          },
+        }}
+      >
         <Grid
           rows={rows}
           columns={columns}
@@ -258,8 +257,7 @@ const Billable2 = ({ billable }) => {
           customizeHeader={customizeHeader}
           // customizeFooter={customizeFooter}
         />
-      </Paper>
-      // </Box>
+      </Box>
     );
   };
 
@@ -281,7 +279,7 @@ const Billable2 = ({ billable }) => {
           >
             Billable Activities for Current Studies
           </Typography>
-          {renderGrid()}
+          {/* {renderGrid()} */}
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Typography

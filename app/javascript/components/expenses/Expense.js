@@ -75,7 +75,7 @@ const Expense = ({ expenses, onDelete }) => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <TextField
               id="expense_currency"
               label="Expense Currency"
@@ -85,7 +85,7 @@ const Expense = ({ expenses, onDelete }) => {
               variant="outlined"
               disabled
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={6}>
             <TextField
               id="notes"

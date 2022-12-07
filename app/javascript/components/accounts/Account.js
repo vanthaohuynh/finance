@@ -145,6 +145,18 @@ const Account = ({ token, accounts, onDelete }) => {
             <Stack spacing={2} direction="row">
               <Button
                 sx={{
+                  width: 100,
+                  height: 40,
+                }}
+                variant="outlined"
+                color="primary"
+                onClick={() => onDelete(account.id)}
+                // disabled
+              >
+                Delete
+              </Button>
+              <Button
+                sx={{
                   width: 125,
                   height: 40,
                 }}

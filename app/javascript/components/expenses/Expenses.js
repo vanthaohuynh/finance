@@ -11,7 +11,7 @@ import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
-const Expenses = ({ token, handleSelectedIndex, handleLogout }) => {
+const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const [expenses, setExpenses] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [expenseCategories, setExpenseCategories] = useState([]);
@@ -354,6 +354,7 @@ const Expenses = ({ token, handleSelectedIndex, handleLogout }) => {
 };
 
 Expenses.propTypes = {
+  userRoleID: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,

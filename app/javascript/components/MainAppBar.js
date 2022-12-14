@@ -36,6 +36,14 @@ const MainAppBar = ({
   if (userRoleID === 1) {
     pages = ['Expenses'];
     dash = '/expenses';
+  } else if (userRoleID === 3) {
+    pages = [...pages, 'Users'];
+    dash = '/dashboard';
+  } else if (userRoleID === 4) {
+    pages = ['Accounts', 'Revenues', 'Expenses'];
+    dash = '/dashboard';
+  } else {
+    dash = '/dashboard';
   }
 
   const handleOpenNavMenu = (event) => {

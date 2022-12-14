@@ -60,27 +60,27 @@ const App = () => {
   // This ProtectedRoute causes error on User.js:
   // <User /> const { id } = useParams(); not working. Gives blank id. Very strange.
   /* eslint-disable-next-line */
-  // const ProtectedRoute = ({
-  //   isAllowed,
-  //   redirectPath = '/login',
-  //   children,
-  // }) => {
-  //   if (!isAllowed) {
-  //     return <Navigate to={redirectPath} replace />;
-  //   }
-  //   /* eslint-disable-next-line */
-  //   return children ? children : <Outlet />;
-  // };
+  const ProtectedRoute = ({
+    isAllowed,
+    redirectPath = '/login',
+    children,
+  }) => {
+    if (!isAllowed) {
+      return <Navigate to={redirectPath} replace />;
+    }
+    /* eslint-disable-next-line */
+    return children ? children : <Outlet />;
+  };
 
-  // ProtectedRoute.propTypes = {
-  //   isAllowed: PropTypes.bool.isRequired,
-  //   redirectPath: PropTypes.string,
-  //   children: PropTypes.node,
-  // };
-  // ProtectedRoute.defaultProps = {
-  //   redirectPath: '/login',
-  //   children: null,
-  // };
+  ProtectedRoute.propTypes = {
+    isAllowed: PropTypes.bool.isRequired,
+    redirectPath: PropTypes.string,
+    children: PropTypes.node,
+  };
+  ProtectedRoute.defaultProps = {
+    redirectPath: '/login',
+    children: null,
+  };
 
   const handleLogin = (data) => {
     // console.log('App: handleLogin: data: ', data);
@@ -136,88 +136,75 @@ const App = () => {
                 <Home loggedInStatus={loggedInStatus} userRoleID={userRoleID} />
               )}
             />
-            {/* <Route element={<ProtectedRoute isAllowed={userRoleID !== 1} />}> */}
-            <Route
-              path="/dashboard"
-              element={(
-                <Dashboard
-                  userRoleID={userRoleID}
-                  token={token}
-                  handleSelectedIndex={handleSelectedIndex}
-                  handleLogout={handleLogout}
-                />
-              )}
-            />
             <Route
               path="/expenses/*"
               element={(
                 <Expenses
-                  userRoleID={userRoleID}
                   token={token}
                   handleSelectedIndex={handleSelectedIndex}
                   handleLogout={handleLogout}
                 />
               )}
             />
-            <Route
-              path="/revenues/*"
-              element={(
-                <Revenues
-                  userRoleID={userRoleID}
-                  token={token}
-                  handleSelectedIndex={handleSelectedIndex}
-                  handleLogout={handleLogout}
-                />
-              )}
-            />
-            <Route
-              path="/accounts/*"
-              element={(
-                <Accounts
-                  userRoleID={userRoleID}
-                  token={token}
-                  handleSelectedIndex={handleSelectedIndex}
-                  handleLogout={handleLogout}
-                />
-              )}
-            />
-            <Route
-              path="/expense_categories/*"
-              element={(
-                <ExpenseCategories
-                  userRoleID={userRoleID}
-                  token={token}
-                  handleSelectedIndex={handleSelectedIndex}
-                  handleLogout={handleLogout}
-                />
-              )}
-            />
-            <Route
-              path="/revenue_categories/*"
-              element={(
-                <RevenueCategories
-                  userRoleID={userRoleID}
-                  token={token}
-                  handleSelectedIndex={handleSelectedIndex}
-                  handleLogout={handleLogout}
-                />
-              )}
-            />
-            <Route
-              path="/users/*"
-              element={(
-                <Users
-                  userRoleID={userRoleID}
-                  token={token}
-                  handleSelectedIndex={handleSelectedIndex}
-                  handleLogout={handleLogout}
-                />
+            <Route element={<ProtectedRoute isAllowed={userRoleID !== 1} />}>
+              <Route
+                path="/dashboard"
+                element={(
+                  <Dashboard
+                    token={token}
+                    handleSelectedIndex={handleSelectedIndex}
+                    handleLogout={handleLogout}
+                  />
                 )}
-            />
-            {/* <Route
-              path="/registration"
-              element={<Registration loggedInStatus={loggedInStatus} />}
-            /> */}
+              />
+              <Route
+                path="/revenues/*"
+                element={(
+                  <Revenues
+                    token={token}
+                    handleSelectedIndex={handleSelectedIndex}
+                    handleLogout={handleLogout}
+                  />
+                )}
+              />
+              <Route
+                path="/accounts/*"
+                element={(
+                  <Accounts
+                    token={token}
+                    handleSelectedIndex={handleSelectedIndex}
+                    handleLogout={handleLogout}
+                  />
+                )}
+              />
+              <Route
+                path="/expense_categories/*"
+                element={<ExpenseCategories token={token} handleLogout={handleLogout} />}
+              />
+              <Route
+                path="/revenue_categories/*"
+                element={<RevenueCategories token={token} handleLogout={handleLogout} />}
+              />
+              <Route
+                path="/registration"
+                element={<Registration loggedInStatus={loggedInStatus} />}
+              />
+            </Route>
+            {/* ProtectedRoute won't work for User.js */}
+            {/* <User /> const { id } = useParams() gives blank id */}
+            {/* <Route element={<ProtectedRoute isAllowed={userRoleID === 3} />}> */}
+            {userRoleID === 3 && (
+              <Route
+                path="/users/*"
+                element={(
+                  <Users
+                    token={token}
+                    handleSelectedIndex={handleSelectedIndex}
+                    handleLogout={handleLogout}
+                  />
+                  )}
+              />
+            )}
           </Routes>
         </>
       )}

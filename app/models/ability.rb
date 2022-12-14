@@ -9,10 +9,10 @@ class Ability
       can :manage, :all
     elsif user.power_user?
       can :manage, [Account, AccountAmendment, Expense, Revenue, ExpenseCategory, RevenueCategory]
-      can :read, [User]
-    elsif user.regular?
+    elsif user.data_entry?
       can :manage, [Expense]
-      can :read, [User]
+    elsif user.viewer?
+      can :read, [Account, AccountAmendment, Expense, Revenue]
     end
   end
 end

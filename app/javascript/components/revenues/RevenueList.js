@@ -21,6 +21,7 @@ const RevenueList = ({ revenues }) => {
     {
       field: 'invoice_num',
       headerName: 'Invoice Number',
+      headerClassName: 'super-app-theme--header',
       width: 150,
       editable: false,
       renderCell: (params) => {
@@ -126,9 +127,10 @@ const RevenueList = ({ revenues }) => {
   // /////////////////////////////////////////////////
   // Using MUI DaraGrid
   const renderRevenues = () => {
-    // const sortedRevenues = [...revenues].sort((a, b) => new
-    // Date(b.created_at) - new Date(a.created_at));
-    const sortedRevenues = [...revenues].sort((a, b) => (a.account_num > b.account_num ? 1 : -1));
+    const sortedRevenues = [...revenues].sort((a, b) => new
+    Date(b.created_at) - new Date(a.created_at));
+    // const sortedRevenues = [...revenues].sort((a, b) =>
+    // (a.account_num > b.account_num ? 1 : -1));
     return (
       <Box
         sx={{

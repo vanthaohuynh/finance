@@ -11,7 +11,7 @@ import { info, success } from '../../../helpers/notifications';
 import { handleAjaxError } from '../../../helpers/helpers';
 import ErrorBoundary from '../../../ErrorBoundary';
 
-const ExpenseCategories = ({ token, handleLogout }) => {
+const ExpenseCategories = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const [expenseCategories, setExpenseCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
@@ -52,6 +52,7 @@ const ExpenseCategories = ({ token, handleLogout }) => {
       }
     };
     validateToken();
+    handleSelectedIndex(3);
   }, []); // Need to keep this empty
 
   const reloadExpenseCategoriesData = async () => {
@@ -154,6 +155,7 @@ const ExpenseCategories = ({ token, handleLogout }) => {
                 element={(
                   <ErrorBoundary>
                     <ExpenseCategory
+                      userRoleID={userRoleID}
                       expenseCategories={expenseCategories}
                       onDelete={deleteExpenseCategory}
                     />
@@ -165,6 +167,7 @@ const ExpenseCategories = ({ token, handleLogout }) => {
                 element={(
                   <ErrorBoundary>
                     <ExpenseCatForm
+                      userRoleID={userRoleID}
                       expenseCategories={expenseCategories}
                       onSave={updateExpenseCategory}
                     />
@@ -176,6 +179,7 @@ const ExpenseCategories = ({ token, handleLogout }) => {
                 element={(
                   <ErrorBoundary>
                     <ExpenseCatForm
+                      userRoleID={userRoleID}
                       expenseCategories={expenseCategories}
                       onSave={addExpenseCategory}
                     />
@@ -191,7 +195,9 @@ const ExpenseCategories = ({ token, handleLogout }) => {
 };
 
 ExpenseCategories.propTypes = {
+  userRoleID: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
+  handleSelectedIndex: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,
 };
 

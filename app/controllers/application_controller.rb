@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
   # before_action :authorized
   skip_before_action :verify_authenticity_token
+  helper_method :current_user # This one is needed for Cancancan Ability.rb
 
   def encode_token(payload)
-    payload[:exp] = 8.hours.from_now.to_i
+    payload[:exp] = 4.hours.from_now.to_i
     # payload[:exp] = 1.minutes.from_now.to_i
     JWT.encode(payload, Rails.application.credentials.secret_key_base)
   end
@@ -41,6 +42,10 @@ class ApplicationController < ActionController::Base
     render json: { message: 'Unauthorized' }, status: :unauthorized unless logged_in?
   end
 
+  # This one is needed for Cancancan Ability.rb
+  def current_user
+    logged_in_user
+  end
 
   # include JwtToken
   # skip_before_action :verify_authenticity_token

@@ -7,39 +7,55 @@ class Api::V1::ExpensesController < ApplicationController
     # The below lines are working perfectly fine, except that I need the JOIN
     # in order to get account_num and expense_category_name (for expense_serializer.rb)
     # for ExpenseList to display on the grid.
-    @expenses = Expense.all.order('created_at DESC')
-    # render json: @expenses, include: %i[account expense_category]
-    render json: @expenses
-    # Had to go back to the .joins method.
-    # @expenses = Expense
-    #             .joins(:account, :expense_category)
-    #             .select('expenses.*, accounts.account_num, expense_categories.name as expense_category_name')
-    #             .order('created_at DESC')
-    # render json: @expenses
+    if can? :read, Expense
+      @expenses = Expense.all.order('created_at DESC')
+      # render json: @expenses, include: %i[account expense_category]
+      render json: @expenses
+      # Had to go back to the .joins method.
+      # @expenses = Expense
+      #             .joins(:account, :expense_category)
+      #             .select('expenses.*, accounts.account_num, expense_categories.name as expense_category_name')
+      #             .order('created_at DESC')
+      # render json: @expenses
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   def create
-    @expense = Expense.new(expense_params)
-    if @expense.save
-      render json: @expense
+    if can? :manage, Expense
+      @expense = Expense.new(expense_params)
+      if @expense.save
+        render json: @expense
+      else
+        render json: @expense.errors, status: :unprocessable_entity
+      end
     else
-      render json: @expense.errors, status: :unprocessable_entity
+      render json: { error: 'UNAUTHORIZED' }, status: 401
     end
   end
 
   def update
-    @expense = Expense.find(params[:id])
-    if @expense.update(expense_params)
-      render json: @expense
+    if can? :manage, Expense
+      @expense = Expense.find(params[:id])
+      if @expense.update(expense_params)
+        render json: @expense
+      else
+        render json: @expense.errors, status: :unprocessable_entity
+      end
     else
-      render json: @expense.errors, status: :unprocessable_entity
+      render json: { error: 'UNAUTHORIZED' }, status: 401
     end
   end
 
   def destroy
-    @expense = Expense.find(params[:id])
-    @expense.destroy
-    render json: @expense
+    if can? :manage, Expense
+      @expense = Expense.find(params[:id])
+      @expense.destroy
+      render json: @expense
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   private

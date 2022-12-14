@@ -13,6 +13,8 @@ import { NumericFormat } from 'react-number-format';
 import Stack from '@mui/material/Stack';
 
 const Revenue = ({ revenues, onDelete }) => {
+  console.log('Revenues props: ', revenues);
+  console.log('Revenue useParams: ', useParams());
   const { id } = useParams();
   const revenue = revenues.find((e) => e.id === Number(id));
   console.log('revenue', revenue);

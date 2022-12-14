@@ -7,6 +7,7 @@ const Registration = ({ handleSuccessfulAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [roleID, setRoleID] = useState(null);
   // const [registrationErrors, setRegistrationErrors] = useState('');
 
   const handleSubmit = (e) => {
@@ -15,9 +16,10 @@ const Registration = ({ handleSuccessfulAuth }) => {
         '/registrations',
         {
           user: {
-            email: email,
-            password: password,
+            email,
+            password,
             password_confirmation: passwordConfirmation,
+            role_id: roleID,
           },
         },
         { withCredentials: true },
@@ -62,6 +64,14 @@ const Registration = ({ handleSuccessfulAuth }) => {
           placeholder="Password confirmation"
           value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
+          required
+        />
+        <input
+          type="roleID"
+          name="roleID"
+          placeholder="Role ID"
+          value={roleID}
+          onChange={(e) => setRoleID(e.target.value)}
           required
         />
         <button type="submit">Register</button>

@@ -11,7 +11,7 @@ import { info, success } from '../../helpers/notifications';
 import { handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
 
-const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
+const Revenues = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const [revenues, setRevenues] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [revenueCategories, setRevenueCategories] = useState([]);
@@ -31,6 +31,7 @@ const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
   const fetchRevenueData = async () => {
     try {
       const response = await axios.get(apiRevenueEndpoint);
+      console.log('Revenues: fetchRevenueDate: response: ', response);
       if (response.status === 200) {
         setRevenues(response.data);
         setIsLoading(false);
@@ -38,7 +39,7 @@ const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
     } catch (error) {
       handleAjaxError(error);
     }
-    setIsLoading(false);
+    // setIsLoading(false); 2022-12-14 try to fix weird error
   };
 
   const fetchAccountData = async () => {
@@ -51,7 +52,7 @@ const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
     } catch (error) {
       handleAjaxError(error);
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const fetchRevenueCategoryData = async () => {
@@ -64,7 +65,7 @@ const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
     } catch (error) {
       handleAjaxError(error);
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   useEffect(() => {
@@ -76,9 +77,12 @@ const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
           fetchRevenueData();
           fetchAccountData();
           fetchRevenueCategoryData();
+        } else {
+          setIsValidated(false);
         }
       } catch (err) {
         handleAjaxError(err);
+        setIsValidated(false);
         handleLogout();
       }
     };
@@ -89,16 +93,17 @@ const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
   const reloadRevenueData = async () => {
     try {
       const response = await axios.get(apiRevenueEndpoint);
+      console.log('Revenues: reloadRevenueData: response: ', response);
       if (response.status === 200) {
         setRevenues(response.data);
         setIsLoading(false);
-      } else {
-        throw Error(response.statusText);
+      // } else {
+      //   throw Error(response.statusText);
       }
     } catch (err) {
       handleAjaxError(err);
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const addRevenue = async (newRevenue) => {
@@ -230,6 +235,7 @@ const Revenues = ({ token, handleSelectedIndex, handleLogout }) => {
 };
 
 Revenues.propTypes = {
+  userRoleID: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,

@@ -5,23 +5,31 @@ class Api::V1::AccountsController < ApplicationController
   # before_action :authenticate_user, only: %i[create update destroy]
 
   def index
-    @accounts = Account
-                .select('accounts.*')
-                # .order('created_at DESC')
-                .order('accounts.account_num')
-    render json: @accounts
+    if can? :read, Account
+      @accounts = Account
+                  .select('accounts.*')
+                  # .order('created_at DESC')
+                  .order('accounts.account_num')
+      render json: @accounts
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   def transactions
-    @account = Account.find(params[:id])
-    render json: @account
-    # @transactions = Account
-    #                 .joins('FULL OUTER JOIN expenses ON accounts.id = expenses.account_id',
-    #                        'FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
-    #                 .where('accounts.id = ?', @account.id)
-    #                 .distinct
-    #                 .order('accounts.id' => :desc)
-    # render json: @transactions
+    if can? :read, Account
+      @account = Account.find(params[:id])
+      render json: @account
+      # @transactions = Account
+      #                 .joins('FULL OUTER JOIN expenses ON accounts.id = expenses.account_id',
+      #                        'FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
+      #                 .where('accounts.id = ?', @account.id)
+      #                 .distinct
+      #                 .order('accounts.id' => :desc)
+      # render json: @transactions
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   # def transactions
@@ -36,30 +44,46 @@ class Api::V1::AccountsController < ApplicationController
   # end
 
   def create
-    @account = Account.new(account_params)
-    if @account.save
-      render json: @account
+    if can? :manage, Account
+      @account = Account.new(account_params)
+      if @account.save
+        render json: @account
+      else
+        render json: @account.errors, status: :unprocessable_entity
+      end
     else
-      render json: @account.errors, status: :unprocessable_entity
+      render json: { error: 'UNAUTHORIZED' }, status: 401
     end
   end
 
   def show
-    @account = Account.find(params[:id])
-    render json: @account
+    if can? :read, Account
+      @account = Account.find(params[:id])
+      render json: @account
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   def update
-    if @account.update(account_params)
-      render json: @account
+    if can? :manage, Account
+      if @account.update(account_params)
+        render json: @account
+      else
+        render json: @account.errors, status: :unprocessable_entity
+      end
     else
-      render json: @account.errors, status: :unprocessable_entity
+      render json: { error: 'UNAUTHORIZED' }, status: 401
     end
   end
 
   def destroy
-    @account.destroy
-    render json: @account
+    if can? :manage, Account
+      @account.destroy
+      render json: @account
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   def rev_ri_year

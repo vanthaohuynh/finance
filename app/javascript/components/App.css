@@ -76,6 +76,19 @@ header h1 a {
   padding-bottom: 50px;
 }
 
+.gridUsers {
+  display: grid;
+  /* grid-gap: 50px; */
+  /* row-gap: 20px; */
+  /* column-gap: 50px; */
+  grid-template-columns: minmax(250px, 100%) auto;
+  margin: 0px 0px;
+  width: 100%;
+  height: calc(100vh - 145px);
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
 .gridTransactionHeader {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -337,6 +350,7 @@ h2 a:hover {
 
 .button-mui {
   /* margin: 0px 0px 0px 0px; */
+  padding-left: 14px;
   text-decoration: none;
 }
 

@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
   resources :roles
-  resources :users
+  resources :users, only: %i[index show create update destroy]
+  # resources :users
 
   # scope '/admin' do
   #   resources :users
   # end
 
   # resources :sessions, only: [:create]
-  # resources :registrations, only: [:create]
+  resources :registrations, only: [:create]
   # delete :logout, to: 'sessions#logout'
   # get :logged_in, to: 'sessions#logged_in'
   # post :login, to: 'sessions#create'
@@ -25,6 +26,12 @@ Rails.application.routes.draw do
   get '/', to: 'site#index'
   get 'dashboard', to: 'site#index'
   get 'registration', to: 'site#index'
+
+  get 'admin', to: 'site#index'
+  get 'users', to: 'site#index'
+  get 'users/new', to: 'site#index'
+  get 'users/:id', to: 'site#index'
+  get 'users/:id/edit', to: 'site#index'
 
   get 'accounts', to: 'site#index'
   get 'accounts/new', to: 'site#index'

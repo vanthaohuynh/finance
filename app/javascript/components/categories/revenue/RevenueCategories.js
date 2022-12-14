@@ -11,7 +11,7 @@ import { info, success } from '../../../helpers/notifications';
 import { handleAjaxError } from '../../../helpers/helpers';
 import ErrorBoundary from '../../../ErrorBoundary';
 
-const RevenueCategories = ({ token, handleLogout }) => {
+const RevenueCategories = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const [revenueCategories, setRevenueCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
@@ -53,6 +53,7 @@ const RevenueCategories = ({ token, handleLogout }) => {
       }
     };
     validateToken();
+    handleSelectedIndex(4);
   }, []); // Need to keep this empty
 
   const reloadRevenueCategoriesData = async () => {
@@ -192,7 +193,9 @@ const RevenueCategories = ({ token, handleLogout }) => {
 };
 
 RevenueCategories.propTypes = {
+  userRoleID: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
+  handleSelectedIndex: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,
 };
 

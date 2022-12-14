@@ -4,22 +4,31 @@ export const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 export const handleAjaxError = (err) => {
   console.log('handleAjaxError: err: ', err);
+  if (err.response === undefined) {
+    error('Network Error. Please contact your administrator.');
+    return;
+  }
   switch (err.response.status) {
     case 401:
-      error('Your session has expired. Please log in again.');
+      if (err.response.data.error === 'UNAUTHORIZED') {
+        error('You are not authorized to perform this action.');
+      } else if (err.response.statusText === 'Unauthorized') {
+        error('Your session has expired. Please log in again.');
+      } else {
+        error('Unauthorized (401). Please contact your administrator.');
+      }
       break;
     case 500:
-      error('Internal Server Error (500). Cannot delete this record. It is still referenced from other tables.');
+      error('Internal Server Error (500). Please contact your administrator.');
       break;
     case 422:
-      error('Unprocessable Entity (422). You are adding a duplicate record. Value must be unique.');
+      error('Unable to process (422). Please contact your administrator.');
       break;
     default:
-      error(`${err.response.statusText}`);
+      error(`Status: ${err.response.status} StatusText: ${err.response.statusText}`);
       break;
   }
 };
-
 // const isValidDate = (dateObj) => !Number.isNaN(Date.parse(dateObj));
 
 export const validateAccount = (account) => {
@@ -126,6 +135,32 @@ export const validateRevenueCategory = (revenueCategory) => {
 
   if (revenueCategory.name === '') {
     errors.revenueCategory = 'Revenue Category name is required';
+  }
+
+  return errors;
+};
+
+export const validateUser = (user) => {
+  const errors = {};
+
+  if (user.email === '') {
+    errors.email = 'Email is required';
+  }
+
+  if (user.role_id === '' || user.role_id === null) {
+    errors.role_id = 'Role is required';
+  }
+
+  if (user.password === '') {
+    errors.password = 'Password is required';
+  }
+
+  if (user.password_confirmation === '') {
+    errors.password_confirmation = 'Password Confirmation is required';
+  }
+
+  if (user.password !== user.password_confirmation) {
+    errors.password_confirmation = 'Password Confirmation does not match Password';
   }
 
   return errors;

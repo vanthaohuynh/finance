@@ -10,15 +10,19 @@ class User < ApplicationRecord
     role.name == 'admin' if role
   end
 
-  def regular?
-    role.name == 'regular' if role
+  def data_entry?
+    role.name == 'data_entry' if role
   end
 
   def power_user?
     role.name == 'power_user' if role
   end
 
+  def viewer?
+    role.name == 'viewer' if role
+  end
+
   def assign_role
-    self.role = Role.find_by name: 'regular' if role.nil?
+    self.role = Role.find_by name: 'viewer' if role.nil?
   end
 end

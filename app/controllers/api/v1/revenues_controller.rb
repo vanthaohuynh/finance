@@ -4,35 +4,52 @@ class Api::V1::RevenuesController < ApplicationController
   # skip_before_action :verify_authenticity_token
 
   def index
-    @revenues = Revenue.all.order('created_at DESC')
-    render json: @revenues
-    # @revenues = Revenue
-    #             .joins(:account, :revenue_category)
-    #             .select('revenues.*, accounts.account_num, revenue_categories.name as revenue_category_name')
-    #             .order('created_at DESC')
-    # render json: @revenues
+    if can? :read, Revenue
+      @revenues = Revenue.all.order('created_at DESC')
+      render json: @revenues
+      # @revenues = Revenue
+      #             .joins(:account, :revenue_category)
+      #             .select('revenues.*, accounts.account_num, revenue_categories.name as revenue_category_name')
+      #             .order('created_at DESC')
+      # render json: @revenues
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   def create
-    @revenue = Revenue.new(revenue_params)
-    if @revenue.save
-      render json: @revenue
+    if can? :manage, Revenue
+      @revenue = Revenue.new(revenue_params)
+      if @revenue.save
+        render json: @revenue
+      else
+        render json: @revenue.errors, status: :unprocessable_entity
+      end
     else
-      render json: @revenue.errors, status: :unprocessable_entity
+      render json: { error: 'UNAUTHORIZED' }, status: 401
     end
   end
 
   def update
-    if @revenue.update(revenue_params)
-      render json: @revenue
+    if can? :manage, Revenue
+      if @revenue.update(revenue_params)
+        render json: @revenue
+      else
+        render json: @revenue.errors, status: :unprocessable_entity
+      end
     else
-      render json: @revenue.errors, status: :unprocessable_entity
+      render json: { error: 'UNAUTHORIZED' }, status: 401
     end
   end
 
   def destroy
-    @revenue.destroy
-    head :no_content
+    if can? :manage, Revenue
+      @revenue = Revenue.find(params[:id])
+      @revenue.destroy
+      head :no_content
+    else
+      render json: { error: 'UNAUTHORIZED' }, status: 401
+    end
   end
 
   private

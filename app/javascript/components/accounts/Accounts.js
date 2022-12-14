@@ -15,7 +15,7 @@ import ErrorBoundary from '../../ErrorBoundary';
 const urlValidation = '/validate_token';
 const apiAccountEndpoint = '/api/v1/accounts';
 
-const Accounts = ({ token, handleSelectedIndex, handleLogout }) => {
+const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const [accounts, setAccounts] = useState([]);
   const dataFetchedRef = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -131,7 +131,7 @@ const Accounts = ({ token, handleSelectedIndex, handleLogout }) => {
             path=":id/transactions/*"
             element={(
               <ErrorBoundary>
-                <Transactions token={token} />
+                <Transactions token={token} handleLogout={handleLogout} />
               </ErrorBoundary>
             )}
           />
@@ -181,6 +181,7 @@ const Accounts = ({ token, handleSelectedIndex, handleLogout }) => {
 };
 
 Accounts.propTypes = {
+  userRoleID: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,

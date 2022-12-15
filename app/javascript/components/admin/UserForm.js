@@ -191,6 +191,30 @@ const UserForm = ({
                   />
                 </Grid>
                 <Grid item xs={6}>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel>Role ID</InputLabel>
+                    <Select
+                      id="role_id"
+                      name="role_id"
+                      label="Role ID"
+                      onChange={handleRoleInputChange}
+                      native
+                      value={user.role_id}
+                      required
+                    >
+                      <option value=""> </option>
+                      {roles.map((role) => (
+                        <option
+                          key={role.id}
+                          value={role.id}
+                        >
+                          {`${role.id} (${role.name})`}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
                   <TextField
                     type="text"
                     id="password"
@@ -217,30 +241,6 @@ const UserForm = ({
                     variant="outlined"
                     required
                   />
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl size="small" fullWidth>
-                    <InputLabel>Role ID</InputLabel>
-                    <Select
-                      id="role_id"
-                      name="role_id"
-                      label="Role ID"
-                      onChange={handleRoleInputChange}
-                      native
-                      value={user.role_id}
-                      required
-                    >
-                      <option value=""> </option>
-                      {roles.map((role) => (
-                        <option
-                          key={role.id}
-                          value={role.id}
-                        >
-                          {role.id} ({role.name})
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
                 </Grid>
               </Grid>
               <div className="button-mui-edit">

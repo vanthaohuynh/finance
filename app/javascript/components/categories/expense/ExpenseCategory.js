@@ -18,6 +18,9 @@ const ExpenseCategory = ({ expenseCategories, onDelete }) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
+              sx={{
+                width: { sm: 300, md: 400 },
+              }}
               id="name"
               name="name"
               label="Name"
@@ -27,7 +30,7 @@ const ExpenseCategory = ({ expenseCategories, onDelete }) => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <TextField
               id="description"
               name="description"
@@ -37,7 +40,7 @@ const ExpenseCategory = ({ expenseCategories, onDelete }) => {
               fullWidth
               variant="outlined"
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <div className="button-mui-edit">
           <Grid item xs={6}>

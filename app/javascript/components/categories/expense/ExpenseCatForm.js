@@ -23,7 +23,7 @@ const ExpenseCatForm = ({ expenseCategories, onSave }) => {
     () => {
       const defaults = {
         name: '',
-        description: '',
+        // description: '',
       };
 
       const currExpenseCat = id ? expenseCategories.find((e) => e.id === Number(id)) : {};
@@ -100,6 +100,9 @@ const ExpenseCatForm = ({ expenseCategories, onSave }) => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  sx={{
+                    width: { sm: 300, md: 400 },
+                  }}
                   type="text"
                   id="name"
                   name="name"
@@ -112,7 +115,7 @@ const ExpenseCatForm = ({ expenseCategories, onSave }) => {
                   required
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   type="text"
                   id="description"
@@ -124,7 +127,7 @@ const ExpenseCatForm = ({ expenseCategories, onSave }) => {
                   fullWidth
                   variant="outlined"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <div className="button-mui-edit">
               <Grid item xs={6}>

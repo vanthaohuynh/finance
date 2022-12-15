@@ -22,12 +22,12 @@ const ExpenseCategoryList = ({ expenseCategories }) => {
         );
       },
     },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 200,
-      editable: false,
-    },
+    // {
+    //   field: 'description',
+    //   headerName: 'Description',
+    //   width: 200,
+    //   editable: false,
+    // },
   ];
 
   const renderExpenseCategories = () => {

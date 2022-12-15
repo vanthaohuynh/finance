@@ -170,7 +170,7 @@ const Transactions = ({ token, handleLogout }) => {
   return (
     <section>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <div className="leftRightPadding">
+        <div className="gridItem">
           <div className="gridTransactionHeader">
             <Typography className="transactionHeaderAccount" variant="h5" component="div">
               {account.account_num} - {account.study_name}

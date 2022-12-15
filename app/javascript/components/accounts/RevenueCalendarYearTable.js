@@ -87,7 +87,7 @@ const RevenueCalendarYearTable = ({ transactions }) => {
                 fontWeight: 'bold',
               }}
             >
-              Revenue by Fiscal Year
+              Revenue by Calendar Year
             </TableCell>
           </TableRow>
         </TableHead>

@@ -177,7 +177,7 @@ const Users = ({ token, handleSelectedIndex, handleLogout }) => {
   };
 
   return (
-    <div className="gridUsers">
+    <div className="grid">
       <ErrorBoundary>
         <UserList users={users} />
       </ErrorBoundary>

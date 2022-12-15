@@ -170,175 +170,175 @@ const Transactions = ({ token, handleLogout }) => {
   return (
     <section>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <div className="gridTransactionHeader">
-          <Typography className="transactionHeaderAccount" variant="h5" component="div">
-            {account.account_num} - {account.study_name}
-          </Typography>
-          <Typography className="transactionHeaderLabel" variant="body1" component="div" align="right">
-            Period:
-          </Typography>
-          <div className="transactionHeaderDateFrom">
-            <DatePicker
-              type="text"
-              id="dateFrom"
-              name="dateFrom"
-              label="From"
-              inputFormat="yyyy-MM-dd"
-              onChange={handleDateFromInputChange}
-              value={dateFrom}
-              renderInput={
-                (params) => <TextField size="small" fullWidth {...params} />
-              }
-            />
+        <div className="leftRightPadding">
+          <div className="gridTransactionHeader">
+            <Typography className="transactionHeaderAccount" variant="h5" component="div">
+              {account.account_num} - {account.study_name}
+            </Typography>
+            <Typography className="transactionHeaderLabel" variant="body1" component="div" align="right">
+              Period:
+            </Typography>
+            <div className="transactionHeaderDateFrom">
+              <DatePicker
+                type="text"
+                id="dateFrom"
+                name="dateFrom"
+                label="From"
+                inputFormat="yyyy-MM-dd"
+                onChange={handleDateFromInputChange}
+                value={dateFrom}
+                renderInput={
+                  (params) => <TextField size="small" fullWidth {...params} />
+                }
+              />
+            </div>
+            <div className="transactionHeaderDateTo">
+              <DatePicker
+                type="text"
+                id="dateTo"
+                name="dateTo"
+                label="To"
+                inputFormat="yyyy-MM-dd"
+                onChange={handleDateToInputChange}
+                value={dateTo}
+                renderInput={
+                  (params) => <TextField size="small" fullWidth {...params} />
+                }
+              />
+            </div>
+            <Button
+              sx={{
+                width: 100,
+                height: 40,
+                backgroundColor: 'white',
+              }}
+              variant="outlined"
+              color="primary"
+              startIcon={<SearchIcon />}
+              onClick={handleDateFilter}
+            >
+              Go
+            </Button>
+            <Button
+              sx={{
+                width: 200,
+                height: 40,
+                backgroundColor: 'white',
+              }}
+              variant="outlined"
+              color="primary"
+              startIcon={<SettingsIcon />}
+              component={Link}
+              to={`/accounts/${id}`}
+            >
+              Account Settings
+            </Button>
           </div>
-          <div className="transactionHeaderDateTo">
-            <DatePicker
-              type="text"
-              id="dateTo"
-              name="dateTo"
-              label="To"
-              inputFormat="yyyy-MM-dd"
-              onChange={handleDateToInputChange}
-              value={dateTo}
-              renderInput={
-                (params) => <TextField size="small" fullWidth {...params} />
-              }
-            />
+
+          <div className="gridAccountSummary">
+            <AccountSummaryTable cardTransactionData={cardTransactionData} />
+            <RevenueCalendarYearTable transactions={transactions} />
+            <RevenueRIYearTable transactions={transactions} />
           </div>
-          <Button
-            sx={{
-              width: 100,
-              height: 40,
-              backgroundColor: 'white',
-            }}
-            variant="outlined"
-            color="primary"
-            startIcon={<SearchIcon />}
-            onClick={handleDateFilter}
-          >
-            Go
-          </Button>
-          <Button
-            sx={{
-              width: 200,
-              height: 40,
-              backgroundColor: 'white',
-            }}
-            variant="outlined"
-            color="primary"
-            startIcon={<SettingsIcon />}
-            component={Link}
-            to={`/accounts/${id}`}
-          >
-            Account Settings
-          </Button>
-        </div>
 
-        <div className="gridAccountSummary">
-          {/* <div className="transactionCard"> */}
-          {/* <AccountSummaryCard cardTransactionData={cardTransactionData} /> */}
-          <AccountSummaryTable cardTransactionData={cardTransactionData} />
-          <RevenueCalendarYearTable transactions={transactions} />
-          <RevenueRIYearTable transactions={transactions} />
-        </div>
-
-        <div className="gridTransactions">
-          {/* {isError && <p>{error.message}</p>} */}
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              {/* <div className="transactionCard">
-                <AccountSummaryCard cardTransactionData={cardTransactionData} />
-              </div> */}
-              <div className="revenueTransactions">
-                <Paper
-                  sx={{
-                    width: '100%',
-                    overflow: 'hidden',
-                  }}
-                >
-                  <Box
+          <div className="gridTransactions">
+            {/* {isError && <p>{error.message}</p>} */}
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                {/* <div className="transactionCard">
+                  <AccountSummaryCard cardTransactionData={cardTransactionData} />
+                </div> */}
+                <div className="revenueTransactions">
+                  <Paper
                     sx={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      justifyContent: 'space-around',
+                      width: '100%',
                       overflow: 'hidden',
-                      backgroundColor: 'background.paper',
-                      // backgroundColor: 'ECF0F1',
-                      // padding: 1,
                     }}
                   >
-                    <Grid
-                      // sx={{
-                      //   backgroundColor: 'ECF0F1',
-                      // }}
-                      container
-                      spacing={2}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-around',
+                        overflow: 'hidden',
+                        backgroundColor: 'background.paper',
+                        // backgroundColor: 'ECF0F1',
+                        // padding: 1,
+                      }}
                     >
-                      <Grid item xs={6} md={5}>
-                        <Card
-                          size="small"
-                          sx={{ width: '100%', height: '100%' }}
-                        >
-                          <RevenueChart
-                            chartTransactionData={chartTransactionData}
-                          />
-                        </Card>
+                      <Grid
+                        // sx={{
+                        //   backgroundColor: 'ECF0F1',
+                        // }}
+                        container
+                        spacing={2}
+                      >
+                        <Grid item xs={6} md={5}>
+                          <Card
+                            size="small"
+                            sx={{ width: '100%', height: '100%' }}
+                          >
+                            <RevenueChart
+                              chartTransactionData={chartTransactionData}
+                            />
+                          </Card>
+                        </Grid>
+                        <Grid item xs={6} md={7}>
+                          <div className="transactionList">
+                            <RevenueTransactionList transactions={filteredTransactions} />
+                          </div>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={6} md={7}>
-                        <div className="transactionList">
-                          <RevenueTransactionList transactions={filteredTransactions} />
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Paper>
-              </div>
+                    </Box>
+                  </Paper>
+                </div>
 
-              <div className="expenseTransactions">
-                <Paper
-                  sx={{
-                    width: '100%',
-                    overflow: 'hidden',
-                  }}
-                >
-                  <Box
+                <div className="expenseTransactions">
+                  <Paper
                     sx={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      justifyContent: 'space-around',
+                      width: '100%',
                       overflow: 'hidden',
-                      backgroundColor: 'background.paper',
-                      // backgroundColor: 'ECF0F1',
-                      // padding: 1,
                     }}
                   >
-                    <Grid
-                      container
-                      spacing={2}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-around',
+                        overflow: 'hidden',
+                        backgroundColor: 'background.paper',
+                        // backgroundColor: 'ECF0F1',
+                        // padding: 1,
+                      }}
                     >
-                      <Grid item xs={6} md={5}>
-                        <Card
-                          size="small"
-                          sx={{ width: '100%', height: '100%' }}
-                        >
-                          <ExpenseChart
-                            chartTransactionData={chartTransactionData}
-                          />
-                        </Card>
+                      <Grid
+                        container
+                        spacing={2}
+                      >
+                        <Grid item xs={6} md={5}>
+                          <Card
+                            size="small"
+                            sx={{ width: '100%', height: '100%' }}
+                          >
+                            <ExpenseChart
+                              chartTransactionData={chartTransactionData}
+                            />
+                          </Card>
+                        </Grid>
+                        <Grid item xs={6} md={7}>
+                          <div className="transactionList">
+                            <ExpenseTransactionList transactions={filteredTransactions} />
+                          </div>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={6} md={7}>
-                        <div className="transactionList">
-                          <ExpenseTransactionList transactions={filteredTransactions} />
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Paper>
-              </div>
-            </>
-          )}
+                    </Box>
+                  </Paper>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </LocalizationProvider>
     </section>

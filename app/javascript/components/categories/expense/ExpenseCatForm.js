@@ -91,78 +91,76 @@ const ExpenseCatForm = ({ expenseCategories, onSave }) => {
   };
 
   return (
-    <section>
-      <div className="eventContainer">
-        <h2>{title}</h2>
-        {renderErrors()}
-        <form onSubmit={handleSubmit}>
-          <FormControl>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  sx={{
-                    width: { sm: 300, md: 400 },
-                  }}
-                  type="text"
-                  id="name"
-                  name="name"
-                  label="Name"
-                  onChange={handleInputChange}
-                  value={expenseCategory.name}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  required
-                />
-              </Grid>
-              {/* <Grid item xs={12}>
-                <TextField
-                  type="text"
-                  id="description"
-                  name="description"
-                  label="Description"
-                  onChange={handleInputChange}
-                  value={expenseCategory.description || ''}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                />
-              </Grid> */}
+    <div className="eventContainerForExpenseCategory">
+      <h2>{title}</h2>
+      {renderErrors()}
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                sx={{
+                  width: { sm: 300, md: 400 },
+                }}
+                type="text"
+                id="name"
+                name="name"
+                label="Name"
+                onChange={handleInputChange}
+                value={expenseCategory.name}
+                size="small"
+                fullWidth
+                variant="outlined"
+                required
+              />
             </Grid>
-            <div className="button-mui-edit">
-              <Grid item xs={6}>
-                <Stack spacing={2} direction="row">
-                  <Button
-                    sx={{
-                      width: 100,
-                      height: 40,
-                      backgroundColor: 'white',
-                    }}
-                    variant="outlined"
-                    color="primary"
-                    component={Link}
-                    to={cancelURL}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    sx={{
-                      width: 100,
-                      height: 40,
-                    }}
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                  >
-                    Save
-                  </Button>
-                </Stack>
-              </Grid>
-            </div>
-          </FormControl>
-        </form>
-      </div>
-    </section>
+            {/* <Grid item xs={12}>
+              <TextField
+                type="text"
+                id="description"
+                name="description"
+                label="Description"
+                onChange={handleInputChange}
+                value={expenseCategory.description || ''}
+                size="small"
+                fullWidth
+                variant="outlined"
+              />
+            </Grid> */}
+          </Grid>
+          <div className="button-mui-edit">
+            <Grid item xs={6}>
+              <Stack spacing={2} direction="row">
+                <Button
+                  sx={{
+                    width: 100,
+                    height: 40,
+                    backgroundColor: 'white',
+                  }}
+                  variant="outlined"
+                  color="primary"
+                  component={Link}
+                  to={cancelURL}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  sx={{
+                    width: 100,
+                    height: 40,
+                  }}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
+                  Save
+                </Button>
+              </Stack>
+            </Grid>
+          </div>
+        </FormControl>
+      </form>
+    </div>
   );
 };
 

@@ -3,17 +3,21 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Header from '../Header';
-import ExpenseList from './ExpenseList';
-import Expense from './Expense';
-import ExpenseForm from './ExpenseForm';
-import { info, success } from '../../helpers/notifications';
-import { handleAjaxError } from '../../helpers/helpers';
-import ErrorBoundary from '../../ErrorBoundary';
+import Header from '../../Header';
+// import ExpenseCatList from './ExpenseCatList';
+import ExpenseSubCatList from './ExpenseSubCatList';
+import ExpenseSubCategory from './ExpenseSubCategory';
+import ExpenseSubCatForm from './ExpenseSubCatForm';
+import { info, success } from '../../../helpers/notifications';
+import { handleAjaxError } from '../../../helpers/helpers';
+import ErrorBoundary from '../../../ErrorBoundary';
 
-const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
-  const [expenses, setExpenses] = useState([]);
-  const [accounts, setAccounts] = useState([]);
+const ExpenseSubCategories = ({
+  userRoleID,
+  token,
+  handleSelectedIndex,
+  handleLogout,
+}) => {
   const [expenseCategories, setExpenseCategories] = useState([]);
   const [expenseSubCategories, setExpenseSubCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,48 +25,18 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const navigate = useNavigate();
   const confirm = useConfirm();
 
-  const apiExpenseEndpoint = '/api/v1/expenses';
-  const apiAccountEndpoint = '/api/v1/accounts2';
   const apiExpenseCatEndpoint = '/api/v1/expense_categories';
   const apiExpenseSubCatEndpoint = '/api/v1/expense_sub_categories';
   const urlValidation = '/validate_token';
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
-  const fetchExpenseData = async () => {
-    try {
-      const response = await axios.get(apiExpenseEndpoint);
-      console.log('Expenses: fetchExpenseData: response: ', response);
-      if (response.status === 200) {
-        setExpenses(response.data);
-        setIsLoading(false);
-      }
-    } catch (err) {
-      handleAjaxError(err);
-      // navigate('/dashboard');
-    }
-  };
-
-  const fetchAccountData = async () => {
-    try {
-      const response = await axios.get(apiAccountEndpoint);
-      console.log('Expenses: fetchAccountData: response: ', response);
-      if (response.status === 200) {
-        const sortedAccounts = response.data
-          .sort((a, b) => (a.account_num > b.account_num ? 1 : -1));
-        setAccounts(sortedAccounts);
-        setIsLoading(false);
-      }
-    } catch (err) {
-      handleAjaxError(err);
-    }
-  };
 
   const fetchExpenseCategoryData = async () => {
     try {
       const response = await axios.get(apiExpenseCatEndpoint);
       console.log('Expenses: fetchExpenseCategoryData: response: ', response);
       if (response.status === 200) {
-        setExpenseCategories(response.data);
+        const sortedExpenseCategories = response.data.sort((a, b) => (a.name > b.name ? 1 : -1));
+        setExpenseCategories(sortedExpenseCategories);
         setIsLoading(false);
       }
     } catch (err) {
@@ -75,7 +49,10 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
       const response = await axios.get(apiExpenseSubCatEndpoint);
       console.log('Expenses: fetchExpenseSubCategoryData: response: ', response);
       if (response.status === 200) {
-        setExpenseSubCategories(response.data);
+        const sortedExpenseSubCategories = response.data
+          .sort((a, b) => (a.expense_code > b.expense_code ? 1 : -1));
+          // .sort((a, b) => (a.expense_category_name > b.expense_category_name ? 1 : -1))
+        setExpenseSubCategories(sortedExpenseSubCategories);
         setIsLoading(false);
       }
     } catch (err) {
@@ -89,8 +66,6 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
         const response = await axios.get(urlValidation);
         if (response.status === 200) {
           setIsValidated(true);
-          fetchExpenseData();
-          fetchAccountData();
           fetchExpenseCategoryData();
           fetchExpenseSubCategoryData();
         } else {
@@ -103,15 +78,18 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
       }
     };
     validateToken();
-    handleSelectedIndex(2);
+    handleSelectedIndex(5);
   }, []); // Need to keep this empty
 
-  const reloadExpenseData = async () => {
+  const reloadExpenseSubCategoriesData = async () => {
     try {
-      const response = await axios.get(apiExpenseEndpoint);
-      console.log('Expenses: reloadExpenseData: response: ', response);
+      const response = await axios.get(apiExpenseSubCatEndpoint);
+      console.log('Expenses: reloadExpenseSubData: response: ', response);
       if (response.status === 200) {
-        setExpenses(response.data);
+        const sortedExpenseSubCategories = response.data
+          .sort((a, b) => (a.expense_code > b.expense_code ? 1 : -1));
+          // .sort((a, b) => (a.expense_category_name > b.expense_category_name ? 1 : -1))
+        setExpenseSubCategories(sortedExpenseSubCategories);
         setIsLoading(false);
       }
     } catch (err) {
@@ -119,42 +97,44 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
     }
   };
 
-  const addExpense = async (newExpense) => {
+  const addExpenseSubCategory = async (newExpenseSubCategory) => {
     try {
-      const response = await axios.post(apiExpenseEndpoint, newExpense);
-      console.log('Expenses: addExpense: response: ', response);
+      const response = await axios.post(apiExpenseSubCatEndpoint, newExpenseSubCategory);
+      console.log('Expenses: addExpenseSubCategory: response: ', response);
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
-      const savedExpense = response.data;
-      const newExpenses = [...expenses, savedExpense];
-      setExpenses(newExpenses);
-      reloadExpenseData();
-      success('Expense added successfully');
-      navigate(`/expenses/${savedExpense.id}`);
+      const savedExpenseSubCategory = response.data;
+      const newExpenseSubCategories = [...expenseSubCategories, savedExpenseSubCategory];
+      setExpenseSubCategories(newExpenseSubCategories);
+      reloadExpenseSubCategoriesData();
+      success('Expense Sub Category added successfully');
+      navigate(`/expense_sub_categories/${savedExpenseSubCategory.id}`);
     } catch (err) {
       handleAjaxError(err);
     }
   };
 
-  const deleteExpense = async (expenseId) => {
+  const deleteExpenseSubCategory = async (expenseSubCatId) => {
     confirm({
       title: 'Confirmation',
-      description: 'Are you sure you want to delete this expense?',
+      description: 'Are you sure you want to delete this Expense Sub Category?',
     })
       .then(async () => {
         try {
-          const response = await axios.delete(`${apiExpenseEndpoint}/${expenseId}`);
-          console.log('Expenses: deleteExpense: response: ', response);
+          const response = await axios.delete(`${apiExpenseSubCatEndpoint}/${expenseSubCatId}`);
+          console.log('Expenses: deleteExpenseSub: response: ', response);
           if (response.status !== 200) {
             throw Error(response.statusText);
           }
-          const newExpenses = expenses.filter((expense) => expense.id !== expenseId);
-          setExpenses(newExpenses);
-          success('Expense deleted successfully');
-          navigate('/expenses');
+          const newExpenseSubCategories = expenseSubCategories
+            .filter((expenseSubCat) => expenseSubCat.id !== expenseSubCatId);
+          setExpenseSubCategories(newExpenseSubCategories);
+          success('Expense Sub Category deleted');
+          navigate('/expense_sub_categories');
         } catch (err) {
           handleAjaxError(err);
+          console.log('Expenses: deleteExpenseSub: err: ', err);
           // To be implemented: Using ErrorBoundary
           // setError(err);
           // setIsError(true);
@@ -166,20 +146,21 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
       });
   };
 
-  const updateExpense = async (updatedExpense) => {
+  const updateExpenseSubCategory = async (updatedExpenseSubCategory) => {
     try {
-      const response = await axios.patch(`${apiExpenseEndpoint}/${updatedExpense.id}`, updatedExpense);
-      console.log('Expenses: updateExpense: response: ', response);
+      const response = await axios
+        .patch(`${apiExpenseSubCatEndpoint}/${updatedExpenseSubCategory.id}`, updatedExpenseSubCategory);
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
-      const newExpenses = expenses;
-      const idx = newExpenses.findIndex((expense) => expense.id === updatedExpense.id);
-      newExpenses[idx] = updatedExpense;
-      setExpenses(newExpenses);
-      reloadExpenseData();
-      success('Expense Updated!');
-      navigate(`/expenses/${updatedExpense.id}`);
+      const newExpenseSubCategories = expenseSubCategories;
+      const idx = newExpenseSubCategories
+        .findIndex((expenseSubCat) => expenseSubCat.id === updatedExpenseSubCategory.id);
+      newExpenseSubCategories[idx] = updatedExpenseSubCategory;
+      setExpenseSubCategories(newExpenseSubCategories);
+      reloadExpenseSubCategoriesData();
+      success('Expense Sub Category updated successfully');
+      navigate(`/expense_sub_categories/${updatedExpenseSubCategory.id}`);
     } catch (err) {
       handleAjaxError(err);
     }
@@ -187,27 +168,29 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
 
   return (
     <>
-      {/* <Header header="Expenses" /> */}
-      <div className="grid">
+      {/* <Header header="Expense Categories" /> */}
+      <div className="gridExpenseCategory">
         {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (
           <p>Loading...</p>
         ) : (
           <>
             <ErrorBoundary>
-              <ExpenseList expenses={expenses} />
+              <ExpenseSubCatList
+                // expenseCategories={expenseCategories}
+                expenseSubCategories={expenseSubCategories}
+              />
             </ErrorBoundary>
             <Routes>
               <Route
                 path=":id"
                 element={(
                   <ErrorBoundary>
-                    <Expense
-                      expenses={expenses}
-                      accounts={accounts}
+                    <ExpenseSubCategory
+                      userRoleID={userRoleID}
                       expenseCategories={expenseCategories}
                       expenseSubCategories={expenseSubCategories}
-                      onDelete={deleteExpense}
+                      onDelete={deleteExpenseSubCategory}
                     />
                   </ErrorBoundary>
                 )}
@@ -216,12 +199,11 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
                 path=":id/edit"
                 element={(
                   <ErrorBoundary>
-                    <ExpenseForm
-                      expenses={expenses}
-                      accounts={accounts}
+                    <ExpenseSubCatForm
+                      userRoleID={userRoleID}
                       expenseCategories={expenseCategories}
                       expenseSubCategories={expenseSubCategories}
-                      onSave={updateExpense}
+                      onSave={updateExpenseSubCategory}
                     />
                   </ErrorBoundary>
                   )}
@@ -230,14 +212,11 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
                 path="new"
                 element={(
                   <ErrorBoundary>
-                    <ExpenseForm
-                      // For new Expense, do not pass expenses in order
-                      // to set up initial state (blank fields)
-                      // expenses={expenses}
-                      accounts={accounts}
+                    <ExpenseSubCatForm
+                      userRoleID={userRoleID}
                       expenseCategories={expenseCategories}
                       expenseSubCategories={expenseSubCategories}
-                      onSave={addExpense}
+                      onSave={addExpenseSubCategory}
                     />
                   </ErrorBoundary>
               )}
@@ -250,11 +229,11 @@ const Expenses = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   );
 };
 
-Expenses.propTypes = {
+ExpenseSubCategories.propTypes = {
   userRoleID: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   handleSelectedIndex: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,
 };
 
-export default Expenses;
+export default ExpenseSubCategories;

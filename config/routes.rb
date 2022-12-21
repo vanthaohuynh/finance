@@ -53,6 +53,11 @@ Rails.application.routes.draw do
   get 'expense_categories/:id', to: 'site#index'
   get 'expense_categories/:id/edit', to: 'site#index'
 
+  get 'expense_sub_categories', to: 'site#index'
+  get 'expense_sub_categories/new', to: 'site#index'
+  get 'expense_sub_categories/:id', to: 'site#index'
+  get 'expense_sub_categories/:id/edit', to: 'site#index'
+
   get 'revenue_categories', to: 'site#index'
   get 'revenue_categories/new', to: 'site#index'
   get 'revenue_categories/:id', to: 'site#index'
@@ -68,6 +73,7 @@ Rails.application.routes.draw do
       resources :accounts3, only: %i[index]
       resources :revenues, only: %i[index show create update destroy]
       resources :expense_categories, only: %i[index show create update destroy]
+      resources :expense_sub_categories, only: %i[index show create update destroy index_listing]
       resources :revenue_categories, only: %i[index show create update destroy]
       resources :account_amendments, only: %i[index show create update destroy]
       get 'accounts/:id/transactions', to: 'accounts#transactions', as: 'account_transactions'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_14_154804) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_21_160207) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +85,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_154804) do
     t.string "description"
   end
 
+  create_table "expense_sub_categories", force: :cascade do |t|
+    t.string "expense_code"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "expense_category_id", null: false
+    t.string "expense_category_name"
+    t.string "name"
+    t.index ["expense_category_id"], name: "index_expense_sub_categories_on_expense_category_id"
+  end
+
   create_table "expenses", force: :cascade do |t|
     t.date "invoice_date"
     t.float "amount"
@@ -97,8 +108,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_154804) do
     t.text "notes"
     t.string "account_num"
     t.string "expense_category_name"
+    t.bigint "expense_sub_category_id", null: false
+    t.string "expense_sub_category_name"
+    t.string "expense_sub_category_code"
+    t.date "payment_date"
+    t.string "supplier"
     t.index ["account_id"], name: "index_expenses_on_account_id"
     t.index ["expense_category_id"], name: "index_expenses_on_expense_category_id"
+    t.index ["expense_sub_category_id"], name: "index_expenses_on_expense_sub_category_id"
   end
 
   create_table "revenue_categories", force: :cascade do |t|
@@ -162,8 +179,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_154804) do
   add_foreign_key "account_amendments", "accounts"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "expense_sub_categories", "expense_categories"
   add_foreign_key "expenses", "accounts"
   add_foreign_key "expenses", "expense_categories"
+  add_foreign_key "expenses", "expense_sub_categories"
   add_foreign_key "revenues", "accounts"
   add_foreign_key "revenues", "revenue_categories"
   add_foreign_key "transactions", "accounts"

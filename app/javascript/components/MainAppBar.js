@@ -29,7 +29,7 @@ const MainAppBar = ({
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   // const [selectedIndex, setSelectedIndex] = React.useState(-1);
-  let pages = ['Accounts', 'Revenues', 'Expenses', 'Expense Categories', 'Revenue Categories'];
+  let pages = ['Accounts', 'Revenues', 'Expenses', 'Expense Categories', 'Revenue Categories', 'Expense Sub Categories'];
   let dash = '/dashboard';
 
   const settings = ['Profile'];

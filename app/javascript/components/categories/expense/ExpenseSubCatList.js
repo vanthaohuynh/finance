@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { Typography } from '@mui/material';
+import {
+  Grid,
+  TextField,
+  Button,
+  Select,
+  InputLabel,
+  FormControl,
+  Stack,
+  Typography,
+} from '@mui/material';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -15,27 +22,40 @@ import {
   GridToolbarDensitySelector,
 } from '@mui/x-data-grid';
 
-const ExpenseCategoryList = ({ expenseCategories }) => {
+const ExpenseSubCategoryList = ({ expenseSubCategories }) => {
   const columns = [
     {
-      field: 'name',
-      headerName: 'Name',
-      width: 225,
+      field: 'expense_category_name',
+      headerName: 'Expense Category',
+      width: 250,
       editable: false,
       renderCell: (params) => {
         const { id } = params;
         const { value } = params;
         return (
-          <Link to={`/expense_categories/${id}`}>{value}</Link>
+          <Link to={`/expense_sub_categories/${id}`}>{value}</Link>
         );
       },
     },
-    // {
-    //   field: 'description',
-    //   headerName: 'Description',
-    //   width: 200,
-    //   editable: false,
-    // },
+    {
+      field: 'expense_code',
+      headerName: 'Sub Expense Code',
+      width: 150,
+      editable: false,
+      renderCell: (params) => {
+        const { id } = params;
+        const { value } = params;
+        return (
+          <Link to={`/expense_sub_categories/${id}`}>{value}</Link>
+        );
+      },
+    },
+    {
+      field: 'name',
+      headerName: 'Sub Expense Name',
+      width: 300,
+      editable: false,
+    },
   ];
 
   function customGridToolbar() {
@@ -47,7 +67,7 @@ const ExpenseCategoryList = ({ expenseCategories }) => {
           color="primary"
           startIcon={(<AddIcon />)}
         >
-          <Link to="/expense_categories/new" style={{ color: '#1876d2' }}>
+          <Link to="/expense_sub_categories/new" style={{ color: '#1876d2' }}>
             Add New
           </Link>
         </Button>
@@ -59,10 +79,8 @@ const ExpenseCategoryList = ({ expenseCategories }) => {
     );
   }
 
-  const renderExpenseCategories = () => {
-    const sortedExpenseCategories = [...expenseCategories].sort((a, b) => new
-    Date(b.created_at) - new Date(a.created_at));
-
+  // eslint-disable-next-line
+  const renderExpenseSubCategories = () => {
     return (
       <Box
         sx={{
@@ -92,12 +110,11 @@ const ExpenseCategoryList = ({ expenseCategories }) => {
         <DataGrid
           rowHeight={35}
           headerHeight={35}
-          rows={sortedExpenseCategories}
+          rows={expenseSubCategories}
           columns={columns}
           pageSize={100}
           rowsPerPageOptions={[100]}
           components={{ Toolbar: customGridToolbar }}
-          // components={{ Toolbar: GridToolbar }}
         />
       </Box>
     );
@@ -108,36 +125,27 @@ const ExpenseCategoryList = ({ expenseCategories }) => {
       <Stack spacing={2}>
         <div className="pageHeader">
           <Typography variant="h6" component="h6" align="left">
-            Expense Categories
+            Expense Sub Categories
           </Typography>
-          {/* <Button
-            sx={{
-              width: 125,
-              height: 40,
-              backgroundColor: 'white',
-            }}
-            variant="outlined"
-            color="primary"
-            startIcon={<AddIcon />}
-            component={Link}
-            to="/expense_categories/new"
-          >
-            Add New
-          </Button> */}
         </div>
         <div className="eventList">
-          {renderExpenseCategories()}
+          {renderExpenseSubCategories()}
         </div>
       </Stack>
     </section>
   );
 };
 
-ExpenseCategoryList.propTypes = {
-  expenseCategories: PropTypes.arrayOf(PropTypes.shape({
+ExpenseSubCategoryList.propTypes = {
+  // expenseCategories: PropTypes.arrayOf(PropTypes.shape({
+  //   id: PropTypes.number,
+  //   name: PropTypes.string,
+  // })).isRequired,
+  expenseSubCategories: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
-    name: PropTypes.string,
+    expense_code: PropTypes.string,
+    description: PropTypes.string,
   })).isRequired,
 };
 
-export default ExpenseCategoryList;
+export default ExpenseSubCategoryList;

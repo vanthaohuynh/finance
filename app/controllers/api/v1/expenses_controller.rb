@@ -69,7 +69,9 @@ class Api::V1::ExpensesController < ApplicationController
           .permit(
             :pdf_invoice, :updated_at, :invoice_date, :invoice_num,
             :expense_currency, :amount, :account_id, :expense_category_id,
-            :notes, :account_num, :expense_category_name
+            :notes, :account_num, :expense_category_name, :expense_sub_category_id,
+            :expense_sub_category_name, :expense_sub_category_code,
+            :payment_date, :supplier
           )
   end
 end

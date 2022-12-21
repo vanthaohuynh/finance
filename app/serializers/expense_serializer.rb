@@ -2,7 +2,9 @@ class ExpenseSerializer < ActiveModel::Serializer
   attributes :id, :invoice_num, :invoice_date,
              :amount, :account_id, :expense_category_id,
              :expense_currency, :notes, :created_at, :updated_at,
-             :pdf_invoice, :account_num, :expense_category_name
+             :pdf_invoice, :account_num, :expense_category_name,
+             :expense_sub_category_id, :expense_sub_category_name,
+             :expense_sub_category_code, :payment_date, :supplier
   def pdf_invoice
     if object.pdf_invoice.attached?
       {

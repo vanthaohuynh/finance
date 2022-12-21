@@ -130,6 +130,23 @@ export const validateExpenseCategory = (expenseCategory) => {
   return errors;
 };
 
+export const validateExpenseSubCategory = (expenseSubCategory) => {
+  const errors = {};
+  if (expenseSubCategory.expense_category_id === '') {
+    errors.expenseSubCategory = 'Expense Category is required';
+  }
+
+  if (expenseSubCategory.expense_code === '') {
+    errors.expenseSubCategory = 'Sub Expense Code is required';
+  }
+
+  if (expenseSubCategory.name === '') {
+    errors.expenseSubCategory = 'Sub Category Name is required';
+  }
+
+  return errors;
+};
+
 export const validateRevenueCategory = (revenueCategory) => {
   const errors = {};
 

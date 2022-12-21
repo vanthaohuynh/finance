@@ -65,7 +65,7 @@ const Users = ({ token, handleSelectedIndex, handleLogout }) => {
     if (!dataFetchedRef.current) {
       dataFetchedRef.current = true;
       validateToken();
-      handleSelectedIndex(5);
+      handleSelectedIndex(6);
     }
   }, []); // Need to keep this dependencies array empty
 

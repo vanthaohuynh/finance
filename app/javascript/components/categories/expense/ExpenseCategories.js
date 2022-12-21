@@ -5,20 +5,28 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Header from '../../Header';
 import ExpenseCatList from './ExpenseCatList';
+import ExpenseSubCatList from './ExpenseSubCatList';
 import ExpenseCategory from './ExpenseCategory';
 import ExpenseCatForm from './ExpenseCatForm';
 import { info, success } from '../../../helpers/notifications';
 import { handleAjaxError } from '../../../helpers/helpers';
 import ErrorBoundary from '../../../ErrorBoundary';
 
-const ExpenseCategories = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
+const ExpenseCategories = ({
+  userRoleID,
+  token,
+  handleSelectedIndex,
+  handleLogout,
+}) => {
   const [expenseCategories, setExpenseCategories] = useState([]);
+  const [expenseSubCategories, setExpenseSubCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isValidated, setIsValidated] = useState(false);
   const navigate = useNavigate();
   const confirm = useConfirm();
 
   const apiExpenseCatEndpoint = '/api/v1/expense_categories';
+  const apiExpenseSubCatEndpoint = '/api/v1/expense_sub_categories';
   const urlValidation = '/validate_token';
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
@@ -35,6 +43,19 @@ const ExpenseCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
     }
   };
 
+  const fetchExpenseSubCategoryData = async () => {
+    try {
+      const response = await axios.get(apiExpenseSubCatEndpoint);
+      console.log('Expenses: fetchExpenseSubCategoryData: response: ', response);
+      if (response.status === 200) {
+        setExpenseSubCategories(response.data);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      handleAjaxError(err);
+    }
+  };
+
   useEffect(() => {
     const validateToken = async () => {
       try {
@@ -42,6 +63,7 @@ const ExpenseCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
         if (response.status === 200) {
           setIsValidated(true);
           fetchExpenseCategoryData();
+          fetchExpenseSubCategoryData();
         } else {
           setIsValidated(false);
         }
@@ -140,7 +162,7 @@ const ExpenseCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
   return (
     <>
       {/* <Header header="Expense Categories" /> */}
-      <div className="grid">
+      <div className="gridExpenseCategory">
         {/* {isError && <p>{error.message}</p>} */}
         {isLoading ? (
           <p>Loading...</p>
@@ -157,6 +179,7 @@ const ExpenseCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
                     <ExpenseCategory
                       userRoleID={userRoleID}
                       expenseCategories={expenseCategories}
+                      expenseSubCategories={expenseSubCategories}
                       onDelete={deleteExpenseCategory}
                     />
                   </ErrorBoundary>

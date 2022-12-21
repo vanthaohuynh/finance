@@ -66,11 +66,15 @@ const Transactions = ({ token, handleLogout }) => {
           id: transactionID += 1,
           account_num,
           invoice_date: expense.invoice_date,
+          payment_date: expense.payment_date,
           invoice_num: expense.invoice_num,
           invoice_id: expense.id,
           transaction_type: 'Expense',
           category: expense.expense_category_name,
+          expense_sub_category_name: expense.expense_sub_category_name,
+          expense_code: expense.expense_sub_category_code,
           amount: (expense.amount),
+          supplier: expense.supplier,
           // amount: (expense.amount) * -1,
         };
         transactions.push(transaction);

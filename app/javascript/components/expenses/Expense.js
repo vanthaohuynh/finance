@@ -56,6 +56,16 @@ const Expense = ({ expenses, onDelete }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              id="payment_date"
+              label="Payment Date"
+              value={expense.payment_date ? expense.payment_date.replace(/\//g, '-') : ''}
+              size="small"
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               id="invoice_date"
               label="Invoice Date"
               value={expense.invoice_date.replace(/\//g, '-') || ''}
@@ -68,8 +78,17 @@ const Expense = ({ expenses, onDelete }) => {
             <TextField
               id="expense_category_name"
               label="Expense Category"
-              // value={expense.expense_category.name || ''}
-              value={expense.expense_category_name || ''}
+              value={expense.expense_category_name}
+              size="small"
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="expense_sub_category_name"
+              label="Sub Category"
+              value={`${expense.expense_sub_category_code} (${expense.expense_sub_category_name})`}
               size="small"
               fullWidth
               variant="outlined"
@@ -86,6 +105,16 @@ const Expense = ({ expenses, onDelete }) => {
               disabled
             />
           </Grid> */}
+          <Grid item xs={6}>
+            <TextField
+              id="supplier"
+              label="Supplier"
+              value={expense.supplier || ''}
+              size="small"
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
           <Grid item xs={6}>
             <TextField
               id="notes"

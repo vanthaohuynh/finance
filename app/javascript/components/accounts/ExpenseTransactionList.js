@@ -13,6 +13,18 @@ const ExpenseTransactionList = ({ transactions }) => {
     {
       field: 'category',
       headerName: 'Category',
+      width: 200,
+      editable: false,
+    },
+    {
+      field: 'expense_sub_category_name',
+      headerName: 'Sub Category',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'expense_code',
+      headerName: 'Sub Expense Code',
       width: 150,
       editable: false,
     },
@@ -30,6 +42,12 @@ const ExpenseTransactionList = ({ transactions }) => {
       },
     },
     {
+      field: 'payment_date',
+      headerName: 'Payment Date',
+      width: 100,
+      editable: false,
+    },
+    {
       field: 'invoice_date',
       headerName: 'Invoice Date',
       width: 100,
@@ -44,6 +62,12 @@ const ExpenseTransactionList = ({ transactions }) => {
       renderCell: (params) => (
         <Link to={`/expenses/${params.row.invoice_id}`}>{params.value}</Link>
       ),
+    },
+    {
+      field: 'supplier',
+      headerName: 'Supplier',
+      width: 100,
+      editable: false,
     },
     {
       field: 'notes',

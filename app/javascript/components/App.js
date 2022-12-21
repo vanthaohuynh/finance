@@ -24,6 +24,7 @@ import { info } from '../helpers/notifications';
 // import { handleAjaxError } from '../helpers/helpers';
 import './App.css';
 import ExpenseCategories from './categories/expense/ExpenseCategories';
+import ExpenseSubCategories from './categories/expense/ExpenseSubCategories';
 import RevenueCategories from './categories/revenue/RevenueCategories';
 import { Container } from '@mui/system';
 
@@ -185,6 +186,17 @@ const App = () => {
               path="/expense_categories/*"
               element={(
                 <ExpenseCategories
+                  userRoleID={userRoleID}
+                  token={token}
+                  handleSelectedIndex={handleSelectedIndex}
+                  handleLogout={handleLogout}
+                />
+              )}
+            />
+            <Route
+              path="/expense_sub_categories/*"
+              element={(
+                <ExpenseSubCategories
                   userRoleID={userRoleID}
                   token={token}
                   handleSelectedIndex={handleSelectedIndex}

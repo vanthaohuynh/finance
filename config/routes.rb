@@ -70,7 +70,7 @@ Rails.application.routes.draw do
       resources :expenses, only: %i[index show create update destroy]
       resources :accounts, only: %i[index show create update destroy]
       resources :accounts2, only: %i[index]
-      resources :accounts3, only: %i[index]
+      # resources :accounts3, only: %i[index]
       resources :revenues, only: %i[index show create update destroy]
       resources :expense_categories, only: %i[index show create update destroy]
       resources :expense_sub_categories, only: %i[index show create update destroy index_listing]

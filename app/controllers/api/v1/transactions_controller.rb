@@ -1,5 +1,5 @@
 class Api::V1::TransactionsController < ApplicationController
-  # before_action :authorized
+  before_action :authorized
 
   def revenue_transactions
     @accounts = Account

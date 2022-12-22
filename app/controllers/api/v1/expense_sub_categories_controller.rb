@@ -1,5 +1,5 @@
 class Api::V1::ExpenseSubCategoriesController < ApplicationController
-  # before_action :authorized
+  before_action :authorized
 
   def index
     @expense_sub_categories = ExpenseSubCategory.all

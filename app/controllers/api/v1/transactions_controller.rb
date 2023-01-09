@@ -6,6 +6,7 @@ class Api::V1::TransactionsController < ApplicationController
                 .joins('FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
                 .select('accounts.*, SUM(revenues.amount) AS revenue_total')
                 .where('accounts.status = ?', 'Open')
+                .where.not('revenues.deposit_date IS NULL')
                 .distinct
                 .group('accounts.id')
                 .order('accounts.id')
@@ -16,6 +17,7 @@ class Api::V1::TransactionsController < ApplicationController
     @revenue_list = Revenue
                     .joins('FULL OUTER JOIN accounts ON revenues.account_id = accounts.id')
                     .where('accounts.status = ?', 'Open')
+                    .where.not('revenues.deposit_date IS NULL')
                     .order('revenues.invoice_date ASC')
     render json: @revenue_list
   end
@@ -82,7 +84,7 @@ class Api::V1::TransactionsController < ApplicationController
                 .joins('FULL OUTER JOIN revenues ON accounts.id = revenues.account_id')
                 .select('accounts.*, SUM(revenues.amount) AS revenue_total')
                 .where('accounts.status = ?', 'Open')
-                .get_revenue_curr_year(Date.current.year)
+                .get_revenue_curr_year(Date.current.year) # Scope defined in account.rb using deposit_date
                 .distinct
                 .group('accounts.id')
                 .order('accounts.id')

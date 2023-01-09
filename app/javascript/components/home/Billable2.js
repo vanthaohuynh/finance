@@ -195,7 +195,7 @@ const Billable2 = ({ billable }) => {
   }, [exporterRef]);
 
   const renderGrid = () => {
-    console.log('renderGrid');
+    // console.log('renderGrid');
     // const onRowPrepared = (e) => {
     //   e.rowElement.css({ height: 50 });
     // };

@@ -31,7 +31,7 @@ const Revenues = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const fetchRevenueData = async () => {
     try {
       const response = await axios.get(apiRevenueEndpoint);
-      console.log('Revenues: fetchRevenueDate: response: ', response);
+      // console.log('Revenues: fetchRevenueDate: response: ', response);
       if (response.status === 200) {
         setRevenues(response.data);
         setIsLoading(false);
@@ -93,7 +93,7 @@ const Revenues = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const reloadRevenueData = async () => {
     try {
       const response = await axios.get(apiRevenueEndpoint);
-      console.log('Revenues: reloadRevenueData: response: ', response);
+      // console.log('Revenues: reloadRevenueData: response: ', response);
       if (response.status === 200) {
         setRevenues(response.data);
         setIsLoading(false);

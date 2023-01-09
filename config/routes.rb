@@ -78,6 +78,8 @@ Rails.application.routes.draw do
       resources :account_amendments, only: %i[index show create update destroy]
       get 'accounts/:id/transactions', to: 'accounts#transactions', as: 'account_transactions'
       # get 'transactions', to: 'transactions#index'
+      get 'revenue_list', to: 'transactions#revenue_list'
+      get 'expense_list', to: 'transactions#expense_list'
       get 'revenue_transactions', to: 'transactions#revenue_transactions'
       get 'expense_transactions', to: 'transactions#expense_transactions'
       get 'billable', to: 'transactions#billable'

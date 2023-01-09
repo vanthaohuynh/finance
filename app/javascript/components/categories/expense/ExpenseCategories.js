@@ -33,7 +33,7 @@ const ExpenseCategories = ({
   const fetchExpenseCategoryData = async () => {
     try {
       const response = await axios.get(apiExpenseCatEndpoint);
-      console.log('Expenses: fetchExpenseCategoryData: response: ', response);
+      // console.log('Expenses: fetchExpenseCategoryData: response: ', response);
       if (response.status === 200) {
         setExpenseCategories(response.data);
         setIsLoading(false);
@@ -46,7 +46,7 @@ const ExpenseCategories = ({
   const fetchExpenseSubCategoryData = async () => {
     try {
       const response = await axios.get(apiExpenseSubCatEndpoint);
-      console.log('Expenses: fetchExpenseSubCategoryData: response: ', response);
+      // console.log('Expenses: fetchExpenseSubCategoryData: response: ', response);
       if (response.status === 200) {
         setExpenseSubCategories(response.data);
         setIsLoading(false);
@@ -80,7 +80,7 @@ const ExpenseCategories = ({
   const reloadExpenseCategoriesData = async () => {
     try {
       const response = await axios.get(apiExpenseCatEndpoint);
-      console.log('Expenses: reloadExpenseData: response: ', response);
+      // console.log('Expenses: reloadExpenseData: response: ', response);
       if (response.status === 200) {
         setExpenseCategories(response.data);
         setIsLoading(false);
@@ -93,7 +93,7 @@ const ExpenseCategories = ({
   const addExpenseCategory = async (newExpenseCategory) => {
     try {
       const response = await axios.post(apiExpenseCatEndpoint, newExpenseCategory);
-      console.log('Expenses: addExpense: response: ', response);
+      // console.log('Expenses: addExpense: response: ', response);
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
@@ -116,7 +116,7 @@ const ExpenseCategories = ({
       .then(async () => {
         try {
           const response = await axios.delete(`${apiExpenseCatEndpoint}/${expenseCatId}`);
-          console.log('Expenses: deleteExpense: response: ', response);
+          // console.log('Expenses: deleteExpense: response: ', response);
           if (response.status !== 200) {
             throw Error(response.statusText);
           }
@@ -127,7 +127,7 @@ const ExpenseCategories = ({
           navigate('/expense_categories');
         } catch (err) {
           handleAjaxError(err);
-          console.log('Expenses: deleteExpense: err: ', err);
+          // console.log('Expenses: deleteExpense: err: ', err);
           // To be implemented: Using ErrorBoundary
           // setError(err);
           // setIsError(true);

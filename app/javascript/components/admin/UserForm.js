@@ -71,8 +71,8 @@ const UserForm = ({
   // **************************************************************************
 
   const updateUser = (key, value) => {
-    console.log('updateUser - key - value:', key, value);
-    console.log('type of value:', typeof value);
+    // console.log('updateUser - key - value:', key, value);
+    // console.log('type of value:', typeof value);
     setUser((prevUser) => ({ ...prevUser, [key]: value }));
   };
 
@@ -162,7 +162,7 @@ const UserForm = ({
     if (!isEmptyObject(errors)) {
       setFormErrors(errors);
     } else {
-      console.log('UserForm handleSubmit user: ', user);
+      // console.log('UserForm handleSubmit user: ', user);
       onSave(user);
     }
   };

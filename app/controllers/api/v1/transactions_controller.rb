@@ -12,6 +12,22 @@ class Api::V1::TransactionsController < ApplicationController
     render json: @accounts
   end
 
+  def revenue_list
+    @revenue_list = Revenue
+                    .joins('FULL OUTER JOIN accounts ON revenues.account_id = accounts.id')
+                    .where('accounts.status = ?', 'Open')
+                    .order('revenues.invoice_date ASC')
+    render json: @revenue_list
+  end
+
+  def expense_list
+    @expense_list = Expense
+                    .joins('FULL OUTER JOIN accounts ON expenses.account_id = accounts.id')
+                    .where('accounts.status = ?', 'Open')
+                    .order('expenses.invoice_date ASC')
+    render json: @expense_list
+  end
+
   def expense_transactions
     @accounts = Account
                 .joins('FULL OUTER JOIN expenses ON accounts.id = expenses.account_id')

@@ -8,11 +8,11 @@ import {
   Tooltip,
 } from 'devextreme-react/pie-chart';
 
-const ExpenseChart = ({ chartTransactionData }) => {
+const ExpenseChart = ({ expenseTransactions }) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    const expenseData = [...chartTransactionData]
+    const expenseData = [...expenseTransactions]
       .filter((transaction) => transaction.transaction_type === 'Expense');
     // Function groupBy from https:
     // https://learnwithparam.com/blog/how-to-group-by-array-of-objects-using-a-key/
@@ -26,7 +26,7 @@ const ExpenseChart = ({ chartTransactionData }) => {
       }, {}); // empty object is the initial value for result object
     };
 
-    const expenseGroupByCategory = groupBy(expenseData, 'expense_category_name');
+    const expenseGroupByCategory = groupBy(expenseData, 'category');
 
     const expenseGroupByCategorySum = Object.keys(expenseGroupByCategory).map((key) => {
       const sum = expenseGroupByCategory[key].reduce((a, b) => a + b.amount, 0);
@@ -35,7 +35,7 @@ const ExpenseChart = ({ chartTransactionData }) => {
 
     setChartData(expenseGroupByCategorySum);
   }, [chartTransactionData]);
-  // console.log('Expense chartData', chartData);
+  console.log('Expense chartData', chartData);
 
   return (
     <PieChart
@@ -66,9 +66,9 @@ const ExpenseChart = ({ chartTransactionData }) => {
 };
 
 ExpenseChart.propTypes = {
-  chartTransactionData: PropTypes.arrayOf(PropTypes.shape({
+  expenseTransactions: PropTypes.arrayOf(PropTypes.shape({
     amount: PropTypes.number,
-    expense_category_name: PropTypes.string,
+    category: PropTypes.string,
   })).isRequired,
 };
 

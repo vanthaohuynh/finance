@@ -144,7 +144,7 @@ const RevenueForm = ({
     const { target } = e;
     const { name } = target;
     const val = target.checked;
-    console.log('val', val);
+    // console.log('val', val);
     updateRevenue(name, val);
     setIsChecked(val);
     if (val === true) {

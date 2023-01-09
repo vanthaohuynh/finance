@@ -11,8 +11,8 @@ const Home = (props) => {
   const { userRoleID } = props;
   const navigate = useNavigate();
   // const [dash, setDash] = useState('');
-  console.log('Home: ', loggedInStatus);
-  console.log('Home: userRoleID: ', userRoleID);
+  // console.log('Home: ', loggedInStatus);
+  // console.log('Home: userRoleID: ', userRoleID);
   // useEffect(() => {
   //   if (userRoleID === 1) {
   //     setDash('/expenses');

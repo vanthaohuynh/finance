@@ -27,7 +27,7 @@ const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const fetchAccountData = async () => {
     try {
       const response = await axios.get(apiAccountEndpoint);
-      console.log('Accounts: fetchAccountData: response: ', response);
+      // console.log('Accounts: fetchAccountData: response: ', response);
       if (response.status === 200) {
         setAccounts(response.data);
         setIsLoading(false);
@@ -62,7 +62,7 @@ const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const addAccount = async (newAccount) => {
     try {
       const response = await axios.post(apiAccountEndpoint, newAccount);
-      console.log('Accounts: addAccount: response: ', response);
+      // console.log('Accounts: addAccount: response: ', response);
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
@@ -72,7 +72,7 @@ const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
       navigate(`/accounts/${savedAccount.id}`);
     } catch (err) {
       handleAjaxError(err);
-      console.log('Accounts: addAccount: err: ', err);
+      // console.log('Accounts: addAccount: err: ', err);
     }
   };
 
@@ -84,7 +84,7 @@ const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
       .then(async () => {
         try {
           const response = await axios.delete(`${apiAccountEndpoint}/${accountId}`);
-          console.log('Accounts: deleteAccount: response: ', response);
+          // console.log('Accounts: deleteAccount: response: ', response);
           if (response.status !== 200) {
             throw Error(response.statusText);
           }
@@ -93,7 +93,7 @@ const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
           navigate('/accounts');
         } catch (err) {
           handleAjaxError(err);
-          console.log('Accounts: deleteAccount: err: ', err);
+          // console.log('Accounts: deleteAccount: err: ', err);
         }
       })
       .catch(() => {
@@ -104,7 +104,7 @@ const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
   const updateAccount = async (updatedAccount) => {
     try {
       const response = await axios.patch(`${apiAccountEndpoint}/${updatedAccount.id}`, updatedAccount);
-      console.log('Accounts: updateAccount: response: ', response);
+      // console.log('Accounts: updateAccount: response: ', response);
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
@@ -117,7 +117,7 @@ const Accounts = ({ userRoleID, token, handleSelectedIndex, handleLogout }) => {
       navigate(`/accounts/${updatedAccount.id}`);
     } catch (err) {
       handleAjaxError(err);
-      console.log('Accounts: updateAccount: err: ', err);
+      // console.log('Accounts: updateAccount: err: ', err);
     }
   };
 

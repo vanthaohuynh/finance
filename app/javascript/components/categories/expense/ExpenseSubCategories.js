@@ -33,7 +33,7 @@ const ExpenseSubCategories = ({
   const fetchExpenseCategoryData = async () => {
     try {
       const response = await axios.get(apiExpenseCatEndpoint);
-      console.log('Expenses: fetchExpenseCategoryData: response: ', response);
+      // console.log('Expenses: fetchExpenseCategoryData: response: ', response);
       if (response.status === 200) {
         const sortedExpenseCategories = response.data.sort((a, b) => (a.name > b.name ? 1 : -1));
         setExpenseCategories(sortedExpenseCategories);
@@ -47,7 +47,7 @@ const ExpenseSubCategories = ({
   const fetchExpenseSubCategoryData = async () => {
     try {
       const response = await axios.get(apiExpenseSubCatEndpoint);
-      console.log('Expenses: fetchExpenseSubCategoryData: response: ', response);
+      // console.log('Expenses: fetchExpenseSubCategoryData: response: ', response);
       if (response.status === 200) {
         const sortedExpenseSubCategories = response.data
           .sort((a, b) => (a.expense_code > b.expense_code ? 1 : -1));
@@ -84,7 +84,7 @@ const ExpenseSubCategories = ({
   const reloadExpenseSubCategoriesData = async () => {
     try {
       const response = await axios.get(apiExpenseSubCatEndpoint);
-      console.log('Expenses: reloadExpenseSubData: response: ', response);
+      // console.log('Expenses: reloadExpenseSubData: response: ', response);
       if (response.status === 200) {
         const sortedExpenseSubCategories = response.data
           .sort((a, b) => (a.expense_code > b.expense_code ? 1 : -1));
@@ -100,7 +100,7 @@ const ExpenseSubCategories = ({
   const addExpenseSubCategory = async (newExpenseSubCategory) => {
     try {
       const response = await axios.post(apiExpenseSubCatEndpoint, newExpenseSubCategory);
-      console.log('Expenses: addExpenseSubCategory: response: ', response);
+      // console.log('Expenses: addExpenseSubCategory: response: ', response);
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
@@ -123,7 +123,7 @@ const ExpenseSubCategories = ({
       .then(async () => {
         try {
           const response = await axios.delete(`${apiExpenseSubCatEndpoint}/${expenseSubCatId}`);
-          console.log('Expenses: deleteExpenseSub: response: ', response);
+          // console.log('Expenses: deleteExpenseSub: response: ', response);
           if (response.status !== 200) {
             throw Error(response.statusText);
           }
@@ -134,7 +134,7 @@ const ExpenseSubCategories = ({
           navigate('/expense_sub_categories');
         } catch (err) {
           handleAjaxError(err);
-          console.log('Expenses: deleteExpenseSub: err: ', err);
+          // console.log('Expenses: deleteExpenseSub: err: ', err);
           // To be implemented: Using ErrorBoundary
           // setError(err);
           // setIsError(true);

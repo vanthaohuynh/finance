@@ -4,7 +4,7 @@ class Api::V1::RevenuesController < ApplicationController
   # skip_before_action :verify_authenticity_token
 
   def index
-    if can? :read, Revenue
+    # if can? :read, Revenue
       @revenues = Revenue.all.order('created_at DESC')
       render json: @revenues
       # @revenues = Revenue
@@ -12,9 +12,9 @@ class Api::V1::RevenuesController < ApplicationController
       #             .select('revenues.*, accounts.account_num, revenue_categories.name as revenue_category_name')
       #             .order('created_at DESC')
       # render json: @revenues
-    else
-      render json: { error: 'UNAUTHORIZED' }, status: 401
-    end
+    # else
+    #   render json: { error: 'UNAUTHORIZED' }, status: 401
+    # end
   end
 
   def create

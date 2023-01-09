@@ -15,7 +15,7 @@ import {
 } from '@mui/x-data-grid';
 
 const Receivable = ({ receivable }) => {
-  console.log('Receivable: ', receivable);
+  // console.log('Receivable: ', receivable);
   const total = receivable.reduce((acc, cur) => acc + cur.revenue_total, 0);
   const formattedTotal = Number(total).toLocaleString('en-US', {
     style: 'currency',

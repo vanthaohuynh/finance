@@ -2869,6 +2869,11 @@
   "resolved" "https://registry.npmjs.org/lodash.isundefined/-/lodash.isundefined-3.0.1.tgz"
   "version" "3.0.1"
 
+"lodash.mapvalues@^4.6.0":
+  "integrity" "sha512-JPFqXFeZQ7BfS00H58kClY7SPVeHertPE0lNuCyZ26/XlN8TvakYD7b9bGyNmXbT/D3BbtPAAmq90gPWqLkxlQ=="
+  "resolved" "https://registry.npmjs.org/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz"
+  "version" "4.6.0"
+
 "lodash.merge@^4.5.0", "lodash.merge@^4.6.2":
   "integrity" "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="
   "resolved" "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
@@ -3021,6 +3026,14 @@
   "integrity" "sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw=="
   "resolved" "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   "version" "2.6.2"
+
+"nested-groupby@^3.0.0":
+  "integrity" "sha512-I5UL0sWUpgwWhySwrThAzIydSz8EtT4XlmuoxpS4H7VCwGl9h5QiimFmwGvMX+g/Mm1muXcOEURb8I6KovCxcw=="
+  "resolved" "https://registry.npmjs.org/nested-groupby/-/nested-groupby-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "lodash.groupby" "^4.6.0"
+    "lodash.mapvalues" "^4.6.0"
 
 "node-releases@^2.0.6":
   "integrity" "sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg=="

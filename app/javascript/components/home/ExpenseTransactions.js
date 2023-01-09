@@ -15,7 +15,7 @@ import {
 } from '@mui/x-data-grid';
 
 const ExpenseTransactions = ({ expenseTransactions }) => {
-  console.log('ExpenseTransactions: ', expenseTransactions);
+  // console.log('ExpenseTransactions: ', expenseTransactions);
   const total = expenseTransactions.reduce((acc, cur) => acc + cur.expense_total, 0);
   const formattedTotal = Number(total).toLocaleString('en-US', {
     style: 'currency',

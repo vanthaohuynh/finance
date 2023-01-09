@@ -25,7 +25,7 @@ const RevenueCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
   const fetchRevenueCategoryData = async () => {
     try {
       const response = await axios.get(apiRevenueCatEndpoint);
-      console.log('Revenues: fetchRevenueCategoryData: response: ', response);
+      // console.log('Revenues: fetchRevenueCategoryData: response: ', response);
       if (response.status === 200) {
         setRevenueCategories(response.data);
         setIsLoading(false);
@@ -59,7 +59,7 @@ const RevenueCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
   const reloadRevenueCategoriesData = async () => {
     try {
       const response = await axios.get(apiRevenueCatEndpoint);
-      console.log('Revenues: reloadRevenueData: response: ', response);
+      // console.log('Revenues: reloadRevenueData: response: ', response);
       if (response.status === 200) {
         setRevenueCategories(response.data);
         setIsLoading(false);
@@ -72,7 +72,7 @@ const RevenueCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
   const addRevenueCategory = async (newRevenueCategory) => {
     try {
       const response = await axios.post(apiRevenueCatEndpoint, newRevenueCategory);
-      console.log('Revenues: addRevenue: response: ', response);
+      // console.log('Revenues: addRevenue: response: ', response);
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
@@ -95,7 +95,7 @@ const RevenueCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
       .then(async () => {
         try {
           const response = await axios.delete(`${apiRevenueCatEndpoint}/${revenueCatId}`);
-          console.log('Revenues: deleteRevenue: response: ', response);
+          // console.log('Revenues: deleteRevenue: response: ', response);
           if (response.status !== 200) {
             throw Error(response.statusText);
           }
@@ -106,7 +106,7 @@ const RevenueCategories = ({ userRoleID, token, handleSelectedIndex, handleLogou
           navigate('/revenue_categories');
         } catch (err) {
           handleAjaxError(err);
-          console.log('Revenues: deleteRevenue: err: ', err);
+          // console.log('Revenues: deleteRevenue: err: ', err);
           // To be implemented: Using ErrorBoundary
           // setError(err);
           // setIsError(true);

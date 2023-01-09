@@ -53,7 +53,7 @@ const RevenueChart = ({ chartTransactionData }) => {
 
     setChartData(revenueGroupByCategorySum);
   }, [chartTransactionData]);
-  // console.log('Revenue chartData', chartData);
+  console.log('Revenue chartData', chartData);
 
   return (
     <PieChart

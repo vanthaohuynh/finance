@@ -40,13 +40,13 @@ const Login = ({ handleLogin }) => {
     //   Accept: 'application/json',
     //   Authorization: `Bearer ${JWT_TOKEN}`,
     // };
-    console.log('Login: ', url, user);
+    // console.log('Login: ', url, user);
     try {
       const response = await axios.post(url, user);
-      console.log('Login: handleSubmit: response: ', response);
-      console.log('Login: handleSubmit: response: ', response.data.status);
+      // console.log('Login: handleSubmit: response: ', response);
+      // console.log('Login: handleSubmit: response: ', response.data.status);
       if (response.status === 200) {
-        console.log('Login: handleSubmit: response.data: ', response.data);
+        // console.log('Login: handleSubmit: response.data: ', response.data);
         // handleSuccessfulAuth(response.data);
         handleLogin(response.data);
       } else {

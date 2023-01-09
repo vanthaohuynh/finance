@@ -50,7 +50,7 @@ const Account = ({ token, accounts, onDelete }) => {
   // setIsAmendment(true);
   // }
 
-  console.log('Amendments List', amendmentList);
+  // console.log('Amendments List', amendmentList);
 
   const showAmendmentForm = () => {
     setIsShown(!isShown);

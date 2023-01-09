@@ -34,6 +34,7 @@ import RevenueCalendarYearTable from './RevenueCalendarYearTable';
 import RevenueRIYearTable from './RevenueRIYearTable';
 import ExpenseChart from './ExpenseChart';
 import RevenueChart from './RevenueChart';
+import ExpenseListBySubCategory from '../home/ExpenseListBySubCategory';
 import { info, success } from '../../helpers/notifications';
 import { formatDate, handleAjaxError } from '../../helpers/helpers';
 import ErrorBoundary from '../../ErrorBoundary';
@@ -70,9 +71,9 @@ const Transactions = ({ token, handleLogout }) => {
           invoice_num: expense.invoice_num,
           invoice_id: expense.id,
           transaction_type: 'Expense',
-          category: expense.expense_category_name,
+          expense_category_name: expense.expense_category_name,
           expense_sub_category_name: expense.expense_sub_category_name,
-          expense_code: expense.expense_sub_category_code,
+          expense_sub_category_code: expense.expense_sub_category_code,
           amount: (expense.amount),
           supplier: expense.supplier,
           // amount: (expense.amount) * -1,
@@ -98,7 +99,7 @@ const Transactions = ({ token, handleLogout }) => {
         transactions.push(transaction);
       });
     }
-    console.log('createTransaction', transactions);
+    // console.log('createTransaction', transactions);
     setTransactions(transactions);
     setFilteredTransactions(transactions);
     setChartTransactionData(transactions);
@@ -337,6 +338,34 @@ const Transactions = ({ token, handleLogout }) => {
                           </div>
                         </Grid>
                       </Grid>
+                    </Box>
+                  </Paper>
+                </div>
+                <div className="expenseSubList">
+                  <Paper
+                    sx={{
+                      width: '100%',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        // display: 'flex',
+                        // flexWrap: 'wrap',
+                        // justifyContent: 'space-around',
+                        // overflow: 'hidden',
+                        backgroundColor: 'background.paper',
+                        paddingLeft: 2,
+                        paddingRight: 2,
+                        paddingBottom: 4,
+                      }}
+                    >
+                      <ExpenseListBySubCategory
+                        expenseListForSelectedMonth={
+                          filteredTransactions
+                            .filter((transaction) => transaction.transaction_type === 'Expense')
+                        }
+                      />
                     </Box>
                   </Paper>
                 </div>

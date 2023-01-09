@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const UserList = ({ users }) => {
-  console.log('UserList: users: ', users);
+  // console.log('UserList: users: ', users);
   const columns = [
     {
       field: 'id',

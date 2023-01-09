@@ -9,9 +9,10 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const ExpenseTransactionList = ({ transactions }) => {
   const expenseTransactions = transactions.filter((transaction) => transaction.transaction_type === 'Expense');
+  // console.log('*********************** expenseTransactions: ', expenseTransactions);
   const columns = [
     {
-      field: 'category',
+      field: 'expense_category_name',
       headerName: 'Category',
       width: 200,
       editable: false,
@@ -23,7 +24,7 @@ const ExpenseTransactionList = ({ transactions }) => {
       editable: false,
     },
     {
-      field: 'expense_code',
+      field: 'expense_sub_category_code',
       headerName: 'Sub Expense Code',
       width: 150,
       editable: false,

@@ -13,7 +13,7 @@ const RevenueCalendarYearTable = ({ transactions }) => {
   const revenueTransactions = transactions
     .filter((transaction) => transaction.transaction_type === 'Revenue' && transaction.deposit_date !== null);
 
-  console.log('Filtered Revenue Transactions:', revenueTransactions);
+  // console.log('Filtered Revenue Transactions:', revenueTransactions);
   let thisyearTotal = 0;
   let lastyearTotal = 0;
   let twoyearsagoTotal = 0;

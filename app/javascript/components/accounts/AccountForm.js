@@ -145,7 +145,7 @@ const AccountForm = ({ accounts, onSave }) => {
   };
 
   const onAddAmendment = (amendment) => {
-    console.log('amendment:', amendment);
+    // console.log('amendment:', amendment);
     // const newAccount = { ...account };
     // newAccount.amendments.push(amendment);
     // setAccount(newAccount);

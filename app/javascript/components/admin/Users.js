@@ -27,7 +27,7 @@ const Users = ({ token, handleSelectedIndex, handleLogout }) => {
     try {
       const response = await axios.get(apiRoleEndpoint);
       if (response.status === 200) {
-        console.log('Admin: Users: fetcRoleData: response.data: ', response.data);
+        // console.log('Admin: Users: fetcRoleData: response.data: ', response.data);
         const roleList = response.data.sort((a, b) => a.id - b.id);
         setRoles(roleList);
       }
@@ -83,7 +83,7 @@ const Users = ({ token, handleSelectedIndex, handleLogout }) => {
   };
 
   const addUser = async (newUser) => {
-    console.log('Admin: Users: addUser: newUser: ', newUser);
+    // console.log('Admin: Users: addUser: newUser: ', newUser);
     try {
       const response = await axios
         .post(
@@ -103,7 +103,7 @@ const Users = ({ token, handleSelectedIndex, handleLogout }) => {
         throw Error(response.statusText);
       }
       const savedUser = response.data;
-      console.log('Admin: Users: addUser', savedUser);
+      // console.log('Admin: Users: addUser', savedUser);
       const newUsers = [...users, savedUser];
       setUsers(newUsers);
       reloadUserData();
@@ -143,7 +143,7 @@ const Users = ({ token, handleSelectedIndex, handleLogout }) => {
   };
 
   const updateUser = async (updatedUser) => {
-    console.log('Admin: Users: updateUser', updatedUser);
+    // console.log('Admin: Users: updateUser', updatedUser);
     try {
       const response = await axios
         .patch(
@@ -162,11 +162,11 @@ const Users = ({ token, handleSelectedIndex, handleLogout }) => {
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
-      console.log('Admin: Users: updateUser: response: ', response.data);
+      // console.log('Admin: Users: updateUser: response: ', response.data);
       const newUsers = users;
       const idx = newUsers.findIndex((user) => user.id === updatedUser.id);
       newUsers[idx] = updatedUser;
-      console.log('Admin: Users: updateUser: newUsers: ', newUsers);
+      // console.log('Admin: Users: updateUser: newUsers: ', newUsers);
       setUsers(newUsers);
       reloadUserData();
       success('User Updated!');

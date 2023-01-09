@@ -15,7 +15,7 @@ import {
 } from '@mui/x-data-grid';
 
 const RevenueCurrentYear = ({ revenueCurrentYear }) => {
-  console.log('RevenueCurrentYear: ', revenueCurrentYear);
+  // console.log('RevenueCurrentYear: ', revenueCurrentYear);
   const total = revenueCurrentYear.reduce((acc, cur) => acc + cur.revenue_total, 0);
   const formattedTotal = Number(total).toLocaleString('en-US', {
     style: 'currency',

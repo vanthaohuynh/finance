@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  # before_action :authorized
   skip_before_action :verify_authenticity_token
   helper_method :current_user # This one is needed for Cancancan Ability.rb
 

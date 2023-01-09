@@ -44,7 +44,7 @@ const ExpenseSubCatForm = ({ userRoleID, expenseCategories, expenseSubCategories
   const [expenseSubCategory, setExpenseSubCategory] = useState(initialExpenseSubCatState);
   const [formErrors, setFormErrors] = useState({});
   const cancelURL = expenseSubCategory.id ? `/expense_sub_categories/${expenseSubCategory.id}` : '/expense_sub_categories';
-  const title = expenseSubCategory.id ? `${expenseSubCategory.description}` : 'New Expense Sub Category';
+  const title = expenseSubCategory.id ? `${expenseSubCategory.name}` : 'New Expense Sub Category';
 
   // This useEffect is important. DON'T TOUCH IT. Please ignore eslint warning.
   // Need to keep expenseSubs in the dependency array or else it won't work.
@@ -64,7 +64,7 @@ const ExpenseSubCatForm = ({ userRoleID, expenseCategories, expenseSubCategories
     const { name } = target;
     const val = target.value;
     updateExpenseSubCategory(name, val);
-    console.log(`InputFieldName: ${name}, val: ${val}`);
+    // console.log(`InputFieldName: ${name}, val: ${val}`);
   };
 
   const handleCategoryInputChange = (event) => {

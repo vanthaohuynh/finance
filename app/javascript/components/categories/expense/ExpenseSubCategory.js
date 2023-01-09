@@ -11,14 +11,14 @@ const ExpenseSubCategory = ({ userRoleID, expenseSubCategories, onDelete }) => {
   const expenseSubCategory = expenseSubCategories.find((e) => e.id === Number(id));
   // const expenseCategory = expenseCategories
   // .find((e) => e.id === expenseSubCategory.expense_category_id);
-  const subDescription = expenseSubCategory.description;
+  const subCatName = expenseSubCategory.name;
   // const newExpenseSubCategories = expenseSubCategories
   //   .filter((e) => e.expense_category_id === expenseCategory.id);
 
   return (
     <div className="eventContainer">
       <h2>
-        {subDescription}
+        {subCatName}
       </h2>
       <FormControl>
         <Grid container spacing={2}>

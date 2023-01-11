@@ -108,6 +108,7 @@ const ExpenseChartByCategory = ({ expenseList, getExpenseListForSelectedMonth })
         type="doughnut"
         innerRadius={0.5}
         size={{ width: 600 }}
+        resolveLabelOverlapping="shift"
         // onPointClick={onPointClick}
       >
         <Series

@@ -7,7 +7,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins 'https://dovee-finance.herokuapp.com'
+    # origins 'https://dovee-finance.herokuapp.com'
+    origins 'https://dovee-finance.onrender.com'
     resource '*', headers: :any, methods: %i[get post put patch delete options head]
   end
 end

@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
   belongs_to :role
-
   validates_presence_of :email
   validates_uniqueness_of :email
   before_save :assign_role

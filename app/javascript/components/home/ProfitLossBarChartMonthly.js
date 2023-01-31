@@ -38,7 +38,10 @@ const ProfitLossBarChartMonthly = ({ revenueList, expenseList }) => {
     charts.length = 0;
     for (let i = 6; i > 0; i -= 1) {
       const date = new Date();
-      const thisMonth = subtractMonths(date, i);
+      const yearDate = date.getFullYear();
+      const monthDate = date.getMonth() + 1;
+      const newDate = new Date(`${yearDate}/${monthDate}/01`);
+      const thisMonth = subtractMonths(newDate, i);
       const thisMonthName = thisMonth.toLocaleString('en-US', { month: 'long' });
       const thisYear = thisMonth.getFullYear();
 

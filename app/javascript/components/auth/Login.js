@@ -80,9 +80,6 @@ const Login = ({ handleLogin }) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Typography component="p">
-            For Demo, please use email: demo, password: demo
-          </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"

@@ -72,13 +72,16 @@ const Login = ({ handleLogin }) => {
           }}
         >
           {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
-          <div>
+          {/* <div>
             <img src="/logo.png" alt="logo" />
-          </div>
+          </div> */}
             {/* <LockOutlinedIcon /> */}
           {/* </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign in
+          </Typography>
+          <Typography component="text" variant="text">
+            For Demo purpose, use email: demo, password: demo
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField

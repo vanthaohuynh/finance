@@ -72,9 +72,9 @@ const Login = ({ handleLogin }) => {
           }}
         >
           {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
-          {/* <div>
-            <img src="/logo.png" alt="logo" />
-          </div> */}
+          <div>
+            <img src="/logo.png" alt="logo" width="200" height="200" />
+          </div>
             {/* <LockOutlinedIcon /> */}
           {/* </Avatar> */}
           <Typography component="h1" variant="h5">

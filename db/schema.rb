@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_21_160207) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_11_144451) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "account_amendments", force: :cascade do |t|
     t.string "budget_version"

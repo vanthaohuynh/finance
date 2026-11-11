@@ -1,0 +1,15 @@
+open_study:
+  account_num: "07191-005-111"
+  study_name: CARDIO-1
+  study_title: Cardiac outcomes study
+  pi_name: Dr. Alpha
+  sponsor_name: Acme Pharma
+  status: Open
+  targeted_enrolling_number: 40
+  cta_date: <%= 1.year.ago.to_date %>
+  budget_currency: CAD
+
+closed_study:
+  account_num: "07191-005-113"
+  study_name: ONCO-3
+  status: Closed

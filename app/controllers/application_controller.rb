@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def encode_token(payload)
     payload[:exp] = 4.hours.from_now.to_i
     # payload[:exp] = 1.minutes.from_now.to_i
-    JWT.encode(payload, Rails.application.credentials.secret_key_base)
+    JWT.encode(payload, Rails.application.secret_key_base)
   end
 
   def auth_header
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
       token = auth_header.split(' ')[1]
       # header: { 'Authorization': 'Bearer <token>' }
       begin
-        JWT.decode(token, Rails.application.credentials.secret_key_base, true, algorithm: 'HS256')
+        JWT.decode(token, Rails.application.secret_key_base, true, algorithm: 'HS256')
       rescue JWT::DecodeError
         nil
       end
@@ -28,7 +28,9 @@ class ApplicationController < ActionController::Base
   def logged_in_user
     if decoded_token
       user_id = decoded_token[0]['user_id']
-      @user = User.find_by(id: user_id)
+      # Use @current_user, not @user: controllers keep the record they act on in @user
+      # (e.g. UsersController#update), and overwriting it made admins edit themselves.
+      @current_user = User.find_by(id: user_id)
       # logger.debug "logged_in_user: #{@user.inspect}"
     end
   end

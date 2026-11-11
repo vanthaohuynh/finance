@@ -1,0 +1,8 @@
+coordinator_salary:
+  account: open_study
+  account_num: "07191-005-111"
+  expense_category: salary
+  expense_sub_category: coordinator
+  invoice_num: E-1
+  amount: 500
+  invoice_date: <%= Date.current %>

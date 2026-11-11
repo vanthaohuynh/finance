@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def validate_token
-    render json: { user: @user }, status: 200
+    render json: { user: current_user }, status: 200
   end
 
   def login

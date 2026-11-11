@@ -1,6 +1,6 @@
 class Api::V1::ExpensesController < ApplicationController
   before_action :authorized
-  before_action :set_expense, only: %i[show edit update destroy]
+  before_action :set_expense, only: %i[update destroy]
   # skip_before_action :verify_authenticity_token
 
   def index

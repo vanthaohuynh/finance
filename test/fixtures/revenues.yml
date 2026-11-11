@@ -1,0 +1,16 @@
+deposited:
+  account: open_study
+  account_num: "07191-005-111"
+  revenue_category: sales
+  invoice_num: R-1
+  amount: 1000
+  invoice_date: <%= Date.current %>
+  deposit_date: <%= Date.current %>
+
+receivable:
+  account: open_study
+  account_num: "07191-005-111"
+  revenue_category: sales
+  invoice_num: R-2
+  amount: 750
+  invoice_date: <%= Date.current %>

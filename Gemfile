@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.1"
+ruby "3.3.11"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.3", ">= 7.0.3.1"
+gem "rails", "~> 8.1.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -13,7 +13,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", ">= 6.0"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
@@ -37,7 +37,7 @@ gem "jbuilder"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -50,10 +50,10 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  # Van added Oct 31, 2022 for Debugger
-  gem 'ruby-debug-ide', '~> 0.7.3'
-  gem 'debase', '~> 0.2.5.beta2', require: false
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
+  gem "bundler-audit", require: false
   # gem 'dotenv-rails' # Van added Nov 1, 2021
 end
 
@@ -70,10 +70,10 @@ end
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 
-gem 'rack-cors', '~> 1.1', '>= 1.1.1', require: 'rack/cors'
+gem 'rack-cors', '>= 2.0.2', require: 'rack/cors'
 
 gem 'cancancan', '~> 3.2', '>= 3.2.1'
 
-gem 'jwt', '~> 2.2', '>= 2.2.2'
+gem 'jwt', '~> 2.10'
 
 gem 'active_model_serializers', '~> 0.10', '>= 0.10.12'

@@ -1,6 +1,6 @@
 class Api::V1::AccountsController < ApplicationController
   before_action :authorized
-  before_action :set_account, only: %i[show edit update destroy transactions rev_ri_year1]
+  before_action :set_account, only: %i[show update destroy transactions]
   # skip_before_action :verify_authenticity_token
   # before_action :authenticate_user, only: %i[create update destroy]
 

@@ -73,7 +73,7 @@ Rails.application.routes.draw do
       # resources :accounts3, only: %i[index]
       resources :revenues, only: %i[index show create update destroy]
       resources :expense_categories, only: %i[index show create update destroy]
-      resources :expense_sub_categories, only: %i[index show create update destroy index_listing]
+      resources :expense_sub_categories, only: %i[index show create update destroy]
       resources :revenue_categories, only: %i[index show create update destroy]
       resources :account_amendments, only: %i[index show create update destroy]
       get 'accounts/:id/transactions', to: 'accounts#transactions', as: 'account_transactions'

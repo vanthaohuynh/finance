@@ -1,0 +1,6 @@
+coordinator:
+  expense_code: SAL-RC
+  name: Research coordinator
+  description: Research coordinator
+  expense_category: salary
+  expense_category_name: Salary

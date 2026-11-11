@@ -1,0 +1,8 @@
+# roles.yml uses explicit ids (to match the frontend), so reference roles by id rather than by label.
+<% { "admin" => 3, "power_user" => 2, "data_entry" => 1, "viewer" => 4 }.each do |role, role_id| %>
+<%= role %>:
+  email: <%= role %>@test.example
+  password_digest: <%= BCrypt::Password.create(ApiTestHelpers::PASSWORD, cost: BCrypt::Engine::MIN_COST) %>
+  role_id: <%= role_id %>
+  role_name: <%= role %>
+<% end %>

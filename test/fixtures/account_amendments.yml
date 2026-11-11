@@ -1,0 +1,7 @@
+budget_v2:
+  account: open_study
+  account_num: "07191-005-111"
+  budget_version: v2
+  targeted_enrolling_number: 45
+  cta_date: <%= 3.months.ago.to_date %>
+  count: 1

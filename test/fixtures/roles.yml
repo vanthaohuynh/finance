@@ -1,0 +1,20 @@
+# Ids match what the React app hardcodes (1 = Regular, 3 = Admin); names match what the backend checks.
+data_entry:
+  id: 1
+  name: data_entry
+  description: "Regular: data entry for expenses only"
+
+power_user:
+  id: 2
+  name: power_user
+  description: "PowerUser: can edit accounts, expenses, revenues and categories"
+
+admin:
+  id: 3
+  name: admin
+  description: "Admin: can do anything, including managing users"
+
+viewer:
+  id: 4
+  name: viewer
+  description: "Viewer: read-only"

@@ -4,7 +4,7 @@ Rails 8.1 API + React (esbuild) app for tracking clinical-study accounts, expens
 
 ## Requirements
 
-- Ruby 3.3.6 (see `.ruby-version`)
+- Ruby 3.3.11 (see `.ruby-version`)
 - Node.js 20+ and npm (npm is the only package manager; `package-lock.json` is the lockfile)
 - PostgreSQL
 

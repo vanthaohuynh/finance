@@ -7,7 +7,8 @@ CI.run do
   step "Build: JavaScript bundle", "npm run build"
 
   step "Security: Gem audit", "bin/bundler-audit"
-  step "Security: npm audit (production deps)", "npm audit --omit=dev"
+  # Moderate uuid advisory via @devexpress/dx-react-grid-export -> exceljs has no upstream fix yet.
+  step "Security: npm audit (production deps)", "npm audit --omit=dev --audit-level=high"
 
   # Optional: set a green GitHub commit status to unblock PR merge.
   # Requires the `gh` CLI and `gh extension install basecamp/gh-signoff`.

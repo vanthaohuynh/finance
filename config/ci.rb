@@ -6,7 +6,7 @@ CI.run do
   step "Zeitwerk: eager load check", "bin/rails zeitwerk:check"
   step "Build: JavaScript bundle", "npm run build"
 
-  step "Security: Gem audit", "bin/bundler-audit"
+  step "Security: Gem audit", "bin/bundler-audit check --update"
   # Moderate uuid advisory via @devexpress/dx-react-grid-export -> exceljs has no upstream fix yet.
   step "Security: npm audit (production deps)", "npm audit --omit=dev --audit-level=high"
 

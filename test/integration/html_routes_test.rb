@@ -40,6 +40,18 @@ class HtmlRoutesTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "the layout links the favicon and touch icon, and they are served" do
+    get "/"
+    assert_select "link[rel=icon][href='/favicon.ico']"
+    assert_select "link[rel=apple-touch-icon][href='/apple-touch-icon.png']"
+
+    %w[/favicon.ico /icon.png /apple-touch-icon.png].each do |path|
+      get path
+      assert_response :success, path
+      assert_operator response.body.bytesize, :>, 0, "#{path} is not empty"
+    end
+  end
+
   test "the JavaScript bundle is served" do
     get "/assets/application.js"
 
